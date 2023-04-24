@@ -25,10 +25,10 @@
     case 'haiwaikan':
       var menuAPI = 'https://haiwaikan.com/api.php/provide/vod/at/xml';
       var urlAPI = 'https://haiwaikan.com/api.php/provide/vod/?ac=detail';
-      document.getElementById('menu-movie').href = 'home.html?s='+s+'&t=28';
-      document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=119';
-      document.getElementById('menu-variety').href = 'home.html?s='+s+'&t=128';
-      document.getElementById('menu-animation').href = 'home.html?s='+s+'&t=135';
+      document.getElementById('menu-movie').href = 'home.html?s='+s+'&t=30';
+      document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=125';
+      document.getElementById('menu-variety').href = 'home.html?s='+s+'&t=133';
+      document.getElementById('menu-animation').href = 'home.html?s='+s+'&t=136';
       document.getElementById('menu-favorites').href = 'home.html?s='+s+'&ids=favorites';
       break;
     case 'kuaibozy':
@@ -343,7 +343,7 @@
         // htmlString += '<div class="myui-content__detail">';
 
         htmlString += '<button class="btn btn-primary" type="button" style="font-size: 24px;margin:2px;">';
-        htmlString += '<a href="../vod/playvideo.html?url='+m3u8+'">播放</a></button>';
+        htmlString += '<a href="playvideo.html?url='+m3u8+'">播放</a></button>';
         htmlString += '<button class="btn btn-secondary" type="button" onclick="setCookieBySourceId(\''+s+'\',\''+id+'\');" id="favorites" '
         htmlString += 'style="font-size: 24px;margin:2px;">收藏</button><br><br>';
 
@@ -354,7 +354,7 @@
               const p = pl.split('$');
               var pl_name = p[0];
               var pl_m3u8 = p[1];
-              htmlString += '<a href="../vod/playvideo.html?url='+pl_m3u8+'">';
+              htmlString += '<a href="playvideo.html?url='+pl_m3u8+'">';
               htmlString += '<button class="btn btn-outline-primary" type="button" style="width:120px;margin:2px;font-size: 16px;">';
               htmlString += pl_name+'</button></a>';
           }
