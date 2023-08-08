@@ -25,66 +25,80 @@
     case 'haiwaikan':
       var menuAPI = 'https://haiwaikan.com/api.php/provide/vod/at/xml';
       var urlAPI = 'https://haiwaikan.com/api.php/provide/vod/?ac=detail';
+      var player = 'playvideo.html?url=';
       document.getElementById('menu-movie').href = 'home.html?s='+s+'&t=30';
       document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=125';
       document.getElementById('menu-variety').href = 'home.html?s='+s+'&t=133';
       document.getElementById('menu-animation').href = 'home.html?s='+s+'&t=136';
       document.getElementById('menu-favorites').href = 'home.html?s='+s+'&ids=favorites';
+      document.getElementById('haiwaikan').style="background-color: #0d9156;"
       break;
     case 'kuaibozy':
       var menuAPI = 'https://www.kuaibozy.com/api.php/provide/vod/from/kbm3u8/at/xml';
       var urlAPI = 'https://www.kuaibozy.com/api.php/provide/vod/?ac=detail';
+      var player = 'playvideo.html?url=';
       document.getElementById('menu-movie').href = 'home.html?s='+s+'&t=6';
       document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=13';
       document.getElementById('menu-variety').href = 'home.html?s='+s+'&t=3';
       document.getElementById('menu-animation').href = 'home.html?s='+s+'&t=4';
       document.getElementById('menu-favorites').href = 'home.html?s='+s+'&ids=favorites';
+      document.getElementById('kuaibozy').style="background-color: #0d9156;"
       break;
     case 'guangsu':
       var menuAPI = 'https://api.guangsuapi.com/api.php/provide/vod/at/xml/';
       var urlAPI = 'https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/at/json?ac=detail';
+      var player = 'playvideo.html?url=';
       document.getElementById('menu-movie').href = 'home.html?s='+s+'&t=6';
       document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=13';
       document.getElementById('menu-variety').href = 'home.html?s='+s+'&t=3';
       document.getElementById('menu-animation').href = 'home.html?s='+s+'&t=4';
       document.getElementById('menu-favorites').href = 'home.html?s='+s+'&ids=favorites';
+      document.getElementById('guangsu').style="background-color: #0d9156;"
       break;
     case 'xinlang':
       var menuAPI = 'https://api.xinlangapi.com/xinlangapi.php/provide/vod/at/xml';
       var urlAPI = 'https://api.xinlangapi.com/xinlangapi.php/provide/vod/at/json?ac=detail';
+      var player = '';
       document.getElementById('menu-movie').href = 'home.html?s='+s+'&t=6';
       document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=13';
       document.getElementById('menu-variety').style.visibility = 'hidden';
       document.getElementById('menu-animation').href = 'home.html?s='+s+'&t=3';
       document.getElementById('menu-favorites').href = 'home.html?s='+s+'&ids=favorites';
+      document.getElementById('xinlang').style="background-color: #0d9156;"
       break;
     case 'bdzy':
       var menuAPI = 'https://api.apibdzy.com/api.php/provide/vod/from/dbm3u8/at/xml';
       var urlAPI = 'https://api.apibdzy.com/api.php/provide/vod/?ac=detail';
+      var player = '';
       document.getElementById('menu-movie').href = 'home.html?s='+s+'&t=6';
-      document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=13';
+      document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=21';
       document.getElementById('menu-variety').style.visibility = 'hidden';
       document.getElementById('menu-animation').style.visibility = 'hidden';
       document.getElementById('search').style.visibility = 'hidden';
       document.getElementById('menu-favorites').href = 'home.html?s='+s+'&ids=favorites';
+      document.getElementById('bdzy').style="background-color: #0d9156;"
       break;
     case '1080zyku':
       var menuAPI = 'https://api.1080zyku.com/inc/ldg_api.php';
       var urlAPI = 'https://api.1080zyku.com/inc/apijson.php?ac=detail';
+      var player = 'playvideo.html?url=';
       document.getElementById('menu-movie').href = 'home.html?s='+s+'&t=5';
-      document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=12';
+      document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=13';
       document.getElementById('menu-variety').href = 'home.html?s='+s+'&t=3';
       document.getElementById('menu-animation').href = 'home.html?s='+s+'&t=4';
       document.getElementById('menu-favorites').href = 'home.html?s='+s+'&ids=favorites';
+      document.getElementById('1080zyku').style="background-color: #0d9156;"
       break;
     default:
       var menuAPI = 'https://haiwaikan.com/api.php/provide/vod/at/xml';
       var urlAPI = 'https://haiwaikan.com/api.php/provide/vod/?ac=detail';
+      var player = 'playvideo.html?url=';
       document.getElementById('menu-movie').href = 'home.html?s='+s+'&t=28';
       document.getElementById('menu-tvshow').href = 'home.html?s='+s+'&t=119';
       document.getElementById('menu-variety').href = 'home.html?s='+s+'&t=128';
       document.getElementById('menu-animation').href = 'home.html?s='+s+'&t=135';
       document.getElementById('menu-favorites').href = 'home.html?s='+s+'&ids=favorites';
+      document.getElementById('haiwaikan').style="background-color: #0d9156;"
       break;
   }
 
@@ -148,8 +162,7 @@
 
 
 
-// 解決CORS問題
-  // var cors_api_url = 'https://pkjcors.herokuapp.com/';
+  // 解決CORS問題
   // var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
   var cors_api_url = 'https://api.allorigins.win/get?url=';
   
@@ -280,7 +293,7 @@
       page = data.page;
       pagecount = data.pagecount;
 
-      let htmlString = '<ul>';
+      let htmlString = '<ul class="row row-cols-2">';
       
       for (let file of data.list) {
         var m3u8 = file.vod_play_url.split('#')[0].split('$')[1];
@@ -343,7 +356,8 @@
         // htmlString += '<div class="myui-content__detail">';
 
         htmlString += '<button class="btn btn-primary" type="button" style="font-size: 24px;margin:2px;">';
-        htmlString += '<a href="playvideo.html?url='+m3u8+'">播放</a></button>';
+        // htmlString += '<a href="playvideo.html?url='+m3u8+'">播放</a></button>';
+        htmlString += '<a href="'+player+m3u8+'">播放</a></button>';
         htmlString += '<button class="btn btn-secondary" type="button" onclick="setCookieBySourceId(\''+s+'\',\''+id+'\');" id="favorites" '
         htmlString += 'style="font-size: 24px;margin:2px;">收藏</button><br><br>';
 

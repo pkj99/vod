@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Movie</title>
+    <title>Movie API</title>
     <meta name="keywords" content="movie, tv, radio" />
     <meta name="bookmark-image" content="images/logo.png" />
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -28,6 +28,24 @@
 
     <link rel="stylesheet" href="css/mystyle.css" type="text/css" />
     <script type="text/javascript" src="js/myjavascript.js"></script>
+
+    <style>
+        .sourceButton {
+            font-size: 14px;
+            width:100px;
+            height:40px;
+        }
+
+        .sourceButton:focus {
+            background-color: blueviolet;
+        }
+
+        .sourceButton:active {
+            background-color: rgb(46, 43, 226);
+        }
+        
+    </style>
+
 </head>
 
 <body>
@@ -43,7 +61,7 @@
                     </a>
                 </div>
                 <ul class="myui-header__menu">
-                    <li class="menu_header"><a href="home.html?t=28" id="menu-movie">電影</a></li>
+                    <li class="menu_header"><a href="home.html?t=28" id="menu-movie" class="sourceButton">電影</a></li>
                     <li class="menu_header"><a href="home.html?t=119" id="menu-tvshow">電視劇</a></li>
                     <li class="menu_header"><a href="home.html?t=128" id="menu-variety">綜藝</a></li>
                     <li class="menu_header"><a href="home.html?t=135" id="menu-animation">動漫</a></li>
@@ -91,6 +109,13 @@
                       <a href="https://cors-anywhere.herokuapp.com/corsdemo">cors-anywhere</a>
                       <span class="split-line"></span>
                   </p> -->
+                  <button type="button" class="sourceButton" id="haiwaikan" onclick="location.href='?s=haiwaikan&t=30'"> haiwaikan </button>
+                  <!-- <button type="button" class="sourceButton" id="kuaibozy" onclick="location.href='?s=kuaibozy&t=6'"> kuaibozy </button> -->
+                  <button type="button" class="sourceButton" id="guangsu" onclick="location.href='?s=guangsu&t=6'"> guangsu </button>
+                  <button type="button" class="sourceButton" id="xinlang" onclick="location.href='?s=xinlang&t=6'"> xinlang </button>
+                  <button type="button" class="sourceButton" id="bdzy" onclick="location.href='?s=bdzy&t=6'"> bdzy </button>
+                  <button type="button" class="sourceButton" id="1080zyku" onclick="location.href='?s=1080zyku&t=5'"> 1080zyku </button>
+
                   <p class="margin-0">本站為程式開發測試之用，資料蒐集於網際網路，版權歸官方所有 Powered by PKJ Studio 2023</p>
               </div>
           </div>
