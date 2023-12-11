@@ -91,7 +91,9 @@
     // bypass authentication for test
     // sessionStorage.setItem('loginStatus','success');
     // Session["loginStatus"] = 'success';
-    window.location = 'home.html';
+    // window.location = 'home.html';
+    var loginStatus = sessionStorage.getItem('loginStatus');
+    if (loginStatus == 'success') { window.location = 'home.html'}
 </script>
 
 <body>
