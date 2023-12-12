@@ -15,9 +15,9 @@ var urlParams;
 })();
 
 
-if (urlParams["t"] == null) { var t = ""; } else { var t = urlParams["t"]; }
+if (urlParams["t"] == null) { var t = "5"; } else { var t = urlParams["t"]; }
 if (urlParams["pg"] == null) { var pg = "1"; } else { var pg = urlParams["pg"]; }
-if (urlParams["s"] == null) { var s = "haiwaikan"; } else { var s = urlParams["s"]; }
+if (urlParams["s"] == null) { var s = "1080zyku"; } else { var s = urlParams["s"]; }
 
 document.getElementById('s').value = s;
 
@@ -239,7 +239,6 @@ function doCORSRequestMenu(options, printResult) {
   x.open(options.method, cors_api_url + encodeURIComponent(options.url));
   x.onload = x.onerror = function () {
     var data = JSON.parse(x.responseText).contents;
-
     const parser = new DOMParser();
     // const d = parser.parseFromString(x.responseText, "text/html");
     const d = parser.parseFromString(data, "text/html");
@@ -251,6 +250,24 @@ function doCORSRequestMenu(options, printResult) {
       if (menu_id == t) {
         menu_type = menu_name.substring(menu_name.length - 1);
       }
+    }
+    // console.log(menu_type);
+    switch (menu_type) {
+      case '片':
+        document.getElementById('menu-movie').style = "background-color:#b0c4de;border-radius: 5px; padding: 2px 2px;";
+        break;
+      case '剧':
+        document.getElementById('menu-tvshow').style = "background-color:#b0c4de;border-radius: 5px; padding: 2px 2px;";
+        break;
+      case '艺':
+        document.getElementById('menu-variety').style = "background-color:#b0c4de;border-radius: 5px; padding: 2px 2px;";
+        break;
+      case '漫':
+        document.getElementById('menu-animation').style = "background-color:#b0c4de;border-radius: 5px; padding: 2px 2px;";
+        break;
+      default:
+        document.getElementById('menu-favorites').style = "background-color:#b0c4de;border-radius: 5px; padding: 2px 2px;";
+        break;
     }
     let htmlString = '';
     for (let i = 0; i < list.length; i++) {
@@ -380,7 +397,7 @@ function doCORSRequestById(options, printResult) {
       htmlString += '<a class="myui-vodlist__thumb lazyload" href="' + m3u8 + '" ';
       htmlString += 'title="' + title + '" ';
       htmlString += 'data-original="' + img + '" ';
-      htmlString += 'style="background-image: url(' + img + ')">';
+      htmlString += 'style="background-image: url(' + img +')">';
 
       htmlString += '<span class="play hidden-xs"></span>';
       htmlString += '<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">' + quality + '</span>';
