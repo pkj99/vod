@@ -362,7 +362,7 @@ function doCORSRequest(options, printResult) {
       htmlString += '<a class="myui-vodlist__thumb lazyload" href="' + pagename + '?s=' + s + '&t=' + t + '&id=' + id + '" ';
       htmlString += 'title="' + title + '" ';
       htmlString += 'data-original="' + img + '" ';
-      htmlString += 'style="background-image: url(' + img + ')">';
+      htmlString += 'style="background-image: url(' + cors_api_url + encodeURIComponent(img) + ')">';
 
       htmlString += '<span class="play hidden-xs"></span>';
       if (quality != '1') {
@@ -376,7 +376,6 @@ function doCORSRequest(options, printResult) {
       htmlString += '</div>';
       htmlString += '<div class="myui-vodlist__detail">';
       htmlString += '<h4 class="title text-overflow"><a href="' + m3u8 + '">' + title + '</a></h4>';
-      htmlString += '<img src="'+img+'">';
       htmlString += '</div>';
       htmlString += '</li>';
     }
