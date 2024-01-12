@@ -15,9 +15,9 @@ var urlParams;
 })();
 
 
-if (urlParams["t"] == null) { var t = "30"; } else { var t = urlParams["t"]; }
+if (urlParams["t"] == null) { var t = "6"; } else { var t = urlParams["t"]; }
 if (urlParams["pg"] == null) { var pg = "1"; } else { var pg = urlParams["pg"]; }
-if (urlParams["s"] == null) { var s = "haiwaikan"; } else { var s = urlParams["s"]; }
+if (urlParams["s"] == null) { var s = "bdzy"; } else { var s = urlParams["s"]; }
 
 document.getElementById('s').value = s;
 
@@ -34,17 +34,17 @@ switch (s) {
     document.getElementById('menu-favorites').href = 'home.html?s=' + s + '&ids=favorites';
     document.getElementById('haiwaikan').style = "background-color: #0d9156;"
     break;
-  case 'kuaibozy':
-    var menuAPI = 'https://www.kuaibozy.com/api.php/provide/vod/from/kbm3u8/at/xml';
-    var urlAPI = 'https://www.kuaibozy.com/api.php/provide/vod/?ac=detail';
-    var player = 'playvideo.html?url=';
-    document.getElementById('menu-movie').href = 'home.html?s=' + s + '&t=6';
-    document.getElementById('menu-tvshow').href = 'home.html?s=' + s + '&t=13';
-    document.getElementById('menu-variety').href = 'home.html?s=' + s + '&t=3';
-    document.getElementById('menu-animation').href = 'home.html?s=' + s + '&t=4';
-    document.getElementById('menu-favorites').href = 'home.html?s=' + s + '&ids=favorites';
-    document.getElementById('kuaibozy').style = "background-color: #0d9156;"
-    break;
+  // case 'kuaibozy':
+  //   var menuAPI = 'https://www.kuaibozy.com/api.php/provide/vod/from/kbm3u8/at/xml';
+  //   var urlAPI = 'https://www.kuaibozy.com/api.php/provide/vod/?ac=detail';
+  //   var player = 'playvideo.html?url=';
+  //   document.getElementById('menu-movie').href = 'home.html?s=' + s + '&t=6';
+  //   document.getElementById('menu-tvshow').href = 'home.html?s=' + s + '&t=13';
+  //   document.getElementById('menu-variety').href = 'home.html?s=' + s + '&t=3';
+  //   document.getElementById('menu-animation').href = 'home.html?s=' + s + '&t=4';
+  //   document.getElementById('menu-favorites').href = 'home.html?s=' + s + '&ids=favorites';
+  //   document.getElementById('kuaibozy').style = "background-color: #0d9156;"
+  //   break;
   case 'guangsu':
     var menuAPI = 'https://api.guangsuapi.com/api.php/provide/vod/at/xml/';
     var urlAPI = 'https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/at/json?ac=detail';
@@ -362,7 +362,7 @@ function doCORSRequest(options, printResult) {
       htmlString += '<a class="myui-vodlist__thumb lazyload" href="' + pagename + '?s=' + s + '&t=' + t + '&id=' + id + '" ';
       htmlString += 'title="' + title + '" ';
       htmlString += 'data-original="' + img + '" ';
-      htmlString += 'style="background-image: url(' + cors_api_url + encodeURIComponent(img) + ')">';
+      htmlString += 'style="background-image: url(' + img + ')">';
 
       htmlString += '<span class="play hidden-xs"></span>';
       if (quality != '1') {
