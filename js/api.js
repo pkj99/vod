@@ -15,7 +15,7 @@ var urlParams;
 })();
 
 
-if (urlParams["t"] == null) { var t = "5"; } else { var t = urlParams["t"]; }
+if (urlParams["t"] == null) { var t = "1"; } else { var t = urlParams["t"]; }
 if (urlParams["pg"] == null) { var pg = "1"; } else { var pg = urlParams["pg"]; }
 if (urlParams["s"] == null) { var s = "1080zyku"; } else { var s = urlParams["s"]; }
 
@@ -376,6 +376,7 @@ function doCORSRequest(options, printResult) {
       htmlString += '</div>';
       htmlString += '<div class="myui-vodlist__detail">';
       htmlString += '<h4 class="title text-overflow"><a href="' + m3u8 + '">' + title + '</a></h4>';
+      htmlString += '<img src="'+img+'" hidden>';
       htmlString += '</div>';
       htmlString += '</li>';
     }
