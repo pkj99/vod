@@ -113,8 +113,8 @@ switch (s) {
     document.getElementById('hongniuzy2').style = "background-color: #0d9156;"
     break;
   case 'ffzy': // 非凡资源
-    var menuAPI = 'http://cj.ffzyapi.com/api.php/provide/vod/from/hnm3u8/at/xml';
-    var urlAPI = 'http://cj.ffzyapi.com/api.php/provide/vod/from/hnm3u8/at/json?ac=detail';
+    var menuAPI = 'http://cj.ffzyapi.com/api.php/provide/vod/from/ffm3u8/at/xml';
+    var urlAPI = 'http://cj.ffzyapi.com/api.php/provide/vod/from/ffm3u8/at/json?ac=detail';
     var player = 'playvideo.html?url=';
     document.getElementById('menu-movie').href = 'home.html?s=' + s + '&t=6';
     document.getElementById('menu-tvshow').href = 'home.html?s=' + s + '&t=21';
@@ -157,8 +157,8 @@ switch (s) {
     document.getElementById('tiankong').style = "background-color: #0d9156;"
     break;
   case 'sdzy': // 閃電資源
-    var menuAPI = 'https://sdzyapi.com/api.php/provide/vod/from/hnm3u8/at/xml';
-    var urlAPI = 'https://sdzyapi.com/api.php/provide/vod/?ac=detail';
+    var menuAPI = 'https://sdzyapi.com/api.php/provide/vod/from/sdm3u8/at/xml';
+    var urlAPI = 'https://sdzyapi.com/api.php/provide/vod/from/sdm3u8/at/json?ac=detail';
     var player = '';
     document.getElementById('menu-movie').href = 'home.html?s=' + s + '&t=6';
     document.getElementById('menu-tvshow').href = 'home.html?s=' + s + '&t=18';
