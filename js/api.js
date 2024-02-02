@@ -297,14 +297,16 @@ function checkCookieBySourceId(source, id) {
 
 // 解決CORS問題
 // var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
-var cors_api_url = 'https://api.allorigins.win/get?url=';
+// var cors_api_url = 'https://api.allorigins.win/get?url=';
+var cors_api_url = 'https://api.allorigins.win/raw?url=';
 
 
 function doCORSRequestMenu(options, printResult) {
   var x = new XMLHttpRequest();
-  x.open(options.method, cors_api_url + encodeURIComponent(options.url));
+  x.open(options.method, cors_api_url + encodeURIComponent(options.url.replace('/at/xml','/at/json')));
   x.onload = x.onerror = function () {
-    var data = JSON.parse(x.responseText).contents;
+    // var data = JSON.parse(x.responseText).contents;
+    var data = JSON.parse(x.responseText);
     const parser = new DOMParser();
     // const d = parser.parseFromString(x.responseText, "text/html");
     const d = parser.parseFromString(data, "text/html");
@@ -357,11 +359,11 @@ function doCORSRequestMenu(options, printResult) {
 
 function doCORSRequest(options, printResult) {
   var x = new XMLHttpRequest();
-  x.open(options.method, cors_api_url + encodeURIComponent(options.url));
+  x.open(options.method, cors_api_url + encodeURIComponent(options.url.replace('/at/xml','/at/json')));
   x.onload = x.onerror = function () {
-    var contents = JSON.parse(x.responseText).contents;
-    var data = JSON.parse(contents);
-    // var data = JSON.parse(x.responseText);
+    // var contents = JSON.parse(x.responseText).contents;
+    // var data = JSON.parse(contents);
+    var data = JSON.parse(x.responseText);
 
     page = data.page;
     pagecount = data.pagecount;
@@ -431,11 +433,11 @@ function doCORSRequest(options, printResult) {
 
 function doCORSRequestById(options, printResult) {
   var x = new XMLHttpRequest();
-  x.open(options.method, cors_api_url + encodeURIComponent(options.url));
+  x.open(options.method, cors_api_url + encodeURIComponent(options.url.replace('/at/xml','/at/json')));
   x.onload = x.onerror = function () {
-    var contents = JSON.parse(x.responseText).contents;
-    var data = JSON.parse(contents);
-    // var data = JSON.parse(x.responseText);
+    // var contents = JSON.parse(x.responseText).contents;
+    // var data = JSON.parse(contents);
+    var data = JSON.parse(x.responseText);
 
     page = data.page;
     pagecount = data.pagecount;
@@ -543,6 +545,10 @@ function doCORSSearch(options, printResult) {
       var urlAPI = 'https://haiwaikan.com/api.php/provide/vod/?ac=detail';
       var source = '海外看';
       break;
+    case 'kuaikan':
+      var urlAPI = 'https://kuaikan-api.com/api.php/provide/vod/from/kuaikan/at/json?ac=detail';
+      var source = '快看';
+      break;      
     case 'guangsu':
       var urlAPI = 'https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/at/json?ac=detail';
       var source = '光速';
@@ -614,10 +620,9 @@ function doCORSSearch(options, printResult) {
   var x = new XMLHttpRequest();
   x.open(options.method, cors_api_url + encodeURIComponent(urlAPI + '&wd=' + options.wd));
   x.onload = x.onerror = function () {
-    console.log(x.responseText);
-    var contents = JSON.parse(x.responseText).contents;
-    var data = JSON.parse(contents);
-    // var data = JSON.parse(x.responseText);
+    // var contents = JSON.parse(x.responseText).contents;
+    // var data = JSON.parse(contents);
+    var data = JSON.parse(x.responseText);
 
     page = data.page;
     pagecount = data.pagecount;
