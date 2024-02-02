@@ -539,7 +539,7 @@ function doCORSRequestById(options, printResult) {
 function doCORSSearch(options, printResult) {
 
   var s = options.s;
-  console.log(s);
+  // console.log(s);
   switch (s) {
     case 'haiwaikan':
       var urlAPI = 'https://haiwaikan.com/api.php/provide/vod/?ac=detail';
@@ -605,7 +605,10 @@ function doCORSSearch(options, printResult) {
       var urlAPI = 'https://subocaiji.com/api.php/provide/vod/?ac=detail';
       var source = '速播';
       break;
-                
+    case 'suoni':
+      var urlAPI = 'https://suoniapi.com/api.php/provide/vod/?ac=detail';
+      var source = '索尼';
+      break;            
 
     default:
       var urlAPI = 'https://haiwaikan.com/api.php/provide/vod/?ac=detail';
@@ -615,7 +618,7 @@ function doCORSSearch(options, printResult) {
 
   document.getElementById('myui-panel').innerHTML = '';
 
-  console.log(urlAPI + '&wd=' + options.wd);
+  // console.log(urlAPI + '&wd=' + options.wd);
 
   var x = new XMLHttpRequest();
   x.open(options.method, cors_api_url + encodeURIComponent(urlAPI + '&wd=' + options.wd));
