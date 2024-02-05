@@ -307,18 +307,29 @@ function doCORSRequestMenu(options, printResult) {
   x.onload = x.onerror = function () {
     // var data = JSON.parse(x.responseText).contents;
     var data = JSON.parse(x.responseText);
-    const parser = new DOMParser();
-    // const d = parser.parseFromString(x.responseText, "text/html");
-    const d = parser.parseFromString(data, "text/html");
-    var list = d.getElementsByTagName('ty');
-    let menu_type = '';
+    // const parser = new DOMParser();
+    // // const d = parser.parseFromString(x.responseText, "text/html");
+    // const d = parser.parseFromString(data, "text/html");
+    // var list = d.getElementsByTagName('ty');
+    // let menu_type = '';
+    // for (let i = 0; i < list.length; i++) {
+    //   var menu_id = list[i].id;
+    //   var menu_name = list[i].textContent;
+    //   if (menu_id == t) {
+    //     menu_type = menu_name.substring(menu_name.length - 1);
+    //   }
+    // }
+
+    // console.log(data);
+    var list = data.class;
     for (let i = 0; i < list.length; i++) {
-      var menu_id = list[i].id;
-      var menu_name = list[i].textContent;
+      var menu_id = list[i].type_id;
+      var menu_name = list[i].type_name;
       if (menu_id == t) {
         menu_type = menu_name.substring(menu_name.length - 1);
       }
     }
+
     // console.log(menu_type);
     switch (menu_type) {
       case '片':
@@ -338,9 +349,22 @@ function doCORSRequestMenu(options, printResult) {
         break;
     }
     let htmlString = '';
+    // for (let i = 0; i < list.length; i++) {
+    //   var menu_id = list[i].id;
+    //   var menu_name = list[i].textContent;
+    //   const cate = ['电影', '电视剧', '综艺', '动漫'];
+    //   var menu_active = ' style="border-radius: 5px; padding: 2px 2px;"';
+    //   if (!cate.includes(menu_name)) {
+    //     if (menu_name.substring(menu_name.length - 1) == menu_type) {
+    //       if (menu_id == t) { menu_active = 'style="background-color:#b0c4de;border-radius: 5px; padding: 2px 2px;"'; }
+    //       // menu_name = menu_name.replace("片","").replace("剧","").replace("综艺","").replace("动漫","");
+    //       htmlString += '<li class="menu_header"><a href="' + pagename + '?s=' + s + '&t=' + menu_id + '" ' + menu_active + '>' + menu_name + '</a></li>';
+    //     }
+    //   }
+    // }
     for (let i = 0; i < list.length; i++) {
-      var menu_id = list[i].id;
-      var menu_name = list[i].textContent;
+      var menu_id = list[i].type_id;
+      var menu_name = list[i].type_name;
       const cate = ['电影', '电视剧', '综艺', '动漫'];
       var menu_active = ' style="border-radius: 5px; padding: 2px 2px;"';
       if (!cate.includes(menu_name)) {
@@ -350,7 +374,7 @@ function doCORSRequestMenu(options, printResult) {
           htmlString += '<li class="menu_header"><a href="' + pagename + '?s=' + s + '&t=' + menu_id + '" ' + menu_active + '>' + menu_name + '</a></li>';
         }
       }
-    }
+    }    
     document.getElementById('myui-menu').innerHTML = htmlString;
   }
   x.send(options.data);
