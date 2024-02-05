@@ -1,5 +1,4 @@
 
-
 let pagename = window.location.pathname.split('/').slice(-1);
 var urlParams;
 (window.onpopstate = function () {
@@ -402,7 +401,7 @@ function doCORSRequest(options, printResult) {
     for (let file of data.list) {
       var m3u8 = file.vod_play_url.split('$')[1];
       var img = file.vod_pic;
-      if (s=='haiwaikan'){
+      if (s=='haiwaikan'||s=='tiankong'){
         img = cors_api_url + encodeURIComponent(img);
       }
       var title = file.vod_name;
@@ -479,7 +478,7 @@ function doCORSRequestById(options, printResult) {
     for (let file of data.list) {
       var m3u8 = file.vod_play_url.split('#')[0].split('$')[1];
       var img = file.vod_pic;
-      if (s=='haiwaikan'){
+      if (s=='haiwaikan'||s=='tiankong'){
         img = cors_api_url + encodeURIComponent(img);
       }
       var title = file.vod_name;
@@ -539,6 +538,9 @@ function doCORSRequestById(options, printResult) {
       htmlString += '<li class="col-lg-2 col-md-2 col-sm-2 col-xs-1">';
       htmlString += '<button class="btn btn-primary" type="button" style="font-size: 24px;margin:2px;">';
       if (player==''){ var imgstring = ''; } else {var imgstring = '&img='+img;}
+      if (s=='haiwaikan'||s=='tiankong'){
+        imgstring = '&img='+file.vod_pic;
+      }
       htmlString += '<a href="' + player + m3u8 + imgstring +'">播放</a></button>';
       htmlString += '<button class="btn btn-secondary" type="button" onclick="setCookieBySourceId(\'' + s + '\',\'' + id + '\');" id="favorites" '
       htmlString += 'style="font-size: 24px;margin:2px;">收藏</button><br><br>';
@@ -670,7 +672,7 @@ function doCORSSearch(options, printResult) {
     for (let file of data.list) {
       var m3u8 = file.vod_play_url.split('$')[1];
       var img = file.vod_pic;
-      if (s=='haiwaikan'){
+      if (s=='haiwaikan'||s=='tiankong'){
         img = cors_api_url + encodeURIComponent(img);
       }      
       var title = file.vod_name;
