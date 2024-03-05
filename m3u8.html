@@ -163,7 +163,7 @@
               htmlString += '<a class="myui-vodlist__thumb lazyload" href="' + newURL + '" ';
               htmlString += 'title="' + file.name + '" ';
               htmlString += 'data-original="' + file.path + '" ';
-              htmlString += 'style="background-image: url(' + imglink + '.jpg)">';
+              htmlString += 'style="background-image: url(' + encodeURI(piclink + '.jpg') + ')">';
               htmlString += '</a>';
               htmlString += '</div>';
               htmlString += '<div class="myui-vodlist__detail">';

@@ -16,7 +16,7 @@ var urlParams;
 
 if (urlParams["t"] == null) { var t = "6"; } else { var t = urlParams["t"]; }
 if (urlParams["pg"] == null) { var pg = "1"; } else { var pg = urlParams["pg"]; }
-if (urlParams["s"] == null) { var s = "bdzy"; } else { var s = urlParams["s"]; }
+if (urlParams["s"] == null) { var s = "xinlang"; } else { var s = urlParams["s"]; }
 
 document.getElementById('s').value = s;
 
@@ -45,7 +45,7 @@ switch (s) {
     document.getElementById('menu-animation').href = 'home.html?s=' + s + '&t=54';
     document.getElementById('menu-favorites').href = 'home.html?s=' + s + '&ids=favorites';
     document.getElementById('kuaikan').style = "background-color: #0d9156;"
-    break;    
+    break;
   case 'guangsu': // 光速资源
     // var menuAPI = 'https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/at/xml';
     var menuAPI = 'https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/at/json';
@@ -212,7 +212,7 @@ switch (s) {
     document.getElementById('menu-animation').href = 'home.html?s=' + s + '&t=26';
     document.getElementById('menu-favorites').href = 'home.html?s=' + s + '&ids=favorites';
     document.getElementById('subo').style = "background-color: #0d9156;"
-    break;    
+    break;
   case 'suoni': // 索尼資源
     // var menuAPI = 'https://suoniapi.com/api.php/provide/vod/from/snm3u8/at/xml';
     var menuAPI = 'https://suoniapi.com/api.php/provide/vod/from/snm3u8/at/json';
@@ -224,7 +224,7 @@ switch (s) {
     document.getElementById('menu-animation').href = 'home.html?s=' + s + '&t=31';
     document.getElementById('menu-favorites').href = 'home.html?s=' + s + '&ids=favorites';
     document.getElementById('suoni').style = "background-color: #0d9156;"
-    break;    
+    break;
   default:
     // var menuAPI = 'https://haiwaikan.com/api.php/provide/vod/at/xml';
     var menuAPI = 'https://haiwaikan.com/api.php/provide/vod/at/json';
@@ -378,7 +378,7 @@ function doCORSRequestMenu(options, printResult) {
           htmlString += '<li class="menu_header"><a href="' + pagename + '?s=' + s + '&t=' + menu_id + '" ' + menu_active + '>' + menu_name + '</a></li>';
         }
       }
-    }    
+    }
     document.getElementById('myui-menu').innerHTML = htmlString;
   }
   x.send(options.data);
@@ -401,7 +401,7 @@ function doCORSRequest(options, printResult) {
     for (let file of data.list) {
       var m3u8 = file.vod_play_url.split('$')[1];
       var img = file.vod_pic;
-      if (s=='haiwaikan'||s=='tiankong'){
+      if (s == 'haiwaikan' || s == 'tiankong') {
         img = cors_api_url + encodeURIComponent(img);
       }
       var title = file.vod_name;
@@ -478,7 +478,7 @@ function doCORSRequestById(options, printResult) {
     for (let file of data.list) {
       var m3u8 = file.vod_play_url.split('#')[0].split('$')[1];
       var img = file.vod_pic;
-      if (s=='haiwaikan'||s=='tiankong'){
+      if (s == 'haiwaikan' || s == 'tiankong') {
         img = cors_api_url + encodeURIComponent(img);
       }
       var title = file.vod_name;
@@ -499,7 +499,7 @@ function doCORSRequestById(options, printResult) {
       htmlString += '<a class="myui-vodlist__thumb lazyload" href="' + m3u8 + '" ';
       htmlString += 'title="' + title + '" ';
       htmlString += 'data-original="' + img + '" ';
-      htmlString += 'style="background-image: url(' + img +')">';
+      htmlString += 'style="background-image: url(' + img + ')">';
 
       htmlString += '<span class="play hidden-xs"></span>';
       htmlString += '<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">' + quality + '</span>';
@@ -537,11 +537,11 @@ function doCORSRequestById(options, printResult) {
       //  create playlists buttons
       htmlString += '<li class="col-lg-2 col-md-2 col-sm-2 col-xs-1">';
       htmlString += '<button class="btn btn-primary" type="button" style="font-size: 24px;margin:2px;">';
-      if (player==''){ var imgstring = ''; } else {var imgstring = '&img='+img;}
-      if (s=='haiwaikan'||s=='tiankong'){
-        imgstring = '&img='+file.vod_pic;
+      if (player == '') { var imgstring = ''; } else { var imgstring = '&img=' + img; }
+      if (s == 'haiwaikan' || s == 'tiankong') {
+        imgstring = '&img=' + file.vod_pic;
       }
-      htmlString += '<a href="' + player + m3u8 + imgstring +'">播放</a></button>';
+      htmlString += '<a href="' + player + m3u8 + imgstring + '">播放</a></button>';
       htmlString += '<button class="btn btn-secondary" type="button" onclick="setCookieBySourceId(\'' + s + '\',\'' + id + '\');" id="favorites" '
       htmlString += 'style="font-size: 24px;margin:2px;">收藏</button><br><br>';
 
@@ -553,7 +553,7 @@ function doCORSRequestById(options, printResult) {
           const p = pl.split('$');
           var pl_name = p[0];
           var pl_m3u8 = p[1];
-          htmlString += '<a href="'+ player + pl_m3u8 + imgstring + '">';
+          htmlString += '<a href="' + player + pl_m3u8 + imgstring + '">';
           htmlString += '<button class="btn btn-outline-primary" type="button" style="width:110px;margin:2px;font-size: 14px;">';
           htmlString += pl_name + '</button></a>';
         }
@@ -585,7 +585,7 @@ function doCORSSearch(options, printResult) {
     case 'kuaikan':
       var urlAPI = 'https://kuaikan-api.com/api.php/provide/vod/from/kuaikan/at/json?ac=detail';
       var source = '快看';
-      break;      
+      break;
     case 'guangsu':
       var urlAPI = 'https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/at/json?ac=detail';
       var source = '光速';
@@ -645,7 +645,7 @@ function doCORSSearch(options, printResult) {
     case 'suoni':
       var urlAPI = 'https://suoniapi.com/api.php/provide/vod/?ac=detail';
       var source = '索尼';
-      break;            
+      break;
 
     default:
       var urlAPI = 'https://haiwaikan.com/api.php/provide/vod/?ac=detail';
@@ -672,9 +672,9 @@ function doCORSSearch(options, printResult) {
     for (let file of data.list) {
       var m3u8 = file.vod_play_url.split('$')[1];
       var img = file.vod_pic;
-      if (s=='haiwaikan'||s=='tiankong'){
+      if (s == 'haiwaikan' || s == 'tiankong') {
         img = cors_api_url + encodeURIComponent(img);
-      }      
+      }
       var title = file.vod_name;
       var year = file.vod_year;
       var quality = file.vod_play_url.split('$')[0];
@@ -761,7 +761,7 @@ if (urlParams["ids"] == null) {
       // console.log(urlField);
       // var j = doCORSRequest({ method: 'GET', url: urlField, }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'haiwaikan' }, function printResult(result) { outputField.value = result; })
-      var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'kuaikan'}, function printResult(result) { outputField.value = result; })
+      var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'kuaikan' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'guangsu' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'xinlang' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: '1080zyku' }, function printResult(result) { outputField.value = result; })
@@ -773,7 +773,7 @@ if (urlParams["ids"] == null) {
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'kczy' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'jyzy' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'subo' }, function printResult(result) { outputField.value = result; })
-      var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'suoni'}, function printResult(result) { outputField.value = result; })
+      var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'suoni' }, function printResult(result) { outputField.value = result; })
     }
   } else {
     var id = urlParams["id"];
