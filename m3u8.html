@@ -129,15 +129,19 @@
         if (urlParams["path"] == '4gtv' || urlParams["path"] == 'litv') {
           file['year'] = fnAry[fnAry.length - 3];
         } else {
-          if (urlParams["path"] == 'imdb' || urlParams["path"] == 'netflix' || urlParams["path"] == 'ofiii') {
+          if (urlParams["path"] == 'imdb' || urlParams["path"] == 'netflix' || urlParams["path"] == 'ofiii' || urlParams["path"].includes('series/')) {
             file['year'] = fn.split('(')[1].split(')')[0];
           } else {
             file['year'] = 0;
           }
         }
       }
-      var sortedData = sortBy('year', data);
-      // console.log(sortedData);
+	  if (urlParams["path"].includes('series/')){
+		var sortedData = sortBy('year', data).reverse();
+	  } else {
+		var sortedData = sortBy('year', data);
+	  }
+      console.log(sortedData);
 
       let htmlString = '<ul>';
       let dirString = '';
