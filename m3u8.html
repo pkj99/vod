@@ -158,6 +158,7 @@
           var piclink = m3u8link.replace('m3u8/', 'images/').replace('.m3u8', '.jpg');
         }
         var imglink = encodeURI(piclink);
+        // var imglink = piclink;
         if (file.name != "index.html") {
           if (file.type == "dir") {
             // var newURL = window.location.protocol +  window.location.host + "/" + window.location.pathname + window.location.search + "/" + file.name;
@@ -169,7 +170,7 @@
               htmlString += '<a class="myui-vodlist__thumb lazyload" href="' + newURL + '" ';
               htmlString += 'title="' + file.name + '" ';
               htmlString += 'data-original="' + file.path + '" ';
-              htmlString += 'style="background-image: url(' + encodeURI(piclink + '.jpg') + ')">';
+              htmlString += 'style="background-image: url(' + "'" + encodeURI(piclink + '.jpg') + "'" + ')">';
               htmlString += '</a>';
               htmlString += '</div>';
               htmlString += '<div class="myui-vodlist__detail">';
@@ -212,7 +213,7 @@
             }
             htmlString += 'title="' + file.name + '" ';
             htmlString += 'data-original="' + file.path + '" ';
-            htmlString += 'style="background-image: url(' + imglink + ')">';
+            htmlString += 'style="background-image: url(' + "'" + imglink + "'" + ')">';
             htmlString += '<span class="pic-text text-left">' + source + '</span>';
             htmlString += '<span class="pic-text text-right">' + year + '</span>';
             htmlString += '</a>';
