@@ -136,11 +136,11 @@
           }
         }
       }
-	  if (urlParams["path"].includes('series/')){
-		var sortedData = sortBy('year', data).reverse();
-	  } else {
-		var sortedData = sortBy('year', data);
-	  }
+      if (urlParams["path"].includes('series/')) {
+        var sortedData = sortBy('year', data).reverse();
+      } else {
+        var sortedData = sortBy('year', data);
+      }
       console.log(sortedData);
 
       let htmlString = '<ul>';
