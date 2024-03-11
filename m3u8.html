@@ -126,10 +126,10 @@
       for (let file of data) {
         var fn = file.path;
         var fnAry = fn.split('.');
-        if (urlParams["path"] == '4gtv' || urlParams["path"] == 'litv') {
+        if (['4gtv', 'litv'].includes(urlParams["path"])) {
           file['year'] = fnAry[fnAry.length - 3];
         } else {
-          if (urlParams["path"] == 'imdb' || urlParams["path"] == 'netflix' || urlParams["path"] == 'ofiii' || urlParams["path"].includes('series/')) {
+          if (['imdb', 'netflix', 'ofiii'].includes(urlParams["path"]) || urlParams["path"].includes('series/')) {
             file['year'] = fn.split('(')[1].split(')')[0];
           } else {
             file['year'] = 0;
@@ -141,7 +141,7 @@
       } else {
         var sortedData = sortBy('year', data);
       }
-      console.log(sortedData);
+      // console.log(sortedData);
 
       let htmlString = '<ul>';
       let dirString = '';
@@ -151,9 +151,11 @@
         if (file.path.includes('iptv')) {
           var piclink = m3u8link.replace('m3u8/', 'images/').replace('.m3u8', '.png').replace(' (', '.').replace(').', '.');
         } else if (file.path.includes('4gtv') || file.path.includes('litv')) {
-          var piclink = m3u8link.replace('m3u8/', 'images/').replace('.m3u8', '.jpg').replace('(', '').replace(')', '');
+          // var piclink = m3u8link.replace('m3u8/', 'images/').replace('.m3u8', '.jpg').replace('(', '').replace(')', '');
+          var piclink = m3u8link.replace('m3u8/', 'images/').replace('.m3u8', '.jpg');
         } else {
-          var piclink = m3u8link.replace('m3u8/', 'images/').replace('.m3u8', '.jpg').replace(' (', '.').replace(').', '.');
+          // var piclink = m3u8link.replace('m3u8/', 'images/').replace('.m3u8', '.jpg').replace(' (', '.').replace(').', '.');
+          var piclink = m3u8link.replace('m3u8/', 'images/').replace('.m3u8', '.jpg');
         }
         var imglink = encodeURI(piclink);
         if (file.name != "index.html") {
@@ -179,6 +181,28 @@
             }
 
           } else {
+            if (['4gtv', 'litv'].includes(urlParams["path"])) {
+              var fnAry = file.name.split('.');
+              var title = fnAry[0];
+              var year = fnAry[fnAry.length - 3];
+              var source = urlParams["path"];
+            } else if (['imdb', 'netflix', 'ofiii', 'hits', 'marvel', 'dc'].includes(urlParams["path"])) {
+              var titleFullname = file.name.replace('.m3u8', '');
+              var title = titleFullname.split('(')[0];
+              var year = titleFullname.split('(')[1].split(')')[0];
+              var source = urlParams["path"];
+            } else if (urlParams["path"].includes('series/')) {
+              var titleFullname = file.name.replace('.m3u8', '');
+              var title = titleFullname.split('(')[0];
+              var year = titleFullname.split('(')[1].split(')')[0];
+              var source = 'series';
+            } else {
+              var titleFullname = file.name.replace('.m3u8', '');
+              var title = titleFullname;
+              var year = 'Live';
+              var source = urlParams["path"];
+            }
+
             htmlString += '<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">';
             htmlString += '<div class="myui-vodlist__box">';
             if (file.path.includes('iptv')) {
@@ -189,10 +213,12 @@
             htmlString += 'title="' + file.name + '" ';
             htmlString += 'data-original="' + file.path + '" ';
             htmlString += 'style="background-image: url(' + imglink + ')">';
+            htmlString += '<span class="pic-text text-left">' + source + '</span>';
+            htmlString += '<span class="pic-text text-right">' + year + '</span>';
             htmlString += '</a>';
             htmlString += '</div>';
             htmlString += '<div class="myui-vodlist__detail">';
-            htmlString += '<h4 class="title text-overflow"><a href="' + m3u8link + '">' + file.name.replace('.m3u8', '') + '</a></h4>';
+            htmlString += '<h4 class="title text-overflow"><a href="' + m3u8link + '">' + title + '</a></h4>';
             htmlString += '</div>';
             htmlString += '</li>';
           }
