@@ -45,7 +45,7 @@ function tvchannels2(groupName) {
             }
             if (channel == "1") {
                 var img = tvg_logo;
-                if (tvg_logo.includes('haiwaikan')) {
+                if (tvg_logo.includes('haiwaikan') || tvg_logo.includes('movieffm')) {
                     img = cors_api_url + encodeURIComponent(tvg_logo);
                 }
                 if (group_title == groupName || groupName == 'ALL') {
