@@ -44,8 +44,10 @@ function tvchannels2(groupName) {
                 }
             }
             if (channel == "1") {
-                // var img = cors_api_url + encodeURIComponent(tvg_logo);
                 var img = tvg_logo;
+                if (tvg_logo.includes('haiwaikan')) {
+                    img = cors_api_url + encodeURIComponent(tvg_logo);
+                }
                 if (group_title == groupName || groupName == 'ALL') {
                     htmlString += `<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
                     htmlString += `<div class="myui-vodlist__box">`;
@@ -83,6 +85,10 @@ function tvchannels2(groupName) {
     while (match = search.exec(query))
         urlParams[decode(match[1])] = decode(match[2]);
 })();
+
+if (urlParams["m3u"] == null) {
+    urlParams["m3u"] = "https://pkj99.github.io/demo/media/movie-hits.m3u";
+}
 
 if (urlParams["m3u"] != null) {
     m3u_url = urlParams["m3u"];
