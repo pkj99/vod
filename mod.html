@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>MOD</title>
@@ -34,76 +35,83 @@
     <script type="text/javascript" src="js/myjavascript.js"></script>
 
     <style>
-      .myui-vodlist__thumb {
-        background-size:contain!important;
-      }
+        .myui-vodlist__thumb {
+            background-size: contain !important;
+        }
     </style>
 
 </head>
 
 <body>
-  <header class="myui-header__top clearfix" id="header-top">
-    <div class="container" style="margin-bottom: 4px;">
-        <div class="row">
-            <div class="myui-header_bd clearfix">
-                <div class="myui-header__logo" style="padding-top: 15px;">
-                    <a class="" href="home.html">
-                        <img class="img-responsive hidden-xs" src="images/logo.png" style="width:80px" />
-                        <!-- <img class="img-responsive visible-xs" src="images/favicon.png"  style="width:30px;height:30px" /> -->
-                    </a>
+    <header class="myui-header__top clearfix" id="header-top">
+        <div class="container" style="margin-bottom: 4px;">
+            <div class="row">
+                <div class="myui-header_bd clearfix">
+                    <div class="myui-header__logo" style="padding-top: 15px;">
+                        <a class="" href="home.html">
+                            <img class="img-responsive hidden-xs" src="images/logo.png" style="width:80px" />
+                            <!-- <img class="img-responsive visible-xs" src="images/favicon.png"  style="width:30px;height:30px" /> -->
+                        </a>
+                    </div>
+
+                    <ul class="myui-header__menu" id="myui-menu">
+                        <li class="menu_header visible-xs"><a href="mod.html">Home</a></li>
+                        <li class="menu_header" id="hits"><a
+                                href="?m3u=https://pkj99.github.io/demo/media/movie-hits.m3u">熱播</a></li>
+                        <li class="menu_header" id="imdb"><a
+                                href="?m3u=https://pkj99.github.io/demo/media/movie-imdb.m3u">高分榜</a></li>
+                        <li class="menu_header" id="marvel"><a
+                                href="?m3u=https://pkj99.github.io/demo/media/movie-marvel.m3u">Marvel</a></li>
+                        <li class="menu_header" id="dc"><a
+                                href="?m3u=https://pkj99.github.io/demo/media/movie-dc.m3u">DC</a></li>
+                        <li class="menu_header" id="netflix"><a
+                                href="?m3u=https://pkj99.github.io/demo/media/movie-netflix.m3u">Netflix</a></li>
+                        <li class="menu_header" id="series"><a
+                                href="?m3u=https://pkj99.github.io/demo/media/movie-series.m3u">系列</a></li>
+                        <li class="menu_header" id="litv"><a
+                                href="?m3u=https://pkj99.github.io/demo/media/movie-litv.m3u">LiTV</a></li>
+                        <li class="menu_header" id="4gtv"><a
+                                href="?m3u=https://pkj99.github.io/demo/media/movie-4gtv.m3u">4gTV</a></li>
+                        <li class="menu_header" id="ofiii"><a
+                                href="?m3u=https://pkj99.github.io/demo/media/movie-ofiii.m3u">Ofiii</a></li>
+                        <li class="menu_header" id="random"><a
+                                href="?m3u=https://pkj99.github.io/demo/media/movie-random.m3u">隨意看</a></li>
+                    </ul>
                 </div>
 
-                <ul class="myui-header__menu" id="myui-menu">
-                    <li class="menu_header visible-xs"><a href="mod.html">Home</a></li>
-                    <li class="menu_header" id="hits"><a href="?m3u=https://pkj99.github.io/demo/media/movie-hits.m3u">熱播</a></li>
-                    <li class="menu_header" id="imdb"><a href="?m3u=https://pkj99.github.io/demo/media/movie-imdb.m3u">高分榜</a></li>
-                    <li class="menu_header" id="marvel"><a href="?m3u=https://pkj99.github.io/demo/media/movie-marvel.m3u">Marvel</a></li>
-                    <li class="menu_header" id="dc"><a href="?m3u=https://pkj99.github.io/demo/media/movie-dc.m3u">DC</a></li>
-                    <li class="menu_header" id="netflix"><a href="?m3u=https://pkj99.github.io/demo/media/movie-netflix.m3u">Netflix</a></li>
-                    <li class="menu_header" id="series"><a href="?m3u=https://pkj99.github.io/demo/media/movie-series.m3u">系列</a></li>
-                    <li class="menu_header" id="litv"><a href="?m3u=https://pkj99.github.io/demo/media/movie-litv.m3u">LiTV</a></li>
-                    <li class="menu_header" id="4gtv"><a href="?m3u=https://pkj99.github.io/demo/media/movie-4gtv.m3u">4gTV</a></li>
-                    <li class="menu_header" id="ofiii"><a href="?m3u=https://pkj99.github.io/demo/media/movie-ofiii.m3u">Ofiii</a></li>
-                    <li class="menu_header" id="random"><a href="?m3u=https://pkj99.github.io/demo/media/movie-random.m3u">隨意看</a></li>
-                  </ul>
             </div>
-
         </div>
-    </div>
-    </div>
-</header>
+        </div>
+    </header>
 
 
 
-  <div class="container">
-    <div class="row">
-        <div class="myui-panel myui-panel-bg clearfix">
-            <div class="myui-panel-box clearfix" id="tvlist">
-                <div class="text-center">
-                <img src="images/movie.png" style="width:200px; margin-top: 50px; margin-bottom: 50px;" />
+    <div class="container">
+        <div class="row">
+            <div class="myui-panel myui-panel-bg clearfix">
+                <div class="myui-panel-box clearfix" id="tvlist">
+                    <div class="text-center">
+                        <img src="images/movie.png" style="width:200px; margin-top: 50px; margin-bottom: 50px;" />
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
 
 
 
-  <div class="myui-foot clearfix">
-    <div class="container min">
-        <div class="row">
-            <div class="col-pd text-center masked">
-                <p class="margin-0">本站為程式開發測試之用，資料蒐集於網際網路，版權歸官方所有 Powered by PKJ Studio 2023</p>
+    <div class="myui-foot clearfix">
+        <div class="container min">
+            <div class="row">
+                <div class="col-pd text-center masked">
+                    <p class="margin-0">本站為程式開發測試之用，資料蒐集於網際網路，版權歸官方所有 Powered by PKJ Studio 2023</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script type="text/javascript" src='js/sql.js'></script>
-<script type="text/javascript" src="js/vod.js"></script>
+    <script type="text/javascript" src="js/mod.js"></script>
 
 </body>
+
 </html>
-
-
-
