@@ -2,7 +2,7 @@
 let pagename = window.location.pathname.split('/').slice(-1);
 var urlParams;
 var api_url = "https://pan.mailberry.com.cn/api/fs/get";
-var db_url = 'https://pkj99.github.io/vod/db/songs.db';
+var db_url = 'https://pkj99.github.io/vod/db/karaoke.db';
 
 function tvchannels2(groupName) {
     const xhr = new XMLHttpRequest();
@@ -110,8 +110,9 @@ function songlists(sqlstring) {
         }
 
         htmlString += '</ul>';
+        console.log(htmlString);
 
-        document.getElementById('tvlist').innerHTML = htmlString;
+        document.getElementById('myui-panel').innerHTML = htmlString;
 
     };
     xhr.send();
