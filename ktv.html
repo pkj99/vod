@@ -55,11 +55,22 @@
                     </div>
 
                     <ul class="myui-header__menu" id="myui-menu">
-                        <li class="menu_header visible-xs"><a href="ktv.html">Home</a></li>
-                        <li class="menu_header" id="male"><a href="?type=1">男歌星</a></li>
-                        <li class="menu_header" id="female"><a href="?type=2">女歌星</a></li>
-                        <li class="menu_header" id="group"><a href="?type=3">團體</a></li>
-                        <li class="menu_header" id="other"><a href="?type=10">其他</a></li>
+                        <li class="menu_header visible-xs"><a href="home.html">Home</a></li>
+                        <li class="menu_header" id="menu1"><a href="?type=1">男歌星</a></li>
+                        <li class="menu_header" id="menu2"><a href="?type=2">女歌星</a></li>
+                        <li class="menu_header" id="menu3"><a href="?type=3">團體</a></li>
+                        <li class="menu_header" id="menu10"><a href="?type=10">其他</a></li>
+                        <li class="">
+                            <div class="myui-header__search search-box">
+                                <form id="search" name="search" method="get" action="ktv.html">
+                                    <input type="text" id="wd" name="wd" class="search_wd form-control" value=""
+                                        placeholder="查詢" autocomplete="off" />
+                                    <!-- <input type="hidden" id="s" name="s" value="" /> -->
+                                    <button class="submit search_submit" id="searchbutton" type="submit"><i
+                                            class="fa fa-search"></i></button>
+                                </form>
+                                </div">
+                        </li>
                     </ul>
                 </div>
 
@@ -75,7 +86,7 @@
             <div class="myui-panel myui-panel-bg clearfix">
                 <div class="myui-panel-box clearfix" id="tvlist">
                     <div class="text-center">
-                        <img src="images/movie.png" style="width:200px; margin-top: 50px; margin-bottom: 50px;" />
+                        <img src="images/karaoke.png" style="width:300px; margin-top: 50px; margin-bottom: 50px;" />
                     </div>
                 </div>
             </div>

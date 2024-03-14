@@ -4,75 +4,6 @@ var urlParams;
 var api_url = "https://pan.mailberry.com.cn/api/fs/get";
 var db_url = 'https://pkj99.github.io/vod/db/karaoke.db';
 
-function tvchannels2(groupName) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', m3u_url);
-    xhr.onload = e => {
-
-        var contents = xhr.response;
-        var channel = "0";
-        var url_tvg, tvg_logo, tvg_name, group_title, title, url, info;
-        let htmlString = '';
-
-        var lines = contents.split(/[\r\n]/);
-        for (var i in lines) {
-            var line = lines[i];
-            if (/#EXTM3U/.test(line)) {
-                channel = "0";
-                if (/url-tvg/.test(line)) {
-                    var keyVal = line.split(/ /)[1], url_tvg = keyVal.split(/[=]/)[1].replaceAll('\"', '').trim();
-                }
-            } else {
-                if (/#EXTINF/.test(line)) {
-                    channel = "0";
-                    title = line.split(/,/)[1].replaceAll('\"', '').trim();
-                    info = line.split(/,/)[0];
-
-                    if (/tvg-logo/.test(info)) {
-                        var keyVal = info.split(/tvg-logo/)[1], val2 = keyVal.split(/ /)[0], tvg_logo = val2.split(/[=]/)[1].replaceAll('\"', '').trim();
-                    }
-                    if (/tvg-name/.test(info)) {
-                        var keyVal = info.split(/tvg-name/)[1], val2 = keyVal.split(/ /)[0], tvg_name = val2.split(/[=]/)[1].replaceAll('\"', '').trim();
-                    }
-                    if (/group-title/.test(info)) {
-                        var keyVal = info.split(/group-title/)[1], val2 = keyVal.split(/ /)[0], group_title = val2.split(/[=]/)[1].replaceAll('\"', '').trim();
-                    }
-                } else {
-                    if (line.trim() != '') {
-                        channel = "1";
-                        url = line.trim();
-                    }
-                }
-            }
-            if (channel == "1") {
-                var img = tvg_logo;
-                if (tvg_logo.includes('haiwaikan') || tvg_logo.includes('movieffm')) {
-                    img = cors_api_url + encodeURIComponent(tvg_logo);
-                }
-                if (group_title == groupName || groupName == 'ALL') {
-                    htmlString += `<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
-                    htmlString += `<div class="myui-vodlist__box">`;
-                    htmlString += `<a class="myui-vodlist__thumb lazyload" href="playvideo.html?url=${url}&img=${tvg_logo}" `;
-                    htmlString += `title="${title}" `;
-                    htmlString += `data-original="${url}" `;
-                    htmlString += `style="background-image: url('${img}')"`;
-                    htmlString += `</a>`;
-                    htmlString += `<span class="pic-text text-right">${group_title}</span>`;
-                    htmlString += `</div>`;
-                    htmlString += `<div class="myui-vodlist__detail">`;
-                    htmlString += `<h4 class="title text-overflow"><a href="${url}">${title}</a></h4>`;
-                    htmlString += `</div>`;
-                    htmlString += `</li>`;
-                }
-                channel = "0";
-            }
-        }
-        document.getElementById('tvlist').innerHTML = htmlString;
-    };
-    xhr.send();
-}
-
-
 // create song list 
 function songlists(sqlstring) {
     // console.log(sqlstring);
@@ -87,9 +18,25 @@ function songlists(sqlstring) {
         const contents = db.exec(sqlstring);
         var data = JSON.parse(JSON.stringify(contents));
 
-        let htmlString = '<ul>';
+        let htmlString = '';
 
         if (typeof data[0] == "undefined") { data = []; } else { data = data[0].values; }
+
+        // htmlString += `<ul><li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
+        htmlString += `<div class="myui-vodlist__box" style="width:200px">`;
+        htmlString += `<a class="myui-vodlist__thumb lazyload" href="?artist=${data[0][1]}" `;
+        htmlString += `title="${data[0][1]}" `;
+        htmlString += `data-original="${data[0][1]}" `;
+        htmlString += `style="background-image: url('${data[0][6]}');padding-top: 200px;"`;
+        htmlString += `</a>`;
+        htmlString += `<span class="pic-text text-right">${data[0][1]}</span>`;
+        htmlString += `</div>`;
+        // htmlString += `<div class="myui-vodlist__detail">`;
+        // htmlString += `<h4 class="title text-overflow"><a href="?artist=${data[0][1]}">${data[0][1]}</a></h4>`;
+        // htmlString += `</div>`;
+        // htmlString += `</li></ul><br>`;
+
+        htmlString += '<ul>';
 
         for (var i = 0; i < data.length; i++) {
             var pid = data[i][0];
@@ -147,13 +94,13 @@ function artistlists(sqlstring) {
             htmlString += `<a class="myui-vodlist__thumb lazyload" href="?artist=${artist_name}" `;
             htmlString += `title="${artist_name}" `;
             htmlString += `data-original="${artist_name}" `;
-            htmlString += `style="background-image: url('${artist_img}')"`;
+            htmlString += `style="background-image: url('${artist_img}');padding-top: 200px;"`;
             htmlString += `</a>`;
-            // htmlString += `<span class="pic-text text-right">${group_id}</span>`;
+            htmlString += `<span class="pic-text text-right">${artist_name}</span>`;
             htmlString += `</div>`;
-            htmlString += `<div class="myui-vodlist__detail">`;
-            htmlString += `<h4 class="title text-overflow"><a href="?artist=${artist_name}">${artist_name}</a></h4>`;
-            htmlString += `</div>`;
+            // htmlString += `<div class="myui-vodlist__detail">`;
+            // htmlString += `<h4 class="title text-overflow"><a href="?artist=${artist_name}">${artist_name}</a></h4>`;
+            // htmlString += `</div>`;
             htmlString += `</li>`;
         }
 
@@ -165,6 +112,61 @@ function artistlists(sqlstring) {
     };
     xhr.send();
 }
+
+
+// create search list 
+function searchlists(sqlstring) {
+    // console.log(sqlstring);
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', db_url, true);
+    xhr.responseType = 'arraybuffer';
+
+    xhr.onload = e => {
+        const uInt8Array = new Uint8Array(xhr.response);
+        const db = new SQL.Database(uInt8Array);
+
+        const contents = db.exec(sqlstring);
+        var data = JSON.parse(JSON.stringify(contents));
+
+        let htmlString = '<ul>';
+
+        if (typeof data[0] == "undefined") { data = []; } else { data = data[0].values; }
+
+        for (var i = 0; i < data.length; i++) {
+            var pid = data[i][0];
+            var artist = data[i][1];
+            var song = data[i][2];
+            var path = data[i][5];
+            var img = data[i][6];
+            if (img == null) {
+                img = 'images/karaoke.jpg';
+            }
+
+            htmlString += `<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
+            htmlString += `<div class="myui-vodlist__box">`;
+            htmlString += `<a class="myui-vodlist__thumb lazyload" href="?song=${path}" `;
+            htmlString += `title="${song}" `;
+            htmlString += `data-original="${path}" `;
+            htmlString += `style="background-image: url('${img}');padding-top: 200px;"`;
+            htmlString += `</a>`;
+            htmlString += `<span class="pic-text text-left">${artist}</span>`;
+            htmlString += `<span class="pic-text text-right">${song}</span>`;
+            htmlString += `</div>`;
+            // htmlString += `<div class="myui-vodlist__detail">`;
+            // htmlString += `<h4 class="title text-overflow"><a href="?artist=${artist_name}">${artist_name}</a></h4>`;
+            // htmlString += `</div>`;
+            htmlString += `</li>`;
+        }
+
+        htmlString += '</ul>';
+        // console.log(htmlString);
+
+        document.getElementById('tvlist').innerHTML = htmlString;
+
+    };
+    xhr.send();
+}
+
 
 // Example POST method implementation:
 async function postData(url = "", data = {}) {
@@ -199,10 +201,16 @@ async function postData(url = "", data = {}) {
 })();
 
 
-if (urlParams["t"] == null) { var t = "0"; } else { var t = urlParams["t"]; }
+if (urlParams["wd"] != null) {
+    var wd = urlParams["wd"];
+    var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.artist like '%" + wd + "%' or a.song like '%" + wd + "%'";
+    searchlists(sqlstring);
+}
+
+
 if (urlParams["artist"] != null) {
     var artist = urlParams["artist"];
-    var sqlstring = "select * from ktv where artist='" + artist + "'";
+    var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.artist='" + artist + "'";
     songlists(sqlstring);
 }
 
@@ -210,6 +218,8 @@ if (urlParams["type"] != null) {
     var type = urlParams["type"];
     var sqlstring = "select * from v_artists where group_id=" + type + "";
     artistlists(sqlstring);
+    let menuId = 'menu' + urlParams["type"];
+    document.getElementById(menuId).classList.add("active");
 }
 
 
@@ -227,7 +237,7 @@ if (urlParams["song"] != null) {
             ktv_url = `playvideo.html?url=${raw_url}&img=${thumb}`;
             // window.location.assign(ktv_url);
             // htmlString += `<video controls autoplay width="50%" poster="${thumb}" src="${raw_url}"></video>`;
-            htmlString += `<video controls autoplay width="100%" src="${raw_url}"></video>`;
+            htmlString += `<video controls autoplay width="100%"><source src="${raw_url}" type="video/mkv"></video>`;
             document.getElementById('tvlist').innerHTML = htmlString;
         }
     });
