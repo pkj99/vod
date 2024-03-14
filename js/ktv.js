@@ -110,7 +110,7 @@ function songlists(sqlstring) {
         }
 
         htmlString += '</ul>';
-        console.log(htmlString);
+        // console.log(htmlString);
 
         document.getElementById('tvlist').innerHTML = htmlString;
 
@@ -137,25 +137,28 @@ function artistlists(sqlstring) {
         if (typeof data[0] == "undefined") { data = []; } else { data = data[0].values; }
 
         for (var i = 0; i < data.length; i++) {
-            var pid = data[i][0];
-            var artist = data[i][1];
-            var song = data[i][2];
-            var path = data[i][5];
+            var artist_id = data[i][0];
+            var artist_name = data[i][1];
+            var artist_img = data[i][2];
+            var group_id = data[i][3];
 
-            htmlString += '<li class="col-lg-10 col-md-8 col-sm-5 col-xs-3">';
-            // htmlString += '<div class="myui-vodlist__box">';
-            // htmlString += '<a class="myui-vodlist__thumb lazyload" href="?song=' + path + '" ';
-            // htmlString += '</a>';
-            // htmlString += '</div>';
-
-            htmlString += '<div class="myui-vodlist__detail">';
-            htmlString += '<h4 class="title text-overflow"><a href="?song=' + path + '">' + song + '</a></h4>';
-            htmlString += '</div>';
-            htmlString += '</li>';
+            htmlString += `<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
+            htmlString += `<div class="myui-vodlist__box">`;
+            htmlString += `<a class="myui-vodlist__thumb lazyload" href="?artist=${artist_name}" `;
+            htmlString += `title="${artist_name}" `;
+            htmlString += `data-original="${artist_name}" `;
+            htmlString += `style="background-image: url('${artist_img}')"`;
+            htmlString += `</a>`;
+            // htmlString += `<span class="pic-text text-right">${group_id}</span>`;
+            htmlString += `</div>`;
+            htmlString += `<div class="myui-vodlist__detail">`;
+            htmlString += `<h4 class="title text-overflow"><a href="?artist=${artist_name}">${artist_name}</a></h4>`;
+            htmlString += `</div>`;
+            htmlString += `</li>`;
         }
 
         htmlString += '</ul>';
-        console.log(htmlString);
+        // console.log(htmlString);
 
         document.getElementById('tvlist').innerHTML = htmlString;
 
@@ -210,12 +213,6 @@ if (urlParams["type"] != null) {
 }
 
 
-
-
-// if (urlParams["song"] == null) {
-//     urlParams["song"] = '/onedrive/KTV/KTV歌库01(1000首)/4 IN LOVE-FALL IN LOVE[国语].mkv';
-// }
-
 var song_name = '';
 let htmlString = '';
 
@@ -230,7 +227,7 @@ if (urlParams["song"] != null) {
             ktv_url = `playvideo.html?url=${raw_url}&img=${thumb}`;
             // window.location.assign(ktv_url);
             // htmlString += `<video controls autoplay width="50%" poster="${thumb}" src="${raw_url}"></video>`;
-            htmlString += `<video controls autoplay width="50%" src="${raw_url}"></video>`;
+            htmlString += `<video controls autoplay width="100%" src="${raw_url}"></video>`;
             document.getElementById('tvlist').innerHTML = htmlString;
         }
     });
