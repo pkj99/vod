@@ -98,10 +98,10 @@ function songlists(sqlstring) {
             var path = data[i][5];
 
             htmlString += '<li class="col-lg-10 col-md-8 col-sm-5 col-xs-3">';
-            htmlString += '<div class="myui-vodlist__box">';
-            htmlString += '<a class="myui-vodlist__thumb lazyload" href="?song=' + path + '" ';
-            htmlString += '</a>';
-            htmlString += '</div>';
+            // htmlString += '<div class="myui-vodlist__box">';
+            // htmlString += '<a class="myui-vodlist__thumb lazyload" href="?song=' + path + '" ';
+            // htmlString += '</a>';
+            // htmlString += '</div>';
 
             htmlString += '<div class="myui-vodlist__detail">';
             htmlString += '<h4 class="title text-overflow"><a href="?song=' + path + '">' + song + '</a></h4>';
@@ -112,13 +112,56 @@ function songlists(sqlstring) {
         htmlString += '</ul>';
         console.log(htmlString);
 
-        document.getElementById('myui-panel').innerHTML = htmlString;
+        document.getElementById('tvlist').innerHTML = htmlString;
 
     };
     xhr.send();
 }
 
+// create song list 
+function artistlists(sqlstring) {
+    // console.log(sqlstring);
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', db_url, true);
+    xhr.responseType = 'arraybuffer';
 
+    xhr.onload = e => {
+        const uInt8Array = new Uint8Array(xhr.response);
+        const db = new SQL.Database(uInt8Array);
+
+        const contents = db.exec(sqlstring);
+        var data = JSON.parse(JSON.stringify(contents));
+
+        let htmlString = '<ul>';
+
+        if (typeof data[0] == "undefined") { data = []; } else { data = data[0].values; }
+
+        for (var i = 0; i < data.length; i++) {
+            var pid = data[i][0];
+            var artist = data[i][1];
+            var song = data[i][2];
+            var path = data[i][5];
+
+            htmlString += '<li class="col-lg-10 col-md-8 col-sm-5 col-xs-3">';
+            // htmlString += '<div class="myui-vodlist__box">';
+            // htmlString += '<a class="myui-vodlist__thumb lazyload" href="?song=' + path + '" ';
+            // htmlString += '</a>';
+            // htmlString += '</div>';
+
+            htmlString += '<div class="myui-vodlist__detail">';
+            htmlString += '<h4 class="title text-overflow"><a href="?song=' + path + '">' + song + '</a></h4>';
+            htmlString += '</div>';
+            htmlString += '</li>';
+        }
+
+        htmlString += '</ul>';
+        console.log(htmlString);
+
+        document.getElementById('tvlist').innerHTML = htmlString;
+
+    };
+    xhr.send();
+}
 
 // Example POST method implementation:
 async function postData(url = "", data = {}) {
@@ -156,11 +199,15 @@ async function postData(url = "", data = {}) {
 if (urlParams["t"] == null) { var t = "0"; } else { var t = urlParams["t"]; }
 if (urlParams["artist"] != null) {
     var artist = urlParams["artist"];
-    var sqlstring = "select * from ktv where artist=" + artist;
+    var sqlstring = "select * from ktv where artist='" + artist + "'";
     songlists(sqlstring);
 }
 
-
+if (urlParams["type"] != null) {
+    var type = urlParams["type"];
+    var sqlstring = "select * from v_atists where group_id=" + type + "";
+    artistlists(sqlstring);
+}
 
 
 
