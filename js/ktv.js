@@ -205,7 +205,7 @@ if (urlParams["artist"] != null) {
 
 if (urlParams["type"] != null) {
     var type = urlParams["type"];
-    var sqlstring = "select * from v_atists where group_id=" + type + "";
+    var sqlstring = "select * from v_artists where group_id=" + type + "";
     artistlists(sqlstring);
 }
 
