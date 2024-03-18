@@ -234,10 +234,29 @@ if (urlParams["song"] != null) {
         if (data['code'] == 200) {
             var raw_url = data['data']['raw_url'];
             var thumb = data['data']['thumb'];
-            ktv_url = `playvideo.html?url=${raw_url}&img=${thumb}`;
+            var sign = data['data']['sign'];
+            var vlc_url = encodeURI(raw_url);
+            // ktv_url = `playvideo.html?url=${raw_url}&img=${thumb}`;
+            // var ktv_url = `playvideo.html?url=https://pan.mailberry.com.cn/d${song_name}?sign=${sign}&img=${thumb}`;
             // window.location.assign(ktv_url);
+            htmlString += `<li class="col-lg-1 col-md-1 col-sm-1 col-xs-1">`;
+            htmlString += `<div class="myui-vodlist__box">`;
+            htmlString += `<a class="myui-vodlist__thumb lazyload" href="vlc://https://pan.mailberry.com.cn/d${song_name}?sign=${sign}"`;
+            htmlString += `title="${song_name}" `;
+            htmlString += `data-original="${song_name}" `;
+            htmlString += `style="background-image: url('images/vlc.webp');padding-top: 200px;"`;
+            htmlString += `</a>`;
+            // htmlString += `<span class="pic-text text-right">Open with VLC Player</span>`;
+            htmlString += `</div>`;
+            htmlString += `<div class="myui-vodlist__detail">`;
+            htmlString += `<h4 class="title text-overflow"><a href="vlc://https://pan.mailberry.com.cn/d${song_name}?sign=${sign}">Open with VLC Player</a></h4>`;
+            htmlString += `</div>`;
+
             // htmlString += `<video controls autoplay width="50%" poster="${thumb}" src="${raw_url}"></video>`;
-            htmlString += `<video controls autoplay width="100%"><source src="${raw_url}" type="video/mkv"></video>`;
+            // htmlString += `<a href='vlc://${vlc_url}'><img src="images/vlc.webp" width="100px">KTV</a>`;
+            // htmlString += `<a href='vlc://https://pan.mailberry.com.cn/d${song_name}?sign=${sign}'><img src="images/vlc.webp" width="100px">Open with VLC Player</a>`;
+            // htmlString += `<video controls autoplay width="100%"><source src="${raw_url}" type="video/mkv"></video>`;
+            htmlString += `</li>`;
             document.getElementById('tvlist').innerHTML = htmlString;
         }
     });
