@@ -249,15 +249,24 @@ if (urlParams["song"] != null) {
             // htmlString += `<span class="pic-text text-right">Open with VLC Player</span>`;
             htmlString += `</div>`;
             htmlString += `<div class="myui-vodlist__detail">`;
-            htmlString += `<h4 class="title text-overflow"><a href="vlc://https://pan.mailberry.com.cn/d${song_name}?sign=${sign}">Open with VLC Player</a></h4>`;
+            htmlString += `<h4 class="title text-overflow text-center"><a href="vlc://https://pan.mailberry.com.cn/d${song_name}?sign=${sign}">Open with VLC Player</a></h4>`;
             htmlString += `</div>`;
 
             // htmlString += `<video controls autoplay width="50%" poster="${thumb}" src="${raw_url}"></video>`;
             // htmlString += `<a href='vlc://${vlc_url}'><img src="images/vlc.webp" width="100px">KTV</a>`;
             // htmlString += `<a href='vlc://https://pan.mailberry.com.cn/d${song_name}?sign=${sign}'><img src="images/vlc.webp" width="100px">Open with VLC Player</a>`;
             // htmlString += `<video controls autoplay width="100%"><source src="${raw_url}" type="video/mkv"></video>`;
+
+
+            htmlString += `<div class="text-center"><br><b>How to enable vlc protocol</b><br><br>Put the files from the bat directory in your VLC directory (usually C:\\Program Files`
+            htmlString += `(x86)\\VideoLAN\\VLC), <br>and then run vlc-protocol-register.bat as administrator (right-click the file and use Run as administrator).`
+            htmlString += `<br><br>You can download the repository here. <br><a href='https://github.com/stefansundin/vlc-protocol/tree/main/windows/bat'>`
+            htmlString += `https://github.com/stefansundin/vlc-protocol/tree/main/windows/bat</a><br><br></div>`
+
+
             htmlString += `</li>`;
             document.getElementById('tvlist').innerHTML = htmlString;
+            window.open(`vlc://https://pan.mailberry.com.cn/d${song_name}?sign=${sign}`);
         }
     });
 
