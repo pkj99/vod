@@ -38,7 +38,13 @@
         .myui-vodlist__thumb {
             background-size: contain !important;
         }
+        .artplayer-app {
+            width: 400px;
+            height: 300px;
+        }
     </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
 
 </head>
 
@@ -84,6 +90,8 @@
     <div class="container">
         <div class="row">
             <div class="myui-panel myui-panel-bg clearfix">
+                <div class="artplayer-app" id="artplayer" style="display: none; margin-left: auto; margin-right: auto;"></div>
+
                 <div class="myui-panel-box clearfix" id="tvlist">
                     <div class="text-center">
                         <img src="images/karaoke.png" style="width:300px; margin-top: 50px; margin-bottom: 50px;" />
@@ -92,7 +100,6 @@
             </div>
         </div>
     </div>
-
 
 
     <div class="myui-foot clearfix">
