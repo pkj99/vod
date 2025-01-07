@@ -263,7 +263,7 @@ if (urlParams["song"] != null) {
                 autoMini: true,
                 screenshot: true,
                 setting: true,
-                loop: true,
+                loop: false,
                 flip: true,
                 playbackRate: true,
                 aspectRatio: true,
@@ -279,11 +279,12 @@ if (urlParams["song"] != null) {
                 theme: '#23ade5'
             });
 
-            var vlc_url = encodeURI(raw_url);
+            var vlc_url = raw_url;
+            // var vlc_url = encodeURI(raw_url);
             var ktv_url = `https://pan.mailberry.com.cn/d${song_name}?sign=${sign}`;
             // ktv_url = `playvideo.html?url=${raw_url}&img=${thumb}`;
             // var ktv_url = `playvideo.html?url=https://pan.mailberry.com.cn/d${song_name}?sign=${sign}&img=${thumb}`;
-            // window.location.assign(ktv_url);
+
             htmlString += `<li class="col-lg-1 col-md-1 col-sm-1 col-xs-1">`;
 
             // htmlString += `<div class="myui-vodlist__box">`;
@@ -294,9 +295,8 @@ if (urlParams["song"] != null) {
             // htmlString += `</a>`;
             // htmlString += `</div>`;
 
-
             htmlString += `<div class="myui-vodlist__detail">`;
-            // htmlString += `<h4 class="title text-overflow text-center"><a href="vlc://https://pan.mailberry.com.cn/d${song_name}?sign=${sign}">Open with VLC Player</a></h4>`;
+            htmlString += `<h4 class="title text-overflow text-center"><a href="vlc://${ktv_url}">Open with VLC Player</a></h4>`;
             htmlString += `<h4 class="title text-overflow text-center"><a href="vlc://${vlc_url}">使用VLC開啟</a> | `;
             htmlString += `<a onclick='navigator.clipboard.writeText("${ktv_url}"); showMessage("複製完成");' style="cursor: pointer;">複製連結</a> | `;
             htmlString += `<a href="${raw_url}" style="cursor: pointer;">下載影片</a> | `;
@@ -305,7 +305,7 @@ if (urlParams["song"] != null) {
             // htmlString += `<video controls autoplay width="50%" poster="${thumb}" src="${raw_url}"></video>`;
             // htmlString += `<a href='vlc://${vlc_url}'><img src="images/vlc.webp" width="100px">KTV</a>`;
             // htmlString += `<a href='vlc://https://pan.mailberry.com.cn/d${song_name}?sign=${sign}'><img src="images/vlc.webp" width="100px">Open with VLC Player</a>`;
-            // htmlString += `<div style="width:400px;margin-left: auto; margin-right: auto;"><video controls autoplay width="100%"><source src="${raw_url}" type="video/mp4"></video></div>`;
+            htmlString += `<div style="width:400px;margin-left: auto; margin-right: auto;"><video controls autoplay width="100%"><source src="${raw_url}" type="video/mp4"></video></div>`;
 
 
             // htmlString += `<div class="text-center"><br><b>How to enable vlc protocol</b><br><br>Put the files from the bat directory in your VLC directory (usually C:\\Program Files`
