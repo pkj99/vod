@@ -16,7 +16,7 @@ var urlParams;
 
 if (urlParams["t"] == null) { var t = "6"; } else { var t = urlParams["t"]; }
 if (urlParams["pg"] == null) { var pg = "1"; } else { var pg = urlParams["pg"]; }
-if (urlParams["s"] == null) { var s = "xinlang"; } else { var s = urlParams["s"]; }
+if (urlParams["s"] == null) { var s = "1080zyku"; } else { var s = urlParams["s"]; }
 
 document.getElementById('s').value = s;
 
@@ -648,8 +648,8 @@ function doCORSSearch(options, printResult) {
       break;
 
     default:
-      var urlAPI = 'https://haiwaikan.com/api.php/provide/vod/?ac=detail';
-      var source = '海外看';
+      var urlAPI = 'https://api.1080zyku.com/inc/apijson.php?ac=detail';
+      var source = '高清';
       break;
   }
 
@@ -666,47 +666,49 @@ function doCORSSearch(options, printResult) {
 
     page = data.page;
     pagecount = data.pagecount;
+    total = data.total;
 
     let htmlString = '<ul>';
 
-    for (let file of data.list) {
-      var m3u8 = file.vod_play_url.split('$')[1];
-      var img = file.vod_pic;
-      if (s == 'haiwaikan' || s == 'tiankong') {
-        img = cors_api_url + encodeURIComponent(img);
+    if (total < 5) {
+      for (let file of data.list) {
+        var m3u8 = file.vod_play_url.split('$')[1];
+        var img = file.vod_pic;
+        if (s == 'haiwaikan' || s == 'tiankong') {
+          img = cors_api_url + encodeURIComponent(img);
+        }
+        var title = file.vod_name;
+        var year = file.vod_year;
+        var quality = file.vod_play_url.split('$')[0];
+        var type_name = file.type_name;
+        var id = file.vod_id;
+        var remarks = file.vod_remarks;
+        var state = file.vod_state;
+
+        htmlString += '<li class="col-lg-10 col-md-8 col-sm-5 col-xs-3">';
+        htmlString += '<div class="myui-vodlist__box">';
+        htmlString += '<a class="myui-vodlist__thumb lazyload" href="' + pagename + '?s=' + s + '&t=' + t + '&id=' + id + '" ';
+        htmlString += 'title="' + title + '" ';
+        htmlString += 'data-original="' + img + '" ';
+        htmlString += 'style="background-image: url(' + img + ')"';
+
+        htmlString += '<span class="play hidden-xs"></span>';
+        if (quality != '1') {
+          htmlString += '<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">' + quality + '</span>';
+        }
+        // htmlString += '<span class="pic-tag pic-tag-right">' + remarks + '</span>';
+        htmlString += '<span class="pic-tag pic-tag-right">' + source + '</span>';
+        htmlString += '<span class="pic-text text-right">' + year + '</span>';
+        htmlString += '<span class="pic-text text-left">' + type_name + '</span>';
+
+        htmlString += '</a>';
+        htmlString += '</div>';
+        htmlString += '<div class="myui-vodlist__detail">';
+        htmlString += '<h4 class="title text-overflow"><a href="' + m3u8 + '">' + title + '</a></h4>';
+        htmlString += '</div>';
+        htmlString += '</li>';
       }
-      var title = file.vod_name;
-      var year = file.vod_year;
-      var quality = file.vod_play_url.split('$')[0];
-      var type_name = file.type_name;
-      var id = file.vod_id;
-      var remarks = file.vod_remarks;
-      var state = file.vod_state;
-
-      htmlString += '<li class="col-lg-10 col-md-8 col-sm-5 col-xs-3">';
-      htmlString += '<div class="myui-vodlist__box">';
-      htmlString += '<a class="myui-vodlist__thumb lazyload" href="' + pagename + '?s=' + s + '&t=' + t + '&id=' + id + '" ';
-      htmlString += 'title="' + title + '" ';
-      htmlString += 'data-original="' + img + '" ';
-      htmlString += 'style="background-image: url(' + img + ')"';
-
-      htmlString += '<span class="play hidden-xs"></span>';
-      if (quality != '1') {
-        htmlString += '<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">' + quality + '</span>';
-      }
-      // htmlString += '<span class="pic-tag pic-tag-right">' + remarks + '</span>';
-      htmlString += '<span class="pic-tag pic-tag-right">' + source + '</span>';
-      htmlString += '<span class="pic-text text-right">' + year + '</span>';
-      htmlString += '<span class="pic-text text-left">' + type_name + '</span>';
-
-      htmlString += '</a>';
-      htmlString += '</div>';
-      htmlString += '<div class="myui-vodlist__detail">';
-      htmlString += '<h4 class="title text-overflow"><a href="' + m3u8 + '">' + title + '</a></h4>';
-      htmlString += '</div>';
-      htmlString += '</li>';
     }
-
     htmlString += '</ul>';
 
     document.getElementById('myui-panel').innerHTML += htmlString;
@@ -760,17 +762,17 @@ if (urlParams["ids"] == null) {
       var urlField = urlAPI + '&wd=' + keyword;
       // console.log(urlField);
       // var j = doCORSRequest({ method: 'GET', url: urlField, }, function printResult(result) { outputField.value = result; })
-      var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'haiwaikan' }, function printResult(result) { outputField.value = result; })
-      var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'kuaikan' }, function printResult(result) { outputField.value = result; })
+      // var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'haiwaikan' }, function printResult(result) { outputField.value = result; })
+      // var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'kuaikan' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'guangsu' }, function printResult(result) { outputField.value = result; })
       // var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'xinlang' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: '1080zyku' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'hongniuzy2' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'lzi' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'ikun' }, function printResult(result) { outputField.value = result; })
-      var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'sdzy' }, function printResult(result) { outputField.value = result; })
+      // var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'sdzy' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'tianyi' }, function printResult(result) { outputField.value = result; })
-      var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'kczy' }, function printResult(result) { outputField.value = result; })
+      // var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'kczy' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'jyzy' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'subo' }, function printResult(result) { outputField.value = result; })
       // var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'suoni' }, function printResult(result) { outputField.value = result; })
