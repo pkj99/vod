@@ -218,11 +218,13 @@ if (urlParams["wd"] != null) {
     var wd = urlParams["wd"];
     var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.artist like '%" + wd + "%' or a.song like '%" + wd + "%'";
     searchlists(sqlstring);
+    document.getElementById('wd').value = wd;
 }
 
 if (urlParams["myktv"] != null) {
     var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.favorite = 1 order by random()";
     searchlists(sqlstring);
+    document.getElementById('menu4').classList.add("active");
 }
 
 
