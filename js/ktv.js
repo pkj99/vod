@@ -138,8 +138,8 @@ function searchlists(sqlstring) {
             var song = data[i][2];
             var path = data[i][6];
             var img = data[i][8];
-            if (img == null) { img = data[i][9]; }
-            if (img == null) { img = 'images/karaoke.jpg'; }
+            if (img == null || img == '') { img = data[i][9]; }
+            if (img == null || img == '') { img = 'images/karaoke.jpg'; }
 
             htmlString += `<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
             htmlString += `<div class="myui-vodlist__box">`;
@@ -221,7 +221,7 @@ if (urlParams["wd"] != null) {
 }
 
 if (urlParams["myktv"] != null) {
-    var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.favorite = 1";
+    var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.favorite = 1 order by random()";
     searchlists(sqlstring);
 }
 
