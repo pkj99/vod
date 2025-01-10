@@ -136,11 +136,10 @@ function searchlists(sqlstring) {
             var pid = data[i][0];
             var artist = data[i][1];
             var song = data[i][2];
-            var path = data[i][5];
-            var img = data[i][6];
-            if (img == null) {
-                img = 'images/karaoke.jpg';
-            }
+            var path = data[i][6];
+            var img = data[i][8];
+            if (img == null) { img = data[i][9]; }
+            if (img == null) { img = 'images/karaoke.jpg'; }
 
             htmlString += `<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
             htmlString += `<div class="myui-vodlist__box">`;
@@ -221,6 +220,11 @@ if (urlParams["wd"] != null) {
     searchlists(sqlstring);
 }
 
+if (urlParams["myktv"] != null) {
+    var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.favorite = 1";
+    searchlists(sqlstring);
+}
+
 
 if (urlParams["artist"] != null) {
     var artist = urlParams["artist"];
@@ -235,7 +239,6 @@ if (urlParams["type"] != null) {
     let menuId = 'menu' + urlParams["type"];
     document.getElementById(menuId).classList.add("active");
 }
-
 
 var song_name = '';
 let htmlString = '';
