@@ -45,13 +45,17 @@ function tvchannels2(groupName) {
             }
             if (channel == "1") {
                 var img = tvg_logo;
-                if (tvg_logo.includes('haiwaikan') || tvg_logo.includes('movieffm')) {
+                if (tvg_logo.includes('movieffm')) {
                     img = cors_api_url + encodeURIComponent(tvg_logo);
                 }
                 if (group_title == groupName || groupName == 'ALL') {
                     htmlString += `<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
                     htmlString += `<div class="myui-vodlist__box">`;
-                    htmlString += `<a class="myui-vodlist__thumb lazyload" href="playvideo.html?url=${url}&img=${tvg_logo}" `;
+                    if (m3u_url.includes('4kvm')){
+                        htmlString += `<a class="myui-vodlist__thumb lazyload" href="${url}" `;
+                    } else {
+                        htmlString += `<a class="myui-vodlist__thumb lazyload" href="playvideo.html?url=${url}&img=${tvg_logo}" `;
+                    }
                     htmlString += `title="${title}" `;
                     htmlString += `data-original="${url}" `;
                     htmlString += `style="background-image: url('${img}')"`;
