@@ -3,6 +3,22 @@ let pagename = window.location.pathname.split('/').slice(-1);
 var urlParams;
 var cors_api_url = 'https://api.allorigins.win/raw?url=';
 
+function get4kvmM3u8(url) {
+    var Url = '';
+    fetch(cors_api_url + encodeURIComponent(url))
+    .then(response => {
+        if (response.ok) return response.text()
+        throw new Error('Network response was not ok.')
+    })
+    .then(data => {
+		var Url = data.split("container: '#artplayer-app',")[1].split(',')[0].trim().split("url:'")[1].split("'")[0];
+        // location.href = Url;
+        // location.href = 'playvideo.html?url='+Url;
+        return Url;
+    });
+}
+
+
 function tvchannels2(groupName) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', m3u_url);
@@ -52,7 +68,10 @@ function tvchannels2(groupName) {
                     htmlString += `<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
                     htmlString += `<div class="myui-vodlist__box">`;
                     if (m3u_url.includes('4kvm')){
-                        htmlString += `<a class="myui-vodlist__thumb lazyload" href="${url}" `;
+                        // var id = url.replace('https://www.4kvm.net/artplayer?mvsource=0&type=hls&id=','');
+                        var id = url.split('id=')[1];
+                        // htmlString += `<a class="myui-vodlist__thumb lazyload" href="${url}" `;
+                        htmlString += `<a class="myui-vodlist__thumb lazyload" href="4kvm.html?id=${id}" `;
                     } else {
                         htmlString += `<a class="myui-vodlist__thumb lazyload" href="playvideo.html?url=${url}&img=${tvg_logo}" `;
                     }
