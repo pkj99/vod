@@ -16,7 +16,7 @@ var urlParams;
 
 if (urlParams["t"] == null) { var t = "6"; } else { var t = urlParams["t"]; }
 if (urlParams["pg"] == null) { var pg = "1"; } else { var pg = urlParams["pg"]; }
-if (urlParams["s"] == null) { var s = "1080zyku"; } else { var s = urlParams["s"]; }
+if (urlParams["s"] == null) { var s = "guangsu"; } else { var s = urlParams["s"]; }
 
 document.getElementById('s').value = s;
 
