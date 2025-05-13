@@ -27,7 +27,7 @@ function songlists(sqlstring) {
         htmlString += `<a class="myui-vodlist__thumb lazyload" href="?artist=${data[0][1]}" `;
         htmlString += `title="${data[0][1]}" `;
         htmlString += `data-original="${data[0][1]}" `;
-        htmlString += `style="background-image: url('${data[0][6]}');padding-top: 200px;"`;
+        htmlString += `style="background-image: url('${data[0][9]}');padding-top: 200px;"`;
         htmlString += `</a>`;
         htmlString += `<span class="pic-text text-right">${data[0][1]}</span>`;
         htmlString += `</div>`;
