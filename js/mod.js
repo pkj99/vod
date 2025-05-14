@@ -60,7 +60,7 @@ function tvchannels2(groupName) {
                 }
             }
             if (channel == "1") {
-                var img = tvg_logo;
+                var img = encodeURIComponent(tvg_logo);
                 if (tvg_logo.includes('movieffm')) {
                     img = cors_api_url + encodeURIComponent(tvg_logo);
                 }
@@ -73,7 +73,7 @@ function tvchannels2(groupName) {
                         // htmlString += `<a class="myui-vodlist__thumb lazyload" href="${url}" `;
                         htmlString += `<a class="myui-vodlist__thumb lazyload" href="4kvm.html?id=${id}" `;
                     } else {
-                        htmlString += `<a class="myui-vodlist__thumb lazyload" href="playvideo.html?url=${url}&img=${tvg_logo}" `;
+                        htmlString += `<a class="myui-vodlist__thumb lazyload" href="playvideo.html?url=${url}&img=${img}" `;
                     }
                     htmlString += `title="${title}" `;
                     htmlString += `data-original="${url}" `;
