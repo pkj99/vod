@@ -42,18 +42,38 @@ function songlists(sqlstring) {
             var pid = data[i][0];
             var artist = data[i][1];
             var song = data[i][2];
-            var path = data[i][5];
+            var path = data[i][6];
+            var img = data[i][8];
+            // if (img == null || img == '') { img = data[i][9]; }
+            if (img == null || img == '') { img = 'images/karaoke.jpg'; }
 
-            htmlString += '<li class="col-lg-10 col-md-8 col-sm-5 col-xs-3">';
-            // htmlString += '<div class="myui-vodlist__box">';
-            // htmlString += '<a class="myui-vodlist__thumb lazyload" href="?song=' + path + '" ';
-            // htmlString += '</a>';
+            htmlString += `<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
+            htmlString += `<div class="myui-vodlist__box">`;
+            htmlString += `<a class="myui-vodlist__thumb lazyload" href="?song=${path}" `;
+            htmlString += `title="${song}" `;
+            htmlString += `data-original="${path}" `;
+            htmlString += `style="background-image: url('${img}');padding-top: 200px;"`;
+            htmlString += `</a>`;
+            htmlString += `<span class="pic-text text-left">${artist}</span>`;
+            htmlString += `<span class="pic-text text-right">${song}</span>`;
+            htmlString += `</div>`;
+            // htmlString += `<div class="myui-vodlist__detail">`;
+            // htmlString += `<h4 class="title text-overflow"><a href="?artist=${artist_name}">${artist_name}</a></h4>`;
+            // htmlString += `</div>`;
+            htmlString += `</li>`;
+
+
+
+            // htmlString += '<li class="col-lg-10 col-md-8 col-sm-5 col-xs-3">';
+            // // htmlString += '<div class="myui-vodlist__box">';
+            // // htmlString += '<a class="myui-vodlist__thumb lazyload" href="?song=' + path + '" ';
+            // // htmlString += '</a>';
+            // // htmlString += '</div>';
+
+            // htmlString += '<div class="myui-vodlist__detail">';
+            // htmlString += '<h4 class="title text-overflow"><a href="?song=' + path + '">' + song + '</a></h4>';
             // htmlString += '</div>';
-
-            htmlString += '<div class="myui-vodlist__detail">';
-            htmlString += '<h4 class="title text-overflow"><a href="?song=' + path + '">' + song + '</a></h4>';
-            htmlString += '</div>';
-            htmlString += '</li>';
+            // htmlString += '</li>';
         }
 
         htmlString += '</ul>';
@@ -216,7 +236,7 @@ async function showMessage(message) {
 
 if (urlParams["wd"] != null) {
     var wd = urlParams["wd"];
-    var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.artist like '%" + wd + "%' or a.song like '%" + wd + "%'";
+    var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.lang <> '粵語' and a.artist like '%" + wd + "%' or a.song like '%" + wd + "%'";
     searchlists(sqlstring);
     document.getElementById('wd').value = wd;
 }
@@ -230,7 +250,7 @@ if (urlParams["myktv"] != null) {
 
 if (urlParams["artist"] != null) {
     var artist = urlParams["artist"];
-    var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.artist='" + artist + "'";
+    var sqlstring = "select a.*,b.artist_img from ktv a left outer join artists b on a.artist = b.artist_name where a.lang <> '粵語' and a.artist='" + artist + "'";
     songlists(sqlstring);
 }
 
