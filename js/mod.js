@@ -60,7 +60,7 @@ function tvchannels2(groupName) {
                 }
             }
             if (channel == "1") {
-                var img = encodeURIComponent(tvg_logo);
+                var img = tvg_logo;
                 if (tvg_logo.includes('movieffm')) {
                     img = cors_api_url + encodeURIComponent(tvg_logo);
                 }
