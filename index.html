@@ -1,155 +1,160 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Password Protected</title>
+<!doctype html>
+<html>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Movie API</title>
+    <meta name="keywords" content="movie, tv, radio" />
+    <meta name="bookmark-image" content="images/logo.png" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" href="images/movie.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="images/icons8-cinema-94.png" />
+
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app"> -->
+
+    <link rel="stylesheet" href="css/mytheme-font.css" type="text/css" />
+    <link rel="stylesheet" href="css/mytheme-ui.css" type="text/css" />
+    <link rel="stylesheet" href="css/mytheme-site.css" type="text/css" />
+    <link rel="stylesheet" href="css/mytheme-share.css" type="text/css" />
+    <link rel="stylesheet" href="css/mytheme-color.css" type="text/css" name="default" />
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="css/mystyle.css" type="text/css" />
+    <script type="text/javascript" src="js/myjavascript.js"></script>
 
     <style>
-        *,
-        *:after,
-        *:before {
-            box-sizing: border-box;
-        }
-        body,
-        html {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-            font-weight: 300;
-            font-size: 16px;
-            background: #f2f2f2;
-            color: #2D3737;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100%;
+        .sourceButton {
+            font-size: 14px;
+            width: 60px;
+            height: 40px;
         }
 
-        .protected {
-            background: #fff;
-            -webkit-box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
-            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
-            border-radius: 3px;
-            min-width: 300px;
-
-        }
-        .protected__content {
-            padding: 24px 28px;
-        }
-        .protected__content__heading {
-            font-size: 16px;
-            font-weight: 500;
-            margin: 0 0 12px;
-            line-height: 1;
-        }
-        .protected__alert {
-            display: none;
-            border-bottom: 1px solid transparent;
-            border-radius: 3px 3px 0 0;
-            padding: 12px 14px;
-            color: #a94442;
-            background-color: #f2dede;
-            border-color: #ebccd1;
-        }
-        .protected__content__input {
-            display: block;
-            border: solid 1px #ccc;
-            padding: 12px 14px;
-            -webkit-box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
-            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
-            font-size: 16px;
-            width: 100%;
-            border-radius: 3px;
-
-            margin-bottom: 12px;
-        }
-        .protected__content__input:focus {
-            outline: none;
-            border-color: #228843;
-        }
-        .protected__content__btn {
-            background-color: #228843;
-            border-radius: 3px;
-            cursor: pointer;
-            border: none;
-            color: #fff;
-            padding: 12px 14px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-            font-weight: 500;
-            font-size: 16px;
-
-        }
-        .protected__content__btn:hover {
-            background-color: #1C6D36;
+        .sourceButton:focus {
+            background-color: blueviolet;
         }
 
+        .sourceButton:active {
+            background-color: rgb(46, 43, 226);
+        }
     </style>
 
 </head>
 
-<script>
-    // bypass authentication for test
-    // sessionStorage.setItem('loginStatus','success');
-    // Session["loginStatus"] = 'success';
-    // window.location = 'home.html';
-    var loginStatus = sessionStorage.getItem('loginStatus');
-    if (loginStatus == 'success') { window.location = 'home.html'}
-</script>
-
 <body>
 
-    <div class="protected">
-        <div class="protected__alert" data-id="alert">You entered the wrong password</div>
-        <div class="protected__content">
-            <h1 class="protected__content__heading">You need a password to continue</h1>
-            <input class="protected__content__input" data-id="password" type="password" placeholder="password"/>
-            <button data-id="button" type="button" class="protected__content__btn">Continue</button>
+    <header class="myui-header__top clearfix" id="header-top">
+        <div class="container" style="margin-bottom: 4px;">
+            <div class="row">
+                <div class="myui-header_bd clearfix">
+                    <div class="myui-header__logo" style="padding-top: 5px;">
+                        <a class="" href="index.html">
+                            <img class="img-responsive hidden-xs" src="images/logo.png"
+                                style="width:100px;height:50px" />
+                            <!-- <img class="img-responsive visible-xs" src="images/movie.ico" style="width:40px;height:40px" /> -->
+                        </a>
+                    </div>
+                    <ul class="myui-header__menu">
+                        <li class="menu_header"><a href="index.html?t=28" id="menu-movie" class="sourceButton">電影</a>
+                        </li>
+                        <li class="menu_header"><a href="index.html?t=119" id="menu-tvshow">電視劇</a></li>
+                        <li class="menu_header"><a href="index.html?t=128" id="menu-variety">綜藝</a></li>
+                        <li class="menu_header"><a href="index.html?t=135" id="menu-animation">動漫</a></li>
+                        <li class="menu_header"><a href="index.html?ids=favorites" id="menu-favorites">收藏</a></li>
+                        <li class="">
+                            <div class="myui-header__search search-box">
+                                <form id="search" name="search" method="get" action="index.html">
+                                    <input type="text" id="wd" name="wd" class="search_wd form-control" value=""
+                                        placeholder="查詢" autocomplete="off" />
+                                    <input type="hidden" id="s" name="s" value="" />
+                                    <button class="submit search_submit" id="searchbutton" type="submit"><i
+                                            class="fa fa-search"></i></button>
+                                </form>
+                                </div">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" style="margin-bottom: 4px;">
+        <div class="row">
+            <div class="myui-header_bd clearfix">
+                <ul class="myui-header__menu" id="myui-menu">
+                </ul>
+            </div>
         </div>
     </div>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-sha1/0.6.0/sha1.min.js"></script>
-    <script type="text/javascript">
-        "use strict"
-        var button = document.querySelectorAll('[data-id="button"]');
-        var password = document.querySelectorAll('[data-id="password"]');
+    <div class="container">
+        <div class="row">
+            <div class="myui-panel myui-panel-bg clearfix">
+                <div class="myui-panel-box clearfix" id="myui-panel">
+                    <p style="text-align:center;">
+                        <!-- <img src="images/loading_eng.gif"> -->
+                        <img id="msg" src="images/movie.png" style="width:300px" />
+                    </p>
+                </div>
+            </div>
+            <ul class="myui-page text-center clearfix" id="myui-page"></ul>
+        </div>
+    </div>
 
-        function login(secret) {
-            var hash = sha1(secret);
-            var url = 'acct/' + hash + "/index.html";
-            var alert = document.querySelectorAll('[data-id="alert"]');
+    <div class="myui-foot clearfix">
+        <div class="container min">
+            <div class="row">
+                <div class="col-pd text-center masked">
+                    <button type="button" class="sourceButton" id="guangsu" onclick="location.href='?s=guangsu&t=6'"> 光速
+                    </button>
+                    <button type="button" class="sourceButton" id="xinlang" onclick="location.href='?s=xinlang&t=6'"> 新浪
+                    </button>
+                    <button type="button" class="sourceButton" id="bdzy" onclick="location.href='?s=bdzy&t=6'"> 百度
+                    </button>
+                    <button type="button" class="sourceButton" id="1080zyku" onclick="location.href='?s=1080zyku&t=5'">
+                        高清 </button>
 
-            var request = new XMLHttpRequest();
-            request.open('GET', url, true);
+                    <button type="button" class="sourceButton" id="hongniuzy2"
+                        onclick="location.href='?s=hongniuzy2&t=5'"> 紅牛 </button>
+                    <button type="button" class="sourceButton" id="ffzy" onclick="location.href='?s=ffzy&t=6'"> 非凡
+                    </button>
+                    <button type="button" class="sourceButton" id="lzi" onclick="location.href='?s=lzi&t=6'"> 量子
+                    </button>
 
-            request.onload = function () {
-                if (request.status >= 200 && request.status < 400) {
-                    window.location = url;
-                } else {
-                    parent.location.hash = hash;
-                    alert[0].style.display = 'block';
-                    password[0].setAttribute('placeholder', 'Incorrect password');
-                    password[0].value = '';
-                }
-            }
-            request.onerror = function () {
-                parent.location.hash = hash;
-                alert[0].style.display = 'block';
-                password[0].setAttribute('placeholder', 'Incorrect password');
-                password[0].value = '';
-            }
-            request.send();
-        }
+                    <button type="button" class="sourceButton" id="ikun" onclick="location.href='?s=ikun&t=6'"> 愛看
+                    </button>
+                    <button type="button" class="sourceButton" id="tiankong" onclick="location.href='?s=tiankong&t=6'">
+                        天空 </button>
+                    <button type="button" class="sourceButton" id="sdzy" onclick="location.href='?s=sdzy&t=6'"> 閃電
+                    </button>
+                    <button type="button" class="sourceButton" id="tianyi" onclick="location.href='?s=tianyi&t=6'"> 天翼
+                    </button>
+                    <!-- <button type="button" class="sourceButton" id="kczy" onclick="location.href='?s=kczy&t=2'"> 快車
+                    </button> -->
+                    <button type="button" class="sourceButton" id="jyzy" onclick="location.href='?s=jyzy&t=9'"> 金鷹
+                    </button>
+                    <button type="button" class="sourceButton" id="subo" onclick="location.href='?s=subo&t=6'"> 速播
+                    </button>
+                    <button type="button" class="sourceButton" id="suoni" onclick="location.href='?s=suoni&t=6'"> 索尼
+                    </button>
 
-        button[0].addEventListener("click", function () {
-            login(password[0].value);
-        })
+                    <p class="margin-0">本站為程式開發測試之用，資料蒐集於網際網路，版權歸官方所有</p>
+                    <p class="menu_header"><a href="m3u8.html" id="menu-vod">M3U8</a> | <a href="mod.html"
+                            id="menu-mod">MOD</a> | <a href="ktv.html" id="menu-mod">KTV</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        document.onkeydown = function (e) {
-            e = e || window.event
-            if (e.keyCode == 13) {
-                login(password[0].value)
-            }
-        }
-    </script>
 </body>
+
 </html>
+
+<script type="text/javascript" src="js/api.js"></script>

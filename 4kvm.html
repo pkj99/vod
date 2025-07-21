@@ -22,7 +22,7 @@ function ajaxUrl(id, callback)
 		var Url = data.split("container: '#artplayer-app',")[1].split(',')[0].trim().split("url:'")[1].split("'")[0];
 		var poster = data.split("container: '#artplayer-app',")[1].split(',')[1].trim().split("poster: '")[1].split("'")[0];
         // location.href = Url;
-        location.href = 'playvideo.html?url='+Url+'&img='+encodeURIComponent(poster);
+        location.href = 'xplayer.html?url='+Url+'&img='+encodeURIComponent(poster);
     });
 }
 
