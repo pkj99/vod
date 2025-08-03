@@ -22,6 +22,28 @@ document.getElementById('s').value = s;
 
 // 來源分類
 switch (s) {
+  case 'heimuer': // 黑木耳
+    var menuAPI = 'https://json.heimuer.xyz/api.php/provide/vod/at/json';
+    var urlAPI = 'https://json.heimuer.xyz/api.php/provide/vod/at/json?ac=detail';
+    var player = 'playvideo.html?url=';
+    document.getElementById('menu-movie').href = 'index.html?s=' + s + '&t=7';
+    document.getElementById('menu-tvshow').href = 'index.html?s=' + s + '&t=13';
+    document.getElementById('menu-variety').href = 'index.html?s=' + s + '&t=63';
+    document.getElementById('menu-animation').href = 'index.html?s=' + s + '&t=68';
+    document.getElementById('menu-favorites').href = 'index.html?s=' + s + '&ids=favorites';
+    document.getElementById('heimuer').style = "background-color: #0d9156;"
+    break;  
+  case 'dytt': // 電影天空
+    var menuAPI = 'https://caiji.dyttzyapi.com/api.php/provide/vod/from/dyttm3u8/at/json';
+    var urlAPI = 'https://caiji.dyttzyapi.com/api.php/provide/vod/from/dyttm3u8/at/json?ac=detail';
+    var player = 'playvideo.html?url=';
+    document.getElementById('menu-movie').href = 'index.html?s=' + s + '&t=6';
+    document.getElementById('menu-tvshow').href = 'index.html?s=' + s + '&t=13';
+    document.getElementById('menu-variety').href = 'index.html?s=' + s + '&t=63';
+    document.getElementById('menu-animation').href = 'index.html?s=' + s + '&t=68';
+    document.getElementById('menu-favorites').href = 'index.html?s=' + s + '&ids=favorites';
+    document.getElementById('dytt').style = "background-color: #0d9156;"
+    break;
   case 'kuaikan': // 快看资源
     // var menuAPI = 'https://kuaikan-api.com/api.php/provide/vod/from/kuaikan/at/xml';
     var menuAPI = 'https://kuaikan-api.com/api.php/provide/vod/from/kuaikan/at/json';
@@ -71,7 +93,7 @@ switch (s) {
     document.getElementById('bdzy').style = "background-color: #0d9156;"
     break;
   case '1080zyku': // 高清资源
-    var menuAPI = 'https://api.1080zyku.com/inc/ldg_api.php';
+    var menuAPI = 'https://api.1080zyku.com/inc/apijson.php';
     var urlAPI = 'https://api.1080zyku.com/inc/apijson.php?ac=detail';
     var player = 'playvideo.html?url=';
     document.getElementById('menu-movie').href = 'index.html?s=' + s + '&t=5';
@@ -165,18 +187,18 @@ switch (s) {
     document.getElementById('menu-favorites').href = 'index.html?s=' + s + '&ids=favorites';
     document.getElementById('tianyi').style = "background-color: #0d9156;"
     break;
-  case 'kczy': // 快車資源
-    // var menuAPI = 'https://caiji.kczyapi.com/api.php/provide/vod/from/kcm3u8/at/xml';
-    var menuAPI = 'https://caiji.kczyapi.com/api.php/provide/vod/from/kcm3u8/at/json';
-    var urlAPI = 'https://caiji.kczyapi.com/api.php/provide/vod/from/kcm3u8/at/json?ac=detail';
-    var player = 'playvideo.html?url=';
-    document.getElementById('menu-movie').href = 'index.html?s=' + s + '&t=2';
-    document.getElementById('menu-tvshow').href = 'index.html?s=' + s + '&t=14';
-    document.getElementById('menu-variety').href = 'index.html?s=' + s + '&t=28';
-    document.getElementById('menu-animation').href = 'index.html?s=' + s + '&t=23';
-    document.getElementById('menu-favorites').href = 'index.html?s=' + s + '&ids=favorites';
-    document.getElementById('kczy').style = "background-color: #0d9156;"
-    break;
+  // case 'kczy': // 快車資源
+  //   // var menuAPI = 'https://caiji.kczyapi.com/api.php/provide/vod/from/kcm3u8/at/xml';
+  //   var menuAPI = 'https://caiji.kczyapi.com/api.php/provide/vod/from/kcm3u8/at/json';
+  //   var urlAPI = 'https://caiji.kczyapi.com/api.php/provide/vod/from/kcm3u8/at/json?ac=detail';
+  //   var player = 'playvideo.html?url=';
+  //   document.getElementById('menu-movie').href = 'index.html?s=' + s + '&t=2';
+  //   document.getElementById('menu-tvshow').href = 'index.html?s=' + s + '&t=14';
+  //   document.getElementById('menu-variety').href = 'index.html?s=' + s + '&t=28';
+  //   document.getElementById('menu-animation').href = 'index.html?s=' + s + '&t=23';
+  //   document.getElementById('menu-favorites').href = 'index.html?s=' + s + '&ids=favorites';
+  //   document.getElementById('kczy').style = "background-color: #0d9156;"
+  //   break;
   case 'jyzy': // 金鷹資源
     // var menuAPI = 'https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/xml';
     var menuAPI = 'https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/json';
@@ -214,16 +236,15 @@ switch (s) {
     document.getElementById('suoni').style = "background-color: #0d9156;"
     break;
   default:
-    // var menuAPI = 'https://haiwaikan.com/api.php/provide/vod/at/xml';
-    var menuAPI = 'https://haiwaikan.com/api.php/provide/vod/at/json';
-    var urlAPI = 'https://haiwaikan.com/api.php/provide/vod/?ac=detail';
+    var menuAPI = 'https://api.1080zyku.com/inc/ldg_api.php';
+    var urlAPI = 'https://api.1080zyku.com/inc/apijson.php?ac=detail';
     var player = 'playvideo.html?url=';
-    document.getElementById('menu-movie').href = 'index.html?s=' + s + '&t=28';
-    document.getElementById('menu-tvshow').href = 'index.html?s=' + s + '&t=119';
-    document.getElementById('menu-variety').href = 'index.html?s=' + s + '&t=128';
-    document.getElementById('menu-animation').href = 'index.html?s=' + s + '&t=135';
+    document.getElementById('menu-movie').href = 'index.html?s=' + s + '&t=5';
+    document.getElementById('menu-tvshow').href = 'index.html?s=' + s + '&t=13';
+    document.getElementById('menu-variety').href = 'index.html?s=' + s + '&t=63';
+    document.getElementById('menu-animation').href = 'index.html?s=' + s + '&t=68';
     document.getElementById('menu-favorites').href = 'index.html?s=' + s + '&ids=favorites';
-    document.getElementById('haiwaikan').style = "background-color: #0d9156;"
+    document.getElementById('1080zyku').style = "background-color: #0d9156;"
     break;
 }
 
@@ -567,6 +588,14 @@ function doCORSSearch(options, printResult) {
   var s = options.s;
   // console.log(s);
   switch (s) {
+    case 'heimuer':
+      var urlAPI = 'https://json.heimuer.xyz/api.php/provide/vod/at/json?ac=detail';
+      var source = '黑木耳';
+      break;
+    case 'dytt':
+      var urlAPI = 'https://caiji.dyttzyapi.com/api.php/provide/vod/from/dyttm3u8/at/json?ac=detail';
+      var source = '電影天堂';
+      break;
     case 'kuaikan':
       var urlAPI = 'https://kuaikan-api.com/api.php/provide/vod/from/kuaikan/at/json?ac=detail';
       var source = '快看';
@@ -749,6 +778,8 @@ if (urlParams["ids"] == null) {
       // var j = doCORSRequest({ method: 'GET', url: urlField, }, function printResult(result) { outputField.value = result; })
       // var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'haiwaikan' }, function printResult(result) { outputField.value = result; })
       // var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'kuaikan' }, function printResult(result) { outputField.value = result; })
+      var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'dytt' }, function printResult(result) { outputField.value = result; })
+      var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'heimuer' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'guangsu' }, function printResult(result) { outputField.value = result; })
       // var j = doCORSSearch({ method: 'GET', wd: keyword, s: 'xinlang' }, function printResult(result) { outputField.value = result; })
       var j = doCORSSearch({ method: 'GET', wd: keyword, s: '1080zyku' }, function printResult(result) { outputField.value = result; })
