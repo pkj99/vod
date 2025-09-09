@@ -12,15 +12,17 @@
 <script>
 function ajaxUrl(id, callback)
 {
-    fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent('https://www.4kvm.net/artplayer?mvsource=0&type=hls&id='+id)}`)
+    fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent('https://www.4kvm.me/artplayer?mvsource=0&type=hls&id='+id)}`)
     // fetch('https://www.4kvm.net/artplayer?mvsource=0&type=hls&id='+id)
     .then(response => {
         if (response.ok) return response.text()
         throw new Error('Network response was not ok.')
     })
     .then(data => {
-		var Url = data.split("container: '#artplayer-app',")[1].split(',')[0].trim().split("url:'")[1].split("'")[0];
-		var poster = data.split("container: '#artplayer-app',")[1].split(',')[1].trim().split("poster: '")[1].split("'")[0];
+		// var Url = data.split("container: '#artplayer-app',")[1].split(',')[0].trim().split("url:'")[1].split("'")[0];
+		// var poster = data.split("container: '#artplayer-app',")[1].split(',')[1].trim().split("poster: '")[1].split("'")[0];
+		var Url = data.split("source: '")[1].split('.svg')[0].replace('/ws/','/m3/')+'.m3u8';
+		var poster = data.split("container: '#artplayer-app',")[1].split(',')[0].trim().split("poster: '")[1].split("'")[0];
         // location.href = Url;
         location.href = 'xplayer.html?url='+Url+'&img='+encodeURIComponent(poster);
     });
