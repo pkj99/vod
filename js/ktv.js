@@ -307,6 +307,7 @@ if (urlParams["song"] != null) {
             var vlc_url = raw_url;
             // var vlc_url = encodeURI(raw_url);
             var ktv_url = `https://pan.mailberry.com.cn/d${song_name}?sign=${sign}`;
+            console.log(ktv_url);
             // ktv_url = `playvideo.html?url=${raw_url}&img=${thumb}`;
             // var ktv_url = `playvideo.html?url=https://pan.mailberry.com.cn/d${song_name}?sign=${sign}&img=${thumb}`;
 
