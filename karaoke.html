@@ -7,7 +7,7 @@
     <!-- <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.7/dist/umd/ffmpeg.umd.js"></script>
     <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.15/dist/umd/ffmpeg.min.js"></script>
-    <script src="cdn.jsdelivr.net"></script>    
+    <script src="https://cdn.jsdelivr.net"></script>    
     <style>
         body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
         #video-container { margin-top: 20px; width: 80%; max-width: 800px; }
@@ -44,7 +44,7 @@
         // 1. 初始化 FFmpeg
         async function loadFFmpeg() {
             // const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
-            const baseURL = "cdn.jsdelivr.net";            
+            const baseURL = "https://cdn.jsdelivr.net";            
             await ffmpeg.load({
                 coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
                 wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
