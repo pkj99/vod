@@ -2,86 +2,115 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>FFmpeg.wasm MKV/AC3 播放器</title>
     <script src="js/coi-serviceworker.js"></script>
-    <!-- <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.7/dist/umd/ffmpeg.umd.js"></script>
-    <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.1/dist/umd/ffmpeg.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>    
+    <title>FFmpeg.wasm 穩定版範例</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg/0.12.10/umd/ffmpeg.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg-util/0.12.1/umd/index.js"></script>
+
     <style>
-        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        #video-container { margin-top: 20px; width: 80%; max-width: 800px; }
-        video { width: 100%; border: 1px solid #333; }
-        .controls { background: #f4f4f4; padding: 20px; border-radius: 8px; }
-        #status { margin-top: 10px; color: blue; }
+        body { font-family: system-ui; max-width: 800px; margin: 20px auto; line-height: 1.5; background: #f0f2f5; }
+        .container { background: white; padding: 2rem; border-radius: 10px; shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        #log { background: #1a1a1a; color: #00ff00; padding: 15px; height: 200px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 12px; border-radius: 5px; margin: 15px 0; }
+        video { width: 100%; border: 1px solid #ddd; border-radius: 5px; margin-top: 10px; background: #000; }
+        .controls { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; }
+        .btn { background: #0062ff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
 
-    <h2>FFmpeg.wasm 瀏覽器端轉碼播放器</h2>
-    
+<div class="container">
+    <h2>FFmpeg.wasm 影片處理器</h2>
+    <p id="status">正在檢查環境並載入引擎...</p>
+
     <div class="controls">
-        <input type="file" id="uploader" accept=".mkv,.mp4" />
-        <button id="transcodeBtn" disabled>載入並轉碼</button>
-        <div id="status">正在下載 FFmpeg 核心...</div>
+        <input type="file" id="uploader" accept="video/*">
+        <button id="convertBtn" class="btn" disabled>開始轉碼</button>
     </div>
 
-    <div id="video-container">
-        <p>轉碼後影片：</p>
-        <video id="player" controls></video>
-    </div>
+    <div id="log">系統日誌待命中...</div>
+    <video id="player" controls></video>
+</div>
 
-    <script>
-        const { FFmpeg } = FFmpegWasm;
-        const { fetchFile, toBlobURL } = FFmpegUtil;
+<script>
+    // 確保對應全域變數 (cdnjs 載入後的名稱)
+    const { FFmpeg } = FFmpegWasm;
+    const { fetchFile, toBlobURL } = FFmpegUtil;
 
-        const ffmpeg = new FFmpeg();
-        const uploader = document.getElementById('uploader');
-        const transcodeBtn = document.getElementById('transcodeBtn');
-        const status = document.getElementById('status');
-        const player = document.getElementById('player');
+    const ffmpeg = new FFmpeg();
+    const logEl = document.getElementById('log');
+    const statusEl = document.getElementById('status');
+    const convertBtn = document.getElementById('convertBtn');
 
-        // 1. 初始化 FFmpeg
-        async function loadFFmpeg() {
-            const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.1/dist/umd';
-            // const baseURL = "https://cdn.jsdelivr.net";            
+    function writeLog(msg) {
+        const div = document.createElement('div');
+        div.textContent = `> ${msg}`;
+        logEl.appendChild(div);
+        logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    async function init() {
+        if (!window.crossOriginIsolated) {
+            statusEl.innerText = "⚠️ 環境未隔離，請等待 Service Worker 自動重新整理...";
+            return;
+        }
+
+        try {
+            // 使用 jsDelivr 載入核心 Core 檔案
+            const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd';
+            
             await ffmpeg.load({
                 coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
                 wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
             });
-            status.innerText = "FFmpeg 已就緒，請選擇 MKV 檔案。";
-            transcodeBtn.disabled = false;
+
+            statusEl.innerText = "✅ 引擎載入成功，可以開始處理檔案。";
+            convertBtn.disabled = false;
+            writeLog("FFmpeg.wasm 核心已就緒");
+        } catch (err) {
+            statusEl.innerText = "❌ 引擎載入失敗，請檢查主機標頭設定。";
+            writeLog("錯誤: " + err.message);
         }
+    }
 
-        // 2. 轉碼邏輯
-        async function transcode() {
-            const file = uploader.files[0];
-            if (!file) return;
+    // 監聽轉碼進度
+    ffmpeg.on('progress', ({ progress }) => {
+        statusEl.innerText = `正在處理中：${(progress * 100).toFixed(0)}%`;
+    });
 
-            status.innerText = "正在讀取檔案並轉碼中... (請耐心等候)";
-            transcodeBtn.disabled = true;
+    // 轉碼邏輯
+    convertBtn.onclick = async () => {
+        const file = document.getElementById('uploader').files[0];
+        if (!file) return;
 
-            // 將檔案寫入 ffmpeg 的虛擬檔案系統
-            await ffmpeg.writeFile('input.mkv', await fetchFile(file));
+        convertBtn.disabled = true;
+        writeLog(`讀取檔案: ${file.name}`);
 
-            // 執行命令：
-            // -c:v copy (影片畫質不變，直接複製，速度快)
-            // -c:a aac (將音訊轉為 AAC，解決 AC3/DTS 不支援的問題)
-            await ffmpeg.exec(['-i', 'input.mkv', '-c:v', 'copy', '-c:a', 'aac', 'output.mp4']);
+        // 寫入虛擬檔案
+        await ffmpeg.writeFile('input_video', await fetchFile(file));
 
-            // 讀取轉碼後的檔案
-            const data = await ffmpeg.readFile('output.mp4');
-            
-            // 轉為 URL 並放入播放器
-            const videoUrl = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
-            player.src = videoUrl;
+        /**
+         * 核心指令：
+         * -i input_video : 輸入
+         * -c:v copy : 影像直接複製（極快）
+         * -c:a aac : 音訊轉為 AAC（解決 AC3 沒聲音問題）
+         * output.mp4 : 輸出容器改為 MP4
+         */
+        writeLog("開始執行轉碼指令...");
+        await ffmpeg.exec(['-i', 'input_video', '-c:v', 'copy', '-c:a', 'aac', 'output.mp4']);
 
-            status.innerText = "轉碼完成！開始播放。";
-            transcodeBtn.disabled = false;
-        }
+        writeLog("轉碼完成，生成播放網址...");
+        const data = await ffmpeg.readFile('output.mp4');
+        const url = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+        
+        document.getElementById('player').src = url;
+        statusEl.innerText = "✅ 處理完成！";
+        convertBtn.disabled = false;
+    };
 
-        loadFFmpeg();
-        transcodeBtn.addEventListener('click', transcode);
-    </script>
+    init();
+</script>
+
 </body>
 </html>
