@@ -5,8 +5,8 @@
     <script src="js/coi-serviceworker.js"></script>
     <title>FFmpeg.wasm 穩定版範例</title>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg/0.12.10/umd/ffmpeg.umd.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg-util/0.12.1/umd/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg/0.12.15/umd/ffmpeg.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg/0.12.15/esm/index.js"></script>
 
     <style>
         body { font-family: system-ui; max-width: 800px; margin: 20px auto; line-height: 1.5; background: #f0f2f5; }
@@ -58,7 +58,7 @@
 
         try {
             // 使用 jsDelivr 載入核心 Core 檔案
-            const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd';
+            const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd';
             
             await ffmpeg.load({
                 coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
