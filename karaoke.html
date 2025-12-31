@@ -5,8 +5,8 @@
     <script src="js/coi-serviceworker.js"></script>
     <title>FFmpeg.wasm 穩定版範例</title>
     
-    <script src="https://github.com/Kagami/ffmpeg.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg/0.12.15/esm/index.js"></script>
+    <!-- <script src="https://github.com/Kagami/ffmpeg.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg/0.12.15/esm/index.js"></script> -->
 
     <style>
         body { font-family: system-ui; max-width: 800px; margin: 20px auto; line-height: 1.5; background: #f0f2f5; }
@@ -35,8 +35,10 @@
 
 <script>
     // 確保對應全域變數 (cdnjs 載入後的名稱)
-    const { FFmpeg } = FFmpegWasm;
-    const { fetchFile, toBlobURL } = FFmpegUtil;
+    import { FFmpeg } from '@ffmpeg/ffmpeg';
+    import { fetchFile, toBlobURL } from '@ffmpeg/util'; // fetchFile is now in @ffmpeg/util
+    // const { FFmpeg } = FFmpegWasm;
+    // const { fetchFile, toBlobURL } = FFmpegUtil;
 
     const ffmpeg = new FFmpeg();
     const logEl = document.getElementById('log');
