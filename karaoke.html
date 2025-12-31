@@ -5,12 +5,13 @@
     <script src="js/coi-serviceworker.js"></script>
     <title>FFmpeg.wasm 穩定版範例</title>
     
-    <!-- <script src="https://github.com/Kagami/ffmpeg.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg/0.12.15/esm/index.js"></script> -->
+    <script src="js/ffmpeg.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg/0.12.15/esm/index.js"></script> -->
 
     <style>
         body { font-family: system-ui; max-width: 800px; margin: 20px auto; line-height: 1.5; background: #f0f2f5; }
-        .container { background: white; padding: 2rem; border-radius: 10px; shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .container { background: white; padding: 2rem; border-radius: 10px; }
+        /* .container { background: white; padding: 2rem; border-radius: 10px; shadow: 0 2px 5px rgba(0,0,0,0.1); } */
         #log { background: #1a1a1a; color: #00ff00; padding: 15px; height: 200px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 12px; border-radius: 5px; margin: 15px 0; }
         video { width: 100%; border: 1px solid #ddd; border-radius: 5px; margin-top: 10px; background: #000; }
         .controls { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; }
@@ -35,10 +36,8 @@
 
 <script>
     // 確保對應全域變數 (cdnjs 載入後的名稱)
-    import { FFmpeg } from '@ffmpeg/ffmpeg';
-    import { fetchFile, toBlobURL } from '@ffmpeg/util'; // fetchFile is now in @ffmpeg/util
-    // const { FFmpeg } = FFmpegWasm;
-    // const { fetchFile, toBlobURL } = FFmpegUtil;
+    const { FFmpeg } = FFmpegWasm;
+    const { fetchFile, toBlobURL } = FFmpegUtil;
 
     const ffmpeg = new FFmpeg();
     const logEl = document.getElementById('log');
