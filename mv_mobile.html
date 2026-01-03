@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberKTV Pro - 科技感雲端點歌系統</title>
+    <title>CyberKTV Pro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
@@ -17,7 +17,7 @@
         body {
             background-color: var(--bg-deep);
             color: #e0e0e0;
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Rajdhani', 'Noto Sans TC', sans-serif;
             background-image: radial-gradient(circle at 50% 50%, #1a1a3a 0%, #050510 100%);
             min-height: 100vh;
         }
@@ -27,9 +27,10 @@
             color: var(--neon-cyan);
             text-shadow: 0 0 10px var(--neon-cyan);
             letter-spacing: 4px;
+            text-align: center;
         }
 
-        /* 播放器固定邏輯 */
+        /* 影片固定區 */
         .player-sticky {
             position: sticky;
             top: 0;
@@ -50,18 +51,15 @@
             top: 0; left: 0; width: 100%; height: 100%;
         }
 
-        /* 玻璃擬態面板 */
         .glass-panel {
             background: var(--glass);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            padding: 20px;
+            padding: 15px;
             margin-top: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
         }
 
-        /* 滾動導覽列 */
         .scroll-nav {
             display: flex;
             overflow-x: auto;
@@ -85,17 +83,13 @@
             box-shadow: 0 0 15px var(--neon-cyan);
         }
 
-        /* 歌曲項目樣式 */
         .song-item {
             background: rgba(255, 255, 255, 0.03);
             border-left: 3px solid transparent;
             margin-bottom: 8px;
-            border-radius: 4px;
+            border-radius: 5px;
             transition: 0.2s;
-        }
-        .song-item:hover {
-            background: rgba(0, 242, 255, 0.1);
-            border-left-color: var(--neon-cyan);
+            padding: 10px;
         }
         .playing-now {
             border-left-color: var(--neon-purple) !important;
@@ -105,12 +99,15 @@
         .scroll-content {
             height: 50vh;
             overflow-y: auto;
-            padding-right: 8px;
+            padding-right: 5px;
         }
+
+        .scroll-content::-webkit-scrollbar { width: 4px; }
+        .scroll-content::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 10px; }
 
         @media (min-width: 992px) {
             .player-sticky { position: relative; border-radius: 15px; margin-top: 20px; }
-            .scroll-content { height: 550px; }
+            .scroll-content { height: 580px; }
         }
     </style>
 </head>
@@ -123,7 +120,7 @@
                 <div id="ytPlayer"></div>
             </div>
             <div class="p-3">
-                <div id="nowPlayingText" class="h5 text-truncate text-info">請開始點歌...</div>
+                <div id="nowPlayingText" class="h5 text-truncate text-info">🎤 CyberKTV Ready...</div>
                 <div class="d-flex flex-wrap gap-2 mt-2">
                     <button class="btn btn-sm btn-outline-light" onclick="nextSong()">切歌 ⏭</button>
                     <button class="btn btn-sm btn-outline-info" onclick="random50()">🎲 隨機50首</button>
@@ -133,35 +130,33 @@
         </div>
 
         <div class="col-lg-5 p-3">
-            <h1 class="cyber-header text-center my-3">CYBER KTV</h1>
+            <h1 class="cyber-header my-2">CYBER KTV</h1>
 
             <div class="glass-panel">
-                <input type="text" id="searchInput" class="form-control bg-dark text-white border-secondary mb-3" placeholder="搜尋歌手或歌名..." oninput="handleSearch()">
+                <input type="text" id="searchInput" class="form-control bg-dark text-white border-secondary mb-3" placeholder="搜尋歌名或歌手..." oninput="handleSearch()">
                 
-                <div class="scroll-nav mb-2" id="snNav">
-                    </div>
+                <div class="scroll-nav mb-2" id="snNav"></div>
 
-                <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
+                <ul class="nav nav-pills nav-justified mb-3" id="ktvTabs">
                     <li class="nav-item">
-                        <button class="nav-link active btn-cyber me-1" id="btn-tab-songDB" data-bs-toggle="pill" data-bs-target="#tab-songDB">歌曲庫</button>
+                        <button class="nav-link active btn-cyber me-1" id="tab-db-btn" data-bs-toggle="pill" data-bs-target="#pane-db">歌曲庫</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link btn-cyber ms-1" id="btn-tab-queue" data-bs-toggle="pill" data-bs-target="#tab-queue">待播清單 (<span id="queueBadge">0</span>)</button>
+                        <button class="nav-link btn-cyber ms-1" id="tab-queue-btn" data-bs-toggle="pill" data-bs-target="#pane-queue" onclick="updateQueueUI()">待播清單 (<span id="qBadge">0</span>)</button>
                     </li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="tab-songDB">
-                        <div id="artistFilterNav" class="scroll-nav mb-2"></div>
-                        <div id="batchAction" class="mb-3 d-none">
-                            <button class="btn btn-sm btn-info w-100 fw-bold" id="addAllFromArtist">加入該歌手所有歌曲</button>
+                    <div class="tab-pane fade show active" id="pane-db">
+                        <div id="artistNav" class="scroll-nav mb-2"></div>
+                        <div id="singerActionBox" class="mb-3 d-none">
+                            <button class="btn btn-sm btn-info w-100 fw-bold" id="addAllArtistSongs">加入此歌手所有歌曲</button>
                         </div>
-                        <div class="scroll-content" id="songDBContainer"></div>
+                        <div class="scroll-content" id="dbContainer"></div>
                     </div>
                     
-                    <div class="tab-pane fade" id="tab-queue">
-                        <div class="scroll-content" id="queueContainer">
-                            </div>
+                    <div class="tab-pane fade" id="pane-queue">
+                        <div class="scroll-content" id="queueContainer"></div>
                     </div>
                 </div>
             </div>
@@ -169,66 +164,67 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script src="js/ytmv.js"></script>
 
 <script>
-    /** 1. 歌曲資料庫 **/
     <!-- const songDB = [ -->
         <!-- { id: 1, artist: "周杰倫", title: "告白氣球", vid: "oh2LWWORoiM", sn: "周" }, -->
         <!-- { id: 2, artist: "周杰倫", title: "青花瓷", vid: "Z8Mqw0b9ADs", sn: "周" }, -->
-        <!-- { id: 3, artist: "周杰倫", title: "稻香", vid: "s-VFpqZkz8o", sn: "周" }, -->
-        <!-- { id: 4, artist: "林俊傑", title: "修煉愛情", vid: "LWV-f6d7S_w", sn: "林" }, -->
-        <!-- { id: 5, artist: "林俊傑", title: "可惜沒如果", vid: "vsBf_0G_71U", sn: "林" }, -->
-        <!-- { id: 6, artist: "陳奕迅", title: "孤勇者", vid: "LiD-S8K6S6M", sn: "陳" }, -->
-        <!-- { id: 7, artist: "鄧紫棋", title: "光年之外", vid: "T4SimnaiktU", sn: "D" }, -->
+        <!-- { id: 3, artist: "林俊傑", title: "修煉愛情", vid: "LWV-f6d7S_w", sn: "林" }, -->
+        <!-- { id: 4, artist: "林俊傑", title: "可惜沒如果", vid: "vsBf_0G_71U", sn: "林" }, -->
+        <!-- { id: 5, artist: "陳奕迅", title: "孤勇者", vid: "LiD-S8K6S6M", sn: "陳" }, -->
+        <!-- { id: 6, artist: "鄧紫棋", title: "光年之外", vid: "T4SimnaiktU", sn: "鄧" }, -->
+        <!-- { id: 7, artist: "蔡依林", title: "玫瑰少年", vid: "feOq6M276W0", sn: "蔡" }, -->
         <!-- { id: 8, artist: "五月天", title: "倔強", vid: "u2u0T-NfUig", sn: "五" }, -->
-        <!-- { id: 9, artist: "蔡依林", title: "玫瑰少年", vid: "feOq6M276W0", sn: "蔡" }, -->
-        <!-- { id: 10, artist: "A-Lin", title: "有一種悲傷", vid: "BRcudpJzy1I", sn: "A" } -->
+        <!-- { id: 9, artist: "A-Lin", title: "有一種悲傷", vid: "BRcudpJzy1I", sn: "A" } -->
     <!-- ]; -->
 
     let player, queue = [], currentIdx = -1;
 
-    /** 2. YouTube 初始化 **/
+    // 關鍵：主動切換至歌曲庫分頁
+    function switchToLibrary() {
+        const dbTabBtn = document.getElementById('tab-db-btn');
+        const tabTrigger = new bootstrap.Tab(dbTabBtn);
+        tabTrigger.show();
+    }
+
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('ytPlayer', {
             height: '100%', width: '100%',
             playerVars: { 'autoplay': 1, 'controls': 1, 'rel': 0 },
             events: { 
                 'onStateChange': (e) => { if(e.data === YT.PlayerState.ENDED) nextSong(); },
-                'onError': () => nextSong() 
+                'onError': () => nextSong()
             }
         });
     }
 
-    /** 3. 動態介面與導航 **/
     window.onload = () => {
-        renderSurnames();
+        initSurnames();
         renderSongs(songDB);
-        
-        // 關鍵修正：當切換到待播清單頁籤時，強制刷新 UI
-        document.getElementById('btn-tab-queue').addEventListener('shown.bs.tab', updateQueueUI);
+        document.getElementById('tab-queue-btn').addEventListener('shown.bs.tab', updateQueueUI);
     };
 
-    // 從 songDB.surname 動態提取姓氏
-    function renderSurnames() {
-        const sns = [...new Set(songDB.map(item => item.surname))].sort();
-        const nav = document.getElementById('snNav');
-        nav.innerHTML = sns.map(s => 
+    function initSurnames() {
+        const sns = [...new Set(songDB.map(i => i.surname))].sort((a,b) => a.localeCompare(b, 'zh-TW'));
+        document.getElementById('snNav').innerHTML = sns.map(s => 
             `<button class="btn btn-sm btn-cyber" onclick="filterBySn('${s}')">${s}</button>`
         ).join('');
     }
 
     function filterBySn(surname) {
-        document.getElementById('batchAction').classList.add('d-none');
+        switchToLibrary(); // 點擊姓氏立即切回歌曲庫
+        document.getElementById('singerActionBox').classList.add('d-none');
         if (surname === "全部") {
             renderSongs(songDB);
-            document.getElementById('artistFilterNav').innerHTML = "";
+            document.getElementById('artistNav').innerHTML = "";
         } else {
             const filtered = songDB.filter(i => i.surname === surname);
             const artists = [...new Set(filtered.map(i => i.artist))];
-            document.getElementById('artistFilterNav').innerHTML = artists.map(a => 
+            document.getElementById('artistNav').innerHTML = artists.map(a => 
                 `<button class="btn btn-sm btn-outline-light" onclick="filterByArtist('${a}')">${a}</button>`
             ).join('');
             renderSongs(filtered);
@@ -236,27 +232,29 @@
     }
 
     function filterByArtist(artist) {
+        switchToLibrary(); // 點擊歌手立即切回歌曲庫
         const filtered = songDB.filter(i => i.artist === artist);
         renderSongs(filtered);
-        document.getElementById('batchAction').classList.remove('d-none');
-        document.getElementById('addAllFromArtist').onclick = () => {
+        const actionBox = document.getElementById('singerActionBox');
+        actionBox.classList.remove('d-none');
+        document.getElementById('addAllArtistSongs').onclick = () => {
             filtered.forEach(s => addSong(s.id, false));
-            // 移除提示，改為視覺回饋 (按鈕閃爍)
-            const btn = document.getElementById('addAllFromArtist');
-            btn.innerText = "✅ 已全部加入";
-            setTimeout(() => { btn.innerText = "加入該歌手所有歌曲"; }, 1000);
+            const btn = document.getElementById('addAllArtistSongs');
+            btn.innerText = "已全部點歌 ✓";
+            setTimeout(() => btn.innerText = "加入此歌手所有歌曲", 1000);
         };
     }
 
     function handleSearch() {
+        switchToLibrary(); // 開始輸入搜尋時切回歌曲庫
         const val = document.getElementById('searchInput').value.toLowerCase();
         renderSongs(songDB.filter(i => i.title.toLowerCase().includes(val) || i.artist.includes(val)));
     }
 
     function renderSongs(list) {
-        const container = document.getElementById('songDBContainer');
+        const container = document.getElementById('dbContainer');
         container.innerHTML = list.map(s => `
-            <div class="song-item p-2 d-flex justify-content-between align-items-center">
+            <div class="song-item d-flex justify-content-between align-items-center">
                 <div><strong>${s.title}</strong><br><small class="text-secondary">${s.artist}</small></div>
                 <div class="btn-group">
                     <button class="btn btn-sm btn-primary" onclick="addSong(${s.id}, false)">點歌</button>
@@ -266,25 +264,31 @@
         `).join('');
     }
 
-    /** 4. 點歌核心邏輯 **/
     function addSong(id, isInsert) {
         const song = songDB.find(s => s.id === id);
-        const newItem = { ...song, qid: 'q_' + Date.now() + Math.random() };
-        
+        const newItem = { ...song, qid: 'q' + Date.now() + Math.random().toString(36).substr(2, 5) };
         if (isInsert && currentIdx !== -1) {
             queue.splice(currentIdx + 1, 0, newItem);
         } else {
             queue.push(newItem);
         }
-        
         updateQueueUI();
         if (currentIdx === -1) nextSong();
+    }
+
+    function promoteInQueue(qid) {
+        const idx = queue.findIndex(s => s.qid === qid);
+        if (idx !== -1 && idx !== currentIdx) {
+            const songToMove = queue.splice(idx, 1)[0];
+            queue.splice(currentIdx + 1, 0, songToMove);
+            updateQueueUI();
+        }
     }
 
     function random50() {
         for(let i=0; i<50; i++) {
             const s = songDB[Math.floor(Math.random() * songDB.length)];
-            queue.push({ ...s, qid: 'r_' + Date.now() + Math.random() });
+            queue.push({ ...s, qid: 'r' + Date.now() + Math.random().toString(36).substr(2, 5) });
         }
         updateQueueUI();
         if (currentIdx === -1) nextSong();
@@ -303,31 +307,32 @@
     }
 
     function clearQueue() {
-        if(!confirm("確定清空後續歌單？")) return;
+        if(!confirm("確定清空歌單？")) return;
         queue = (currentIdx !== -1) ? [queue[currentIdx]] : [];
         currentIdx = (queue.length > 0) ? 0 : -1;
         updateQueueUI();
     }
 
-    // 核心渲染：待播清單
     function updateQueueUI() {
-        document.getElementById('queueBadge').innerText = queue.length;
+        document.getElementById('qBadge').innerText = queue.length;
         const container = document.getElementById('queueContainer');
-        
+        if (!container) return;
         if (queue.length === 0) {
-            container.innerHTML = `<div class="text-center p-5 text-secondary">目前沒有待播歌曲</div>`;
+            container.innerHTML = `<div class="text-center p-5 text-secondary">尚未點歌</div>`;
             return;
         }
-
         container.innerHTML = queue.map((s, i) => `
-            <div class="song-item p-2 d-flex justify-content-between align-items-center ${i === currentIdx ? 'playing-now' : ''}">
-                <div class="text-truncate" style="max-width: 80%">
+            <div class="song-item d-flex justify-content-between align-items-center ${i === currentIdx ? 'playing-now' : ''}">
+                <div class="text-truncate" style="max-width: 60%">
                     <span class="text-info me-2">${i+1}.</span>
                     <strong>${s.title}</strong><br>
-                    <small class="${i === currentIdx ? 'text-white' : 'text-secondary'}">${s.artist}</small>
+                    <small class="text-secondary">${s.artist}</small>
                 </div>
-                <div>
-                    ${i > currentIdx ? `<button class="btn btn-sm text-danger" onclick="removeFromQueue('${s.qid}')">✕</button>` : '<span class="badge bg-purple">PLAYING</span>'}
+                <div class="d-flex gap-1">
+                    ${i > currentIdx ? `
+                        <button class="btn btn-xs btn-outline-warning py-0 px-1" style="font-size: 10px" onclick="promoteInQueue('${s.qid}')">插播</button>
+                        <button class="btn btn-xs btn-outline-danger py-0 px-1" style="font-size: 10px" onclick="removeFromQueue('${s.qid}')">✕</button>
+                    ` : (i === currentIdx ? '<span class="badge bg-danger" style="font-size: 9px">ON AIR</span>' : '<span class="badge bg-secondary" style="font-size: 9px">已播</span>')}
                 </div>
             </div>
         `).join('');
