@@ -325,6 +325,7 @@ if (urlParams["song"] != null) {
             // htmlString += `<h4 class="title text-overflow text-center"><a href="vlc://${ktv_url}">Open with VLC Player</a></h4>`;
             // htmlString += `<h4 class="title text-overflow text-center"><a href="vlc://${ktv_url}" id="vlc">使用VLC開啟</a> | `;
             htmlString += `<h4 class="title text-overflow text-center">`;
+            htmlString += `<a target="_blank" href="player.html?song=${ktv_url}" id="ffmpeg">自動轉檔播放</a> | `;
             htmlString += `<a onclick='navigator.clipboard.writeText("${ktv_url}"); showMessage("複製完成");' style="cursor: pointer;">複製連結</a> | `;
             htmlString += `<a href="${raw_url}" style="cursor: pointer;">下載影片</a> | `;
             htmlString += `</h4></div>`;
