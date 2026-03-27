@@ -24,8 +24,8 @@ document.getElementById('s').value = s;
 switch (s) {
   case 'ffzy': // 非凡资源
     // var menuAPI = 'http://cj.ffzyapi.com/api.php/provide/vod/from/ffm3u8/at/xml';
-    var menuAPI = 'http://cj.ffzyapi.com/api.php/provide/vod/from/ffm3u8/at/json';
-    var urlAPI = 'http://cj.ffzyapi.com/api.php/provide/vod/from/ffm3u8/at/json?ac=detail';
+    var menuAPI = 'http://api.ffzyapi.com/api.php/provide/vod/from/ffm3u8/at/json';
+    var urlAPI = 'http://api.ffzyapi.com/api.php/provide/vod/from/ffm3u8/at/json?ac=detail';
     var player = 'playvideo.html?url=';
     document.getElementById('menu-movie').href = 'index.html?s=' + s + '&t=6';
     document.getElementById('menu-tvshow').href = 'index.html?s=' + s + '&t=21';
