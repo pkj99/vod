@@ -67,14 +67,16 @@ function tvchannels2(groupName) {
                 if (group_title == groupName || groupName == 'ALL') {
                     htmlString += `<li class="col-lg-8 col-md-8 col-sm-5 col-xs-3">`;
                     htmlString += `<div class="myui-vodlist__box">`;
-                    if (m3u_url.includes('4kvm')){
-                        // var id = url.replace('https://www.4kvm.net/artplayer?mvsource=0&type=hls&id=','');
-                        var id = url.split('id=')[1];
-                        // htmlString += `<a class="myui-vodlist__thumb lazyload" href="${url}" `;
-                        htmlString += `<a class="myui-vodlist__thumb lazyload" href="4kvm.html?id=${id}" `;
-                    } else {
-                        htmlString += `<a class="myui-vodlist__thumb lazyload" href="xplayer.html?url=${url}&img=${img}" `;
-                    }
+
+                    // if (m3u_url.includes('4kvm')){
+                    //     var id = url.split('id=')[1];
+                    //     htmlString += `<a class="myui-vodlist__thumb lazyload" href="4kvm.html?id=${id}" `;
+                    // } else {
+                    //     htmlString += `<a class="myui-vodlist__thumb lazyload" href="xplayer.html?url=${url}&img=${img}" `;
+                    // }
+
+                    htmlString += `<a class="myui-vodlist__thumb lazyload" href="xplayer.html?url=${url}&img=${img}" `;
+
                     htmlString += `title="${title}" `;
                     htmlString += `data-original="${url}" `;
                     htmlString += `style="background-image: url('${img}')"`;
