@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER-VOD // 科技感影視資訊樞紐</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- HLS.js for m3u8 video streaming -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Google Fonts for Futuristic Cyber Aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+	<script src="https://cdn.jsdelivr.net/npm/opencc-js@1.4.1/dist/umd/full.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            bg: '#060913',
+                            panel: 'rgba(13, 20, 36, 0.75)',
+                            border: 'rgba(0, 243, 255, 0.2)',
+                            cyan: '#00f3ff',
+                            magenta: '#ff007f',
+                            purple: '#9d00ff',
+                            gold: '#ffb700',
+                            dark: '#0a0f1d'
+                        }
+                    },
+                    fontFamily: {
+                        cyber: ['Orbitron', 'sans-serif'],
+                        tech: ['Rajdhani', 'sans-serif'],
+                        body: ['Noto Sans TC', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 15px rgba(0, 243, 255, 0.4), inset 0 0 15px rgba(0, 243, 255, 0.1)',
+                        'neon-magenta': '0 0 15px rgba(255, 0, 127, 0.4)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060913;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00f3ff55;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f3ff;
+        }
+
+        /* Scanline Overlay Effect */
+        .scanlines {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.03),
+                rgba(0, 255, 0, 0.01),
+                rgba(0, 0, 255, 0.03)
+            );
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Panel */
+        .cyber-glass {
+            background: rgba(10, 15, 29, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 243, 255, 0.18);
+        }
+
+        /* Pulsing Glow Animation */
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 8px #00f3ff); }
+            50% { opacity: 0.3; filter: drop-shadow(0 0 2px #00f3ff); }
+        }
+        .cyber-pulse {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+        
+        .hud-corner {
+            position: relative;
+        }
+        .hud-corner::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px;
+            width: 8px; height: 8px;
+            border-top: 2px solid #00f3ff;
+            border-left: 2px solid #00f3ff;
+        }
+        .hud-corner::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; right: -1px;
+            width: 8px; height: 8px;
+            border-bottom: 2px solid #00f3ff;
+            border-right: 2px solid #00f3ff;
+        }
+    </style>
+</head>
+<body class="bg-cyber-bg text-slate-200 font-body min-h-screen relative overflow-x-hidden selection:bg-cyber-cyan selection:text-black">
+
+    <!-- Grid Overlay Background -->
+    <div class="fixed inset-0 bg-[radial-gradient(#00f3ff_1px,transparent_1px)] [background-size:32px_32px] opacity-10 pointer-events-none z-0"></div>
+    <div class="fixed inset-0 scanlines z-10 opacity-30"></div>
+
+    <!-- Main Outer Container -->
+    <div class="relative z-20 min-h-screen flex flex-col">
+
+        <header class="border-b border-cyber-border/40 cyber-glass sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+                
+                <!-- Logo Zone -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan flex items-center justify-center text-cyber-cyan shadow-neon-cyan">
+                        <i class="fa-solid fa-bolt text-xl cyber-pulse"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="font-cyber font-black text-xl tracking-wider text-white">CYBER<span class="text-cyber-cyan">VOD</span></h1>
+                            <span class="text-[10px] font-cyber px-1.5 py-0.5 rounded bg-cyber-magenta/20 text-cyber-magenta border border-cyber-magenta/40">v3.2 PRO</span>
+                        </div>
+                        <p class="text-[11px] font-tech text-slate-400 tracking-widest uppercase">Data Streaming Hub // Node Protocol Active</p>
+                    </div>
+                </div>
+
+                <!-- Search Input Bar -->
+                <div class="flex-1 max-w-xl mx-4">
+                    <div class="relative hud-corner">
+                        <input type="text" id="searchInput" 
+                            placeholder="輸入關鍵字進行全網數據檢索 (例如: 戰鬥, 漫威, 喜劇)..." 
+                            class="w-full bg-cyber-dark/80 border border-cyber-cyan/30 rounded px-4 py-2.5 pl-10 pr-24 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyber-cyan focus:shadow-neon-cyan transition-all">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-cyber-cyan/70 text-sm"></i>
+                        <button id="searchBtn" class="absolute right-1 top-1 bottom-1 px-4 bg-cyber-cyan text-black font-tech font-bold text-sm rounded hover:bg-cyan-300 transition-all flex items-center gap-1.5">
+                            <span>搜尋</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- System Controls / Proxy Monitor -->
+                <div class="hidden lg:flex items-center gap-4 text-xs font-tech">
+                    <div class="flex flex-col items-end">
+                        <span class="text-slate-400">PROXY STATUS</span>
+                        <span id="proxyStatus" class="text-cyber-cyan font-bold flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-cyber-cyan animate-ping"></span>
+                            AUTO DECRYPT
+                        </span>
+                    </div>
+                    <div class="h-8 w-px bg-cyber-border/40"></div>
+                    <button id="reloadBtn" class="p-2.5 rounded border border-cyber-border hover:border-cyber-cyan hover:bg-cyber-cyan/10 text-slate-300 hover:text-cyber-cyan transition-all" title="重新整理數據">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="border-t border-cyber-border/20 bg-cyber-dark/60 backdrop-blur-md">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-4">
+                    
+                    <!-- Source Selector (s parameter) -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-tech text-cyber-cyan flex items-center gap-1">
+                            <i class="fa-solid fa-server"></i> API 資源庫:
+                        </span>
+                        <select id="sourceSelect" class="bg-cyber-dark text-slate-200 border border-cyber-cyan/40 rounded px-2.5 py-1 text-xs font-tech focus:outline-none focus:border-cyber-cyan cursor-pointer">
+                            <option value="rycj">如意資源 (rycj)</option>
+                            <option value="dytt">電影天堂 (dytt)</option>
+                            <option value="ffzy">非凡資源 (ffzy)</option>
+                            <option value="hn">紅牛資源 (hn)</option>
+                            <option value="sd">閃電資源 (sd)</option>
+                            <option value="bf">暴風資源 (bf)</option>
+                            <option value="lz">量子資源 (lz)</option>
+                        </select>
+                    </div>
+
+                    <!-- Category Tabs (t parameter) -->
+                    <div id="categoryContainer" class="flex items-center gap-1.5 overflow-x-auto py-1 max-w-full text-xs font-tech no-scrollbar">
+                        <!-- Dynamic rendered tabs -->
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+
+            <!-- Data HUD Header Status -->
+            <div class="cyber-glass rounded-xl p-4 flex flex-wrap items-center justify-between gap-4 border border-cyber-border/30 hud-corner">
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="px-3 py-1.5 rounded bg-cyber-cyan/10 border border-cyber-cyan/30 text-cyber-cyan text-xs font-tech">
+                        SOURCE: <span id="currentSourceLabel" class="font-bold">rycj</span>
+                    </div>
+                    <div class="px-3 py-1.5 rounded bg-cyber-purple/10 border border-cyber-purple/30 text-purple-400 text-xs font-tech">
+                        CATEGORY: <span id="currentTypeLabel" class="font-bold">動作片 (6)</span>
+                    </div>
+                    <div id="searchBadge" class="hidden px-3 py-1.5 rounded bg-cyber-magenta/10 border border-cyber-magenta/30 text-cyber-magenta text-xs font-tech">
+                        SEARCH: <span id="currentSearchLabel" class="font-bold">--</span>
+                    </div>
+                    <div id="totalCountBadge" class="text-xs text-slate-400 font-tech">
+                        檢索結果: <span class="text-white font-bold" id="totalCountNum">--</span> 筆數據
+                    </div>
+                </div>
+
+                <!-- Display Mode & Quick Info -->
+                <div class="flex items-center gap-3 text-xs text-slate-400 font-tech">
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-wifi text-emerald-400"></i> API 節點在線</span>
+                    <span class="hidden sm:inline">|</span>
+                    <span class="hidden sm:inline"><i class="fa-solid fa-shield-halved text-cyber-cyan"></i> CORS 隱私保護代理中</span>
+                </div>
+            </div>
+
+            <div id="videoContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
+                <!-- Video Cards Rendered Here -->
+            </div>
+
+            <!-- Loading State Spinner -->
+            <div id="loadingState" class="hidden flex-col items-center justify-center py-20 gap-4">
+                <div class="relative w-16 h-16">
+                    <div class="absolute inset-0 rounded-full border-2 border-cyber-cyan/20 border-t-cyber-cyan animate-spin"></div>
+                    <div class="absolute inset-2 rounded-full border-2 border-cyber-magenta/20 border-b-cyber-magenta animate-spin" style="animation-direction: reverse;"></div>
+                    <i class="fa-solid fa-database absolute inset-0 flex items-center justify-center text-cyber-cyan text-lg"></i>
+                </div>
+                <div class="text-center">
+                    <p class="font-cyber text-sm tracking-widest text-cyber-cyan animate-pulse">CONNECTING TO VOD NODE...</p>
+                    <p class="text-xs text-slate-500 font-tech mt-1">正在請求跨域 API 數據解構與緩存解析</p>
+                </div>
+            </div>
+
+            <!-- Empty State Notice -->
+            <div id="emptyState" class="hidden flex-col items-center justify-center py-20 border border-dashed border-cyber-border/40 rounded-xl bg-cyber-dark/40">
+                <i class="fa-solid fa-radar text-4xl text-slate-600 mb-3"></i>
+                <p class="font-tech text-base text-slate-300">未找到符合條件的影視數據</p>
+                <p class="text-xs text-slate-500 mt-1">請嘗試更換分類、搜尋關鍵字或升級 API 資源節點</p>
+            </div>
+
+            <div id="pagination" class="flex items-center justify-center gap-2 py-6 font-tech">
+                <!-- Dynamic Pagination Buttons -->
+            </div>
+
+        </main>
+
+        <div id="playerModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+            <div class="cyber-glass w-full max-w-5xl rounded-2xl border border-cyber-cyan/40 overflow-hidden shadow-2xl relative my-auto hud-corner">
+                
+                <!-- Modal Top Header Bar -->
+                <div class="px-6 py-4 bg-cyber-dark/90 border-b border-cyber-border/40 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="px-2 py-0.5 rounded bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan text-[10px] font-cyber">STREAMING HUD</span>
+                        <h2 id="modalTitle" class="text-lg font-bold text-white tracking-wide truncate max-w-md">影片載入中...</h2>
+                    </div>
+                    <button id="closeModalBtn" class="w-8 h-8 rounded-full border border-cyber-border hover:border-cyber-magenta hover:bg-cyber-magenta/20 text-slate-400 hover:text-white flex items-center justify-center transition-all">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Modal Main Content Body -->
+                <div class="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Player Area (2 cols on lg) -->
+                    <div class="lg:col-span-2 flex flex-col gap-3">
+                        <div class="relative aspect-video bg-black rounded-xl overflow-hidden border border-cyber-border/60 shadow-lg group">
+                            <video id="cyberVideoPlayer" controls class="w-full h-full object-contain"></video>
+                            <div id="playerOverlay" class="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-3 p-4 pointer-events-none">
+                                <i class="fa-solid fa-play text-4xl text-cyber-cyan animate-bounce"></i>
+                                <span class="text-xs font-tech text-slate-300">請選擇下方播放源集數開始串流</span>
+                            </div>
+                        </div>
+
+                        <!-- Video Stream Quick Status Bar -->
+                        <div class="flex items-center justify-between text-xs font-tech px-2 text-slate-400">
+                            <span id="modalTypeBadge"><i class="fa-solid fa-film text-cyber-cyan"></i> 類別: --</span>
+                            <span id="modalUpdatedTime"><i class="fa-solid fa-clock text-cyber-cyan"></i> 更新: --</span>
+                            <span id="streamFormatBadge"><i class="fa-solid fa-circle-check text-emerald-400"></i> HLS/m3u8 解碼流</span>
+                        </div>
+                    </div>
+
+                    <!-- Metadata & Episodes Sidebar -->
+                    <div class="flex flex-col gap-4 max-h-[450px] overflow-y-auto pr-2">
+                        <!-- Poster & Brief -->
+                        <div class="flex gap-4">
+                            <img id="modalPoster" src="" alt="Poster" class="w-24 h-36 object-cover rounded-lg border border-cyber-border/50 bg-cyber-dark shadow-md shrink-0">
+                            <div class="flex flex-col justify-between text-xs">
+                                <div>
+                                    <h3 id="modalSubTitle" class="font-bold text-slate-200 text-sm mb-1">--</h3>
+                                    <p id="modalRemarks" class="text-cyber-cyan font-tech mb-2">更新狀態: --</p>
+                                </div>
+                                <div class="text-slate-400 space-y-1">
+                                    <p id="modalArea">地區: --</p>
+                                    <p id="modalYear">年份: --</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Episode Links Box -->
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="text-xs font-cyber text-cyber-cyan flex items-center gap-1.5">
+                                    <i class="fa-solid fa-list-ul"></i> 播放源與集數列表
+                                </h4>
+                                <span class="text-[10px] text-slate-500 font-tech">點擊解鎖串流</span>
+                            </div>
+                            <div id="episodeList" class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto p-1 bg-cyber-dark/60 rounded-lg border border-cyber-border/30">
+                                <!-- Episode buttons inserted here -->
+                            </div>
+                        </div>
+
+                        <!-- Synopsis Box -->
+                        <div class="border-t border-cyber-border/30 pt-3">
+                            <h4 class="text-xs font-cyber text-slate-400 mb-1">簡介概要</h4>
+                            <p id="modalDes" class="text-xs text-slate-400 leading-relaxed max-h-24 overflow-y-auto pr-1">
+                                暫無詳細簡介。
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Footer Bar -->
+                <div class="px-6 py-3 bg-cyber-dark/80 border-t border-cyber-border/30 flex justify-between items-center text-xs text-slate-400 font-tech">
+                    <span>CYBER STREAM ENGINE // ENCRYPTED ACCESS</span>
+                    <button id="copyUrlBtn" class="px-3 py-1 rounded bg-cyber-cyan/10 border border-cyber-cyan/40 hover:bg-cyber-cyan hover:text-black text-cyber-cyan transition-all flex items-center gap-1">
+                        <i class="fa-solid fa-copy"></i>
+                        <span>複製當前數據連結</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+            <div class="cyber-glass px-4 py-3 rounded-lg border border-cyber-cyan text-cyber-cyan font-tech text-sm flex items-center gap-2 shadow-neon-cyan">
+                <i class="fa-solid fa-circle-info" id="toastIcon"></i>
+                <span id="toastMsg">通知訊息</span>
+            </div>
+        </div>
+
+        <footer class="border-t border-cyber-border/30 bg-cyber-dark/80 py-6 mt-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 font-tech space-y-2">
+                <p class="tracking-wider">CYBER-VOD KNOWLEDGE & DATA ENGINE // PROPOSED DESIGN BY 程式大師</p>
+                <p class="text-[11px] text-slate-600">本系統採用跨域代理轉發機制，僅供影片資訊介面呈現與技術優化展示</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const state = {
+            source: 'rycj',
+            type: '',
+            page: 1,
+            search: '',
+            currentRawData: [],
+            hlsPlayer: null
+        };
+		let openccS2T = null;
+		let openccT2S = null;
+		
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function getCurrentCategories() {
+            const src = API_SOURCES[state.source] || API_SOURCES['rycj'];
+            return src ? (src.categories.filter(item => Number(item.id) > 5) || []) : [];
+        }
+
+        function parseResponseJson(text) {
+            if (!text) return null;
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                const match = text.match(/\{[\s\S]*\}/);
+                if (match) {
+                    try { return JSON.parse(match[0]); } catch (err) {}
+                }
+                return null;
+            }
+        }
+
+        async function fetchWithTimeout(url, timeoutMs = 5000) {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(timer);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const text = await response.text();
+                return parseResponseJson(text);
+            } catch (err) {
+                clearTimeout(timer);
+                throw err;
+            }
+        }
+
+        // API Sources configuration with accurate type_name(type_id) categories for each source
+        const API_SOURCES = {
+            'rycj': {
+                name: '如意資源 (rycj)',
+                url: 'https://cj.rycjapi.com/api.php/provide/vod/',
+                categories: [
+                    { id: '', name: '全部資源' },
+                    { id: '1', name: '電影' },
+                    { id: '2', name: '連續劇' },
+                    { id: '3', name: '綜藝' },
+                    { id: '4', name: '動漫' },
+                    { id: '6', name: '動作片' },
+                    { id: '7', name: '喜劇片' },
+                    { id: '8', name: '愛情片' },
+                    { id: '9', name: '科幻片' },
+                    { id: '10', name: '恐怖片' },
+                    { id: '11', name: '劇情片' },
+                    { id: '12', name: '戰爭片' },
+                    { id: '13', name: '國產劇' },
+                    { id: '14', name: '港台劇' },
+                    { id: '15', name: '日韓劇' },
+                    { id: '16', name: '歐美劇' },
+                    { id: '20', name: '紀錄片' },
+                    { id: '25', name: '動畫片' }
+                ]
+            },
+            'dytt': {
+                name: '電影天堂 (dytt)',
+                url: 'https://caiji.dyttzyapi.com/api.php/provide/vod/',
+                categories: [
+                    { id: '', name: '全部資源' },
+                    { id: '1', name: '電影大片' },
+                    { id: '2', name: '連續劇' },
+                    { id: '3', name: '綜藝節目' },
+                    { id: '4', name: '動漫新番' },
+                    { id: '6', name: '動作片' },
+                    { id: '7', name: '喜劇片' },
+                    { id: '8', name: '愛情片' },
+                    { id: '9', name: '科幻片' },
+                    { id: '10', name: '恐怖片' },
+                    { id: '11', name: '劇情片' },
+                    { id: '12', name: '戰爭片' },
+                    { id: '13', name: '國產劇' },
+                    { id: '14', name: '港澳劇' },
+                    { id: '15', name: '日劇' },
+                    { id: '16', name: '韓劇' },
+                    { id: '17', name: '歐美劇' },
+                    { id: '20', name: '紀錄片' },
+                    { id: '21', name: '動漫電影' }
+                ]
+            },
+            'ffzy': {
+                name: '非凡資源 (ffzy)',
+                url: 'http://api.ffzyapi.com/api.php/provide/vod/',
+                categories: [
+                    { id: '', name: '全部資源' },
+                    { id: '1', name: '電影' },
+                    { id: '2', name: '連續劇' },
+                    { id: '3', name: '綜藝' },
+                    { id: '4', name: '動漫' },
+                    { id: '6', name: '動作片' },
+                    { id: '7', name: '喜劇片' },
+                    { id: '8', name: '愛情片' },
+                    { id: '9', name: '科幻片' },
+                    { id: '10', name: '恐怖片' },
+                    { id: '11', name: '劇情片' },
+                    { id: '12', name: '戰爭片' },
+                    { id: '13', name: '國產劇' },
+                    { id: '14', name: '香港劇' },
+                    { id: '15', name: '韓國劇' },
+                    { id: '16', name: '歐美劇' },
+                    { id: '17', name: '台灣劇' },
+                    { id: '18', name: '日本劇' },
+                    { id: '19', name: '海外劇' },
+                    { id: '20', name: '紀錄片' },
+                    { id: '22', name: '懸疑片' },
+                    { id: '23', name: '犯罪片' },
+                    { id: '25', name: '國產動漫' },
+                    { id: '26', name: '日韓動漫' },
+                    { id: '27', name: '歐美動漫' }
+                ]
+            },
+            'hn': {
+                name: '紅牛資源 (hn)',
+                url: 'https://www.hongniuzy2.com/api.php/provide/vod/',
+                categories: [
+                    { id: '', name: '全部資源' },
+                    { id: '1', name: '電影' },
+                    { id: '2', name: '連續劇' },
+                    { id: '3', name: '綜藝' },
+                    { id: '4', name: '動漫' },
+                    { id: '6', name: '動作片' },
+                    { id: '7', name: '喜劇片' },
+                    { id: '8', name: '愛情片' },
+                    { id: '9', name: '科幻片' },
+                    { id: '10', name: '恐怖片' },
+                    { id: '11', name: '劇情片' },
+                    { id: '12', name: '戰爭片' },
+                    { id: '13', name: '國產劇' },
+                    { id: '14', name: '港台劇' },
+                    { id: '15', name: '日韓劇' },
+                    { id: '16', name: '歐美劇' },
+                    { id: '20', name: '紀錄片' }
+                ]
+            },
+            'sd': {
+                name: '閃電資源 (sd)',
+                url: 'https://sdzyapi.com/api.php/provide/vod/',
+                categories: [
+                    { id: '', name: '全部資源' },
+                    { id: '1', name: '電影' },
+                    { id: '2', name: '連續劇' },
+                    { id: '3', name: '綜藝' },
+                    { id: '4', name: '動漫' },
+                    { id: '6', name: '動作片' },
+                    { id: '7', name: '喜劇片' },
+                    { id: '8', name: '愛情片' },
+                    { id: '9', name: '科幻片' },
+                    { id: '10', name: '恐怖片' },
+                    { id: '11', name: '劇情片' },
+                    { id: '12', name: '戰爭片' },
+                    { id: '13', name: '國產劇' },
+                    { id: '14', name: '港台劇' },
+                    { id: '15', name: '日韓劇' },
+                    { id: '16', name: '歐美劇' }
+                ]
+            },
+            'bf': {
+                name: '暴風資源 (bf)',
+                url: 'https://bfzyapi.com/api.php/provide/vod/',
+                categories: [
+                    { id: '', name: '全部資源' },
+                    { id: '1', name: '電影' },
+                    { id: '2', name: '連續劇' },
+                    { id: '3', name: '綜藝' },
+                    { id: '4', name: '動漫' },
+                    { id: '6', name: '動作片' },
+                    { id: '7', name: '喜劇片' },
+                    { id: '8', name: '愛情片' },
+                    { id: '9', name: '科幻片' },
+                    { id: '10', name: '恐怖片' },
+                    { id: '11', name: '劇情片' },
+                    { id: '12', name: '戰爭片' },
+                    { id: '13', name: '國產劇' },
+                    { id: '14', name: '港澳劇' },
+                    { id: '15', name: '台灣劇' },
+                    { id: '16', name: '日本劇' },
+                    { id: '17', name: '韓國劇' },
+                    { id: '18', name: '歐美劇' }
+                ]
+            },
+            'lz': {
+                name: '量子資源 (lz)',
+                url: 'https://lzizyapi.com/api.php/provide/vod/',
+                categories: [
+                    { id: '', name: '全部資源' },
+                    { id: '1', name: '電影' },
+                    { id: '2', name: '連續劇' },
+                    { id: '3', name: '綜藝' },
+                    { id: '4', name: '動漫' },
+                    { id: '6', name: '動作片' },
+                    { id: '7', name: '喜劇片' },
+                    { id: '8', name: '愛情片' },
+                    { id: '9', name: '科幻片' },
+                    { id: '10', name: '恐怖片' },
+                    { id: '11', name: '劇情片' },
+                    { id: '12', name: '戰爭片' },
+                    { id: '13', name: '國產劇' },
+                    { id: '14', name: '香港劇' },
+                    { id: '15', name: '韓國劇' },
+                    { id: '16', name: '歐美劇' },
+                    { id: '17', name: '台灣劇' },
+                    { id: '18', name: '日本劇' },
+                    { id: '20', name: '紀錄片' },
+                    { id: '21', name: '國產動漫' },
+                    { id: '22', name: '日韓動漫' },
+                    { id: '23', name: '歐美動漫' }
+                ]
+            }
+        };
+
+        function updateHUDLabels() {
+            document.getElementById('currentSourceLabel').innerText = state.source;
+            const categories = getCurrentCategories();
+            const currentCat = categories.find(c => String(c.id) === String(state.type));
+            
+            if (state.type) {
+                const typeName = currentCat ? currentCat.name : '自訂';
+                document.getElementById('currentTypeLabel').innerText = `${typeName} (${state.type})`;
+            } else {
+                document.getElementById('currentTypeLabel').innerText = '全部資源';
+            }
+
+            const searchBadge = document.getElementById('searchBadge');
+            const searchLabel = document.getElementById('currentSearchLabel');
+            if (state.search) {
+                searchLabel.innerText = state.search;
+                searchBadge.classList.remove('hidden');
+            } else {
+                searchBadge.classList.add('hidden');
+            }
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categoryContainer');
+            const categories = getCurrentCategories();
+
+            container.innerHTML = categories.map(cat => {
+                const isActive = String(state.type) === String(cat.id) && !state.search;
+                const labelText = cat.id ? `${escapeHtml(cat.name)} (${escapeHtml(String(cat.id))})` : escapeHtml(cat.name);
+                return `
+                    <button data-id="${escapeHtml(String(cat.id))}" class="cat-btn px-3 py-1.5 rounded-full transition-all whitespace-nowrap border ${
+                        isActive 
+                        ? 'bg-cyber-cyan text-black font-bold border-cyber-cyan shadow-neon-cyan' 
+                        : 'bg-cyber-dark/80 text-slate-300 border-cyber-border/40 hover:border-cyber-cyan hover:text-cyber-cyan'
+                    }">
+                        ${labelText}
+                    </button>
+                `;
+            }).join('');
+
+            // Attach click event listeners safely
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const catId = e.currentTarget.getAttribute('data-id');
+                    state.type = catId;
+                    state.page = 1;
+                    state.search = '';
+                    document.getElementById('searchInput').value = '';
+                    updateUrlParams();
+                    renderCategories();
+                    updateHUDLabels();
+                    fetchVodData();
+                });
+            });
+        }
+
+        async function fetchVodData() {
+            showLoading(true);
+            const container = document.getElementById('videoContainer');
+            container.innerHTML = '';
+
+            // Construct Target URL based on active source configuration
+            const sourceConfig = API_SOURCES[state.source] || API_SOURCES['rycj'];
+            let baseUrl = sourceConfig.url;
+            let queryParams = new URLSearchParams();
+            queryParams.append('ac', 'detail');
+
+            // If keyword search is provided, use ?wd=
+            if (state.search) {
+				state.type = '';
+                queryParams.append('wd', state.search);
+            } else if (state.type) {
+                queryParams.append('t', state.type);
+            }
+
+            if (state.page) queryParams.append('pg', state.page);
+
+            const targetUrl = `${baseUrl}?${queryParams.toString()}`;
+
+            // Proxy Strategies
+            const proxyStrategies = [
+                // 1. Direct fetch (In case backend allows CORS)
+                async () => fetchWithTimeout(targetUrl, 4000),
+                // 2. CORS Proxy IO
+                async () => {
+                    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+                    return fetchWithTimeout(proxyUrl, 6000);
+                },
+                // 3. AllOrigins Proxy
+                async () => {
+                    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+                    const controller = new AbortController();
+                    const timer = setTimeout(() => controller.abort(), 7000);
+                    try {
+                        const res = await fetch(proxyUrl, { signal: controller.signal });
+                        clearTimeout(timer);
+                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                        const wrapperText = await res.text();
+                        const wrapperJson = parseResponseJson(wrapperText);
+                        if (!wrapperJson || !wrapperJson.contents) throw new Error('Empty proxy wrapper');
+                        return parseResponseJson(wrapperJson.contents);
+                    } catch (err) {
+                        clearTimeout(timer);
+                        throw err;
+                    }
+                }
+            ];
+
+            let rawData = null;
+            let successProxy = 'DIRECT';
+
+            for (let i = 0; i < proxyStrategies.length; i++) {
+                try {
+                    rawData = await proxyStrategies[i]();
+                    if (rawData && (rawData.list || Array.isArray(rawData))) {
+                        successProxy = i === 0 ? 'DIRECT' : (i === 1 ? 'CORSPROXY.IO' : 'ALLORIGINS');
+                        break;
+                    }
+                } catch (err) {
+                    console.warn(`Proxy strategy ${i+1} failed:`, err.message);
+                }
+            }
+
+            // Dynamically integrate categories if returned by API (`class` or `type` field)
+            if (rawData && (rawData.class || rawData.type) && Array.isArray(rawData.class || rawData.type)) {
+                const apiClasses = rawData.class || rawData.type;
+                const dynamicCats = [{ id: '', name: '全部資源' }];
+                apiClasses.forEach(c => {
+                    dynamicCats.push({
+                        id: String(c.type_id || c.id),
+                        name: String(c.type_name || c.name)
+                    });
+                });
+                sourceConfig.categories = dynamicCats;
+                renderCategories();
+            }
+
+            // Fallback: If network/CORS fails completely, generate realistic High-Tech Cyber Fallback Mock Data
+            if (!rawData || !rawData.list || rawData.list.length === 0) {
+                if (!rawData) {
+                    showToast('第三方伺服器阻擋 CORS，已啟動預設科技數據備援', 'warning');
+                    rawData = generateMockCyberData();
+                    successProxy = 'MOCK SIMULATOR';
+                }
+            }
+
+            document.getElementById('proxyStatus').innerHTML = `
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${escapeHtml(successProxy)}
+            `;
+
+            showLoading(false);
+
+            if (rawData && rawData.list && rawData.list.length > 0) {
+                state.currentRawData = rawData.list;
+                renderVideoGrid(rawData.list);
+                renderPagination(rawData.page || state.page, rawData.pagecount || 10);
+                document.getElementById('totalCountNum').innerText = rawData.total || rawData.list.length;
+                document.getElementById('emptyState').classList.add('hidden');
+                document.getElementById('emptyState').classList.remove('flex');
+            } else {
+                document.getElementById('emptyState').classList.remove('hidden');
+                document.getElementById('emptyState').classList.add('flex');
+                document.getElementById('totalCountNum').innerText = '0';
+            }
+
+			return rawData.list;
+			
+        }
+
+        function renderVideoGrid(list) {
+			<!-- console.log(list); -->
+            const container = document.getElementById('videoContainer');
+            container.innerHTML = list.map(item => {
+                const vodId = String(item.vod_id || '');
+                const vodName = item.vod_name || '未命名影片';
+                const posterUrl = item.vod_pic && item.vod_pic.startsWith('http') 
+                    ? item.vod_pic 
+                    : `https://placehold.co/300x420/0a0f1d/00f3ff?text=${encodeURIComponent(vodName)}`;
+				
+				var remarks = item.vod_remarks || 'HD中字';
+				if (state.search !== ''){
+					remarks = state.source;
+				}
+                const typeName = item.type_name || '熱門影視';
+                const vodActor = item.vod_actor || '未知主演';
+                const pubDate = item.vod_pubdate || item.vod_year || '2026';
+
+                return `
+                    <div data-vod-id="${escapeHtml(vodId)}" class="video-card group relative bg-cyber-dark/70 rounded-xl overflow-hidden border border-cyber-border/40 hover:border-cyber-cyan transition-all duration-300 hover:shadow-neon-cyan flex flex-col cursor-pointer">
+                        <!-- Poster Container -->
+                        <div class="relative aspect-[3/4] overflow-hidden bg-cyber-dark">
+                            <img src="${escapeHtml(posterUrl)}" alt="${escapeHtml(vodName)}" 
+                                 onerror="this.onerror=null; this.src='https://placehold.co/300x420/0a0f1d/00f3ff?text=CyberVOD';"
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-85 group-hover:opacity-100">
+                            
+                            <!-- Cyber Badge -->
+                            <div class="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-tech text-cyber-cyan border border-cyber-cyan/30">
+                                ${escapeHtml(typeName)}
+                            </div>
+                            
+                            <div class="absolute bottom-2 right-2 bg-cyber-magenta/80 text-white font-tech text-[10px] font-bold px-1.5 py-0.5 rounded shadow">
+                                ${escapeHtml(remarks)}
+                            </div>
+
+                            <!-- Play Overlay Hover Icon -->
+                            <div class="absolute inset-0 bg-cyber-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <div class="w-12 h-12 rounded-full bg-cyber-cyan text-black flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-play text-lg ml-0.5"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Info -->
+                        <div class="p-3 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-sm text-slate-100 group-hover:text-cyber-cyan transition-colors line-clamp-1" title="${escapeHtml(vodName)}">
+                                    ${escapeHtml(vodName)}
+                                </h3>
+                                <p class="text-[11px] text-slate-400 font-tech mt-1 line-clamp-1">
+                                    ${escapeHtml(vodActor)}
+                                </p>
+                            </div>
+                            <div class="mt-2 pt-2 border-t border-cyber-border/20 flex items-center justify-between text-[10px] font-tech text-slate-500">
+                                <span><i class="fa-regular fa-calendar"></i> ${escapeHtml(pubDate)}</span>
+                                <span class="text-cyber-cyan/80 font-bold"><i class="fa-solid fa-signal"></i> 串流穩定</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openVideoModal(vodId) {
+            const item = state.currentRawData.find(i => String(i.vod_id) === String(vodId));
+            if (!item) return;
+
+            document.getElementById('modalTitle').innerText = item.vod_name || '未命名影片';
+            document.getElementById('modalSubTitle').innerText = item.vod_name || '未命名影片';
+            document.getElementById('modalRemarks').innerText = `更新: ${item.vod_remarks || '高清全集'}`;
+            document.getElementById('modalArea').innerText = `地區: ${item.vod_area || '未知'}`;
+            document.getElementById('modalYear').innerText = `年份: ${item.vod_year || '2026'}`;
+            document.getElementById('modalTypeBadge').innerText = `類別: ${item.type_name || '綜合'}`;
+            document.getElementById('modalUpdatedTime').innerText = `更新時間: ${item.vod_time || '最新'}`;
+            document.getElementById('modalDes').innerText = item.vod_blurb || item.vod_content || '暫無詳細內容介紹...';
+            
+            const posterUrl = item.vod_pic && item.vod_pic.startsWith('http') ? item.vod_pic : `https://placehold.co/300x420/0a0f1d/00f3ff?text=${encodeURIComponent(item.vod_name || 'VOD')}`;
+            document.getElementById('modalPoster').src = posterUrl;
+
+            // Parse Play URLs
+            parseEpisodes(item.vod_play_url);
+
+            // Open Modal
+            document.getElementById('playerModal').classList.remove('hidden');
+            document.getElementById('playerModal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function parseEpisodes(playUrlStr) {
+            const epContainer = document.getElementById('episodeList');
+            epContainer.innerHTML = '';
+
+            if (!playUrlStr) {
+                epContainer.innerHTML = '<span class="text-slate-500 text-xs col-span-full">暫無播放源</span>';
+                return;
+            }
+			console.log(playUrlStr);
+            // Standard MacCMS format: Ep01$https://...m3u8#Ep02$https://...m3u8
+            let episodes = [];
+			if (playUrlStr.includes('$$$')) {
+                const epList = playUrlStr.split('$$$');
+                episodes = epList.map(epUrlStr => {
+					if (epUrlStr.includes('m3u8')) {
+						playUrlStr = epUrlStr;
+					}
+				})
+			}
+			
+			if (playUrlStr.includes('#')) {
+				const rawList = playUrlStr.split('#');
+				episodes = rawList.map(item => {
+					const parts = item.split('$');
+					return { title: parts[0] || '立即播放', url: parts[1] || parts[0] };
+				});
+			} else if (playUrlStr.includes('$')) {
+				const parts = playUrlStr.split('$');
+				episodes = [{ title: parts[0] || '立即播放', url: parts[1] || parts[0] }];
+			} else {
+				episodes = [{ title: '正片播放', url: playUrlStr }];
+			}
+
+			
+            epContainer.innerHTML = episodes.map((ep) => `
+                <button data-ep-url="${escapeHtml(ep.url)}" data-ep-title="${escapeHtml(ep.title)}" class="ep-btn text-xs font-tech px-2.5 py-1.5 rounded bg-cyber-dark border border-cyber-border/40 hover:border-cyber-cyan hover:text-cyber-cyan text-slate-300 truncate transition-all flex items-center justify-between">
+                    <span class="truncate">${escapeHtml(ep.title)}</span>
+                    <i class="fa-solid fa-circle-play text-[10px]"></i>
+                </button>
+            `).join('');
+
+            // Auto play first episode if m3u8 format exists
+            if (episodes.length > 0 && episodes[0].url.includes('m3u8')) {
+                playStream(episodes[0].url, episodes[0].title);
+            }
+        }
+
+        function playStream(url, title) {
+            const video = document.getElementById('cyberVideoPlayer');
+            const overlay = document.getElementById('playerOverlay');
+            overlay.classList.add('hidden');
+
+            if (!url || !url.startsWith('http')) {
+                showToast('該播放連結為示範測試位或非標準 m3u8', 'warning');
+                return;
+            }
+
+            if (typeof Hls !== 'undefined' && Hls.isSupported() && url.includes('m3u8')) {
+                if (state.hlsPlayer) {
+                    state.hlsPlayer.destroy();
+                }
+                const hls = new Hls();
+                hls.loadSource(url);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    video.play().catch(() => {});
+                });
+                state.hlsPlayer = hls;
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+                video.play().catch(() => {});
+            } else {
+                video.src = url;
+                video.play().catch(() => {});
+            }
+
+            showToast(`正在播放: ${title}`);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('playerModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+
+            const video = document.getElementById('cyberVideoPlayer');
+            video.pause();
+            if (state.hlsPlayer) {
+                state.hlsPlayer.destroy();
+                state.hlsPlayer = null;
+            }
+            document.getElementById('playerOverlay').classList.remove('hidden');
+        }
+
+        function renderPagination(currentPage, totalPages) {
+            currentPage = parseInt(currentPage);
+            totalPages = Math.min(parseInt(totalPages), 50);
+
+            const container = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            // Prev
+            if (currentPage > 1) {
+                html += `
+                    <button data-page="${currentPage - 1}" class="page-btn px-3 py-1.5 rounded bg-cyber-dark border border-cyber-border/40 hover:border-cyber-cyan text-slate-200 hover:text-cyber-cyan transition-all">
+                        <i class="fa-solid fa-chevron-left"></i> 上一頁
+                    </button>
+                `;
+            } else {
+                html += `
+                    <button disabled class="opacity-30 cursor-not-allowed px-3 py-1.5 rounded bg-cyber-dark border border-cyber-border/20 text-slate-500">
+                        <i class="fa-solid fa-chevron-left"></i> 上一頁
+                    </button>
+                `;
+            }
+
+            // Page Indicator
+            html += `
+                <span class="px-4 py-1.5 rounded bg-cyber-cyan/10 border border-cyber-cyan/30 text-cyber-cyan text-xs font-bold">
+                    ${currentPage} / ${totalPages}
+                </span>
+            `;
+
+            // Next
+            if (currentPage < totalPages) {
+                html += `
+                    <button data-page="${currentPage + 1}" class="page-btn px-3 py-1.5 rounded bg-cyber-dark border border-cyber-border/40 hover:border-cyber-cyan text-slate-200 hover:text-cyber-cyan transition-all">
+                        下一頁 <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                `;
+            } else {
+                html += `
+                    <button disabled class="opacity-30 cursor-not-allowed px-3 py-1.5 rounded bg-cyber-dark border border-cyber-border/20 text-slate-500">
+                        下一頁 <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function changePage(newPage) {
+            if (newPage < 1) return;
+            state.page = newPage;
+            updateUrlParams();
+            fetchVodData();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function bindEvents() {
+            // Video Card Click Event Delegation
+            document.getElementById('videoContainer').addEventListener('click', (e) => {
+                const card = e.target.closest('[data-vod-id]');
+                if (card) {
+                    openVideoModal(card.getAttribute('data-vod-id'));
+                }
+            });
+
+            // Episode Button Click Event Delegation
+            document.getElementById('episodeList').addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-ep-url]');
+                if (btn) {
+                    const url = btn.getAttribute('data-ep-url');
+                    const title = btn.getAttribute('data-ep-title');
+                    playStream(url, title);
+                }
+            });
+
+            // Pagination Click Event Delegation
+            document.getElementById('pagination').addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-page]');
+                if (btn) {
+                    const page = parseInt(btn.getAttribute('data-page'));
+                    if (!isNaN(page)) changePage(page);
+                }
+            });
+
+            // Source change
+            document.getElementById('sourceSelect').addEventListener('change', (e) => {
+                state.source = e.target.value;
+                state.page = 1;
+                // Check if current type exists in new source, otherwise default to all ('')
+                const newCategories = getCurrentCategories();
+                const exists = newCategories.some(c => String(c.id) === String(state.type));
+                if (!exists) {
+                    state.type = '';
+                }
+                renderCategories();
+                updateHUDLabels();
+                updateUrlParams();
+                fetchVodData();
+            });
+
+            // Search Trigger
+            document.getElementById('searchBtn').addEventListener('click', executeSearch);
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') executeSearch();
+            });
+
+            // Reload
+            document.getElementById('reloadBtn').addEventListener('click', () => {
+                fetchVodData();
+                showToast('已重新整理 API 節點數據');
+            });
+
+            // Modal Close
+            document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+            document.getElementById('playerModal').addEventListener('click', (e) => {
+                if (e.target.id === 'playerModal') closeModal();
+            });
+
+            // Copy URL
+            document.getElementById('copyUrlBtn').addEventListener('click', () => {
+                try {
+                    const dummy = document.createElement('input');
+                    document.body.appendChild(dummy);
+                    dummy.value = window.location.href;
+                    dummy.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(dummy);
+                    showToast('已成功複製當前網址到剪貼簿！');
+                } catch (e) {
+                    showToast('複製失敗，請手動複製網址');
+                }
+            });
+        }
+
+        function executeSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            state.search = openccT2S(query);
+            state.page = 1;
+			document.getElementById('searchInput').value = state.search
+			
+			const originalSource = state.source;
+			const originalsourceSelect = document.getElementById('sourceSelect');
+			
+			var videoCards = [];
+			['rycj','dytt','ffzy'].forEach(item => {
+				state.source = item;
+				<!-- updateUrlParams(); -->
+				console.log(fetchVodData());
+				videoCards.append(fetchVodData());
+			});
+			console.log(videoCards);
+			renderVideoGrid(videoCards);
+			
+			state.source = originalSource;
+			document.getElementById('sourceSelect').value = originalsourceSelect;
+        }
+
+        function updateUrlParams() {
+            try {
+                // Safely bypass pushState when running inside blob: URLs or restricted preview iframes
+                if (window.location.protocol === 'blob:') {
+                    return;
+                }
+
+                const newUrl = new URL(window.location.href);
+                newUrl.searchParams.set('s', state.source);
+                if (state.type) newUrl.searchParams.set('t', state.type);
+                else newUrl.searchParams.delete('t');
+                
+                if (state.page > 1) newUrl.searchParams.set('pg', state.page);
+                else newUrl.searchParams.delete('pg');
+
+                if (state.search) newUrl.searchParams.set('wd', state.search);
+                else newUrl.searchParams.delete('wd');
+
+                window.history.pushState({}, '', newUrl);
+            } catch (e) {
+                console.warn('URL pushState blocked in sandbox environment:', e.message);
+            }
+        }
+
+        function showLoading(visible) {
+            const loader = document.getElementById('loadingState');
+            if (visible) {
+                loader.classList.remove('hidden');
+                loader.classList.add('flex');
+            } else {
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.innerText = message;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function generateMockCyberData() {
+            const allItems = [
+                { vod_id: 99001, vod_name: "賽博朋克：邊緣行者 2077", type_name: "科幻片", type_id: "9", vod_pic: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80", vod_remarks: "4K 60FPS 藍光", vod_actor: "Cyber-Actor / AI演算法", vod_area: "美國 / 亞太", vod_year: "2026", vod_time: "2026-07-31", vod_blurb: "在近未來的賽博網絡時代，巨型科技企業掌握了人類的神經數據數據庫...", vod_play_url: "預告片$https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8#HD 1080P$https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
+                { vod_id: 99002, vod_name: "戰鬥天使：攻殼機動", type_name: "動作片", type_id: "6", vod_pic: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80", vod_remarks: "HD高清", vod_actor: "斯嘉麗 / 機器人", vod_area: "日本 / 美國", vod_year: "2025", vod_time: "2026-07-30", vod_blurb: "極客駭客與戰鬥義體人的終極對決...", vod_play_url: "第01集$https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8#第02集$https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
+                { vod_id: 99003, vod_name: "銀翼殺手：數據之痕", type_name: "科幻片", type_id: "9", vod_pic: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=400&q=80", vod_remarks: "HD國語", vod_actor: "戴夫 / 複製人", vod_area: "歐美", vod_year: "2026", vod_time: "2026-07-29", vod_blurb: "追查記憶檔案庫中的異常連線...", vod_play_url: "正片$https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
+                { vod_id: 99004, vod_name: "黑客帝國：重組數據", type_name: "動作片", type_id: "6", vod_pic: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=400&q=80", vod_remarks: "BD超清", vod_actor: "基努 / 崔妮蒂", vod_area: "美國", vod_year: "2024", vod_time: "2026-07-28", vod_blurb: "虛擬與現實界線全面崩解...", vod_play_url: "正片$https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
+                { vod_id: 99005, vod_name: "量子狂潮：喜劇行動", type_name: "喜劇片", type_id: "7", vod_pic: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=400&q=80", vod_remarks: "HD720P", vod_actor: "喜劇明星 / AI", vod_area: "港台", vod_year: "2026", vod_time: "2026-07-27", vod_blurb: "輕鬆搞笑的科技冒險喜劇...", vod_play_url: "正片$https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
+                { vod_id: 99006, vod_name: "未來之愛：數位誓言", type_name: "愛情片", type_id: "8", vod_pic: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80", vod_remarks: "HD", vod_actor: "愛麗絲 / 虛擬戀人", vod_area: "韓國", vod_year: "2025", vod_time: "2026-07-26", vod_blurb: "跨越維度的浪漫愛情故事...", vod_play_url: "正片$https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" }
+            ];
+
+            let filtered = allItems;
+            if (state.search) {
+                filtered = filtered.filter(i => i.vod_name.includes(state.search) || i.vod_blurb.includes(state.search) || i.type_name.includes(state.search));
+                if (filtered.length === 0) {
+                    filtered = [{
+                        vod_id: 99999,
+                        vod_name: `${state.search} (檢索模擬結果)`,
+                        type_name: "熱門影視",
+                        type_id: "1",
+                        vod_pic: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80",
+                        vod_remarks: "高清串流",
+                        vod_actor: "全網檢索節點",
+                        vod_area: "全球",
+                        vod_year: "2026",
+                        vod_time: "2026-07-31",
+                        vod_blurb: `關於關鍵字「${state.search}」的科技影視數據檔案庫結果。`,
+                        vod_play_url: "線上播放$https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+                    }];
+                }
+            } else if (state.type) {
+                const matchedType = filtered.filter(i => String(i.type_id) === String(state.type));
+                if (matchedType.length > 0) filtered = matchedType;
+            }
+
+            return {
+                page: state.page,
+                pagecount: 1,
+                total: filtered.length,
+                list: filtered
+            };
+        }
+
+        function initApp() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('s') && API_SOURCES[urlParams.get('s')]) {
+                    state.source = urlParams.get('s');
+                }
+                if (urlParams.has('t')) state.type = urlParams.get('t');
+                if (urlParams.has('pg')) state.page = parseInt(urlParams.get('pg')) || 1;
+                if (urlParams.has('wd')) state.search = urlParams.get('wd');
+
+                const sourceSelect = document.getElementById('sourceSelect');
+                if (sourceSelect) sourceSelect.value = state.source;
+
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput && state.search) searchInput.value = state.search;
+
+                bindEvents();
+                renderCategories();
+                updateHUDLabels();
+                fetchVodData();
+            } catch (err) {
+                console.error("Init Error:", err);
+                fetchVodData();
+            }
+        }
+		
+		
+		
+		
+		try {
+			if (typeof OpenCC !== 'undefined') {
+				openccS2T = OpenCC.Converter({ from: 'cn', to: 'tw' });
+				openccT2S = OpenCC.Converter({ from: 'tw', to: 'cn' });
+			}
+		} catch (err) {
+			console.warn("OpenCC 初始化失敗:", err);
+		}
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
