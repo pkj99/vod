@@ -333,8 +333,8 @@ function checkCookieBySourceId(source, id) {
 // 解決CORS問題
 // var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
 // var cors_api_url = 'https://api.allorigins.win/get?url=';
-var cors_api_url = 'https://api.allorigins.win/raw?url=';
-// var cors_api_url = '';
+// var cors_api_url = 'https://api.allorigins.win/raw?url=';
+var cors_api_url = 'https://corsproxy.io/?url=';
 
 
 function doCORSRequestMenu(options, printResult) {
