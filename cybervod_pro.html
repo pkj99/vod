@@ -827,8 +827,13 @@
 
         function renderVideoGrid(list) {
             console.log('state (renderVideoGrid) = ',state,list);
+
+            // [FIX] 防禦性設計：再次確認傳入為陣列，並過濾掉 null / undefined 損壞項目
+            let safeList = Array.isArray(list) ? list : (typeof list === 'object' && list !== null ? Object.values(list) : []);
+
             const container = document.getElementById('videoContainer');
-            container.innerHTML = list.map(item => {
+            // container.innerHTML = list.map(item => {
+            container.innerHTML = safeList.filter(item => item && typeof item === 'object').map(item => {
                 const vodId = String(item.vod_id || '');
                 const vodName = openccS2T(item.vod_name) || '未命名影片';
                 const posterUrl = item.vod_pic && item.vod_pic.startsWith('http') 
