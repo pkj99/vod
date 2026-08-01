@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CYBER-VOD // 科技感影視資訊樞紐</title>
+    <title>CYBERVOD</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -98,7 +98,7 @@
             animation: pulse-glow 3s infinite ease-in-out;
         }
         
-        .hud-corner {
+        /* .hud-corner {
             position: relative;
         }
         .hud-corner::before {
@@ -116,7 +116,7 @@
             width: 8px; height: 8px;
             border-bottom: 2px solid #00f3ff;
             border-right: 2px solid #00f3ff;
-        }
+        } */
     </style>
 </head>
 <body class="bg-cyber-bg text-slate-200 font-body min-h-screen relative overflow-x-hidden selection:bg-cyber-cyan selection:text-black">
@@ -129,8 +129,8 @@
     <div class="relative z-20 min-h-screen flex flex-col">
 
         <header class="border-b border-cyber-border/40 cyber-glass sticky top-0 z-40">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-                
+            <!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-2"> -->
+            <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-2">
                 <!-- Logo Zone -->
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan flex items-center justify-center text-cyber-cyan shadow-neon-cyan">
@@ -139,23 +139,30 @@
                     <div>
                         <div class="flex items-center gap-2">
                             <h1 class="font-cyber font-black text-xl tracking-wider text-white">CYBER<span class="text-cyber-cyan">VOD</span></h1>
-                            <span class="text-[10px] font-cyber px-1.5 py-0.5 rounded bg-cyber-magenta/20 text-cyber-magenta border border-cyber-magenta/40">v3.2 PRO</span>
+                            <span class="hidden lg:flex text-[10px] font-cyber px-1.5 py-0.5 rounded bg-cyber-magenta/20 text-cyber-magenta border border-cyber-magenta/40">v3.2 PRO</span>
                         </div>
-                        <p class="text-[11px] font-tech text-slate-400 tracking-widest uppercase">Data Streaming Hub // Node Protocol Active</p>
+                        <p class="hidden lg:flex text-[11px] font-tech text-slate-400 tracking-widest uppercase">Data Streaming Hub // Node Protocol Active</p>
                     </div>
                 </div>
 
                 <!-- Search Input Bar -->
-                <div class="flex-1 max-w-xl mx-4">
+                <div class="flex-1 max-w-xl mx-1">
                     <div class="relative hud-corner">
-                        <input type="text" id="searchInput" 
+                        <!-- <input type="text" id="searchInput" 
                             placeholder="輸入關鍵字進行全網數據檢索 (例如: 戰鬥, 漫威, 喜劇)..." 
                             class="w-full bg-cyber-dark/80 border border-cyber-cyan/30 rounded px-4 py-2.5 pl-10 pr-24 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyber-cyan focus:shadow-neon-cyan transition-all">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-cyber-cyan/70 text-sm"></i>
                         <button id="searchBtn" class="absolute right-1 top-1 bottom-1 px-4 bg-cyber-cyan text-black font-tech font-bold text-sm rounded hover:bg-cyan-300 transition-all flex items-center gap-1.5">
                             <span>搜尋</span>
                             <i class="fa-solid fa-arrow-right text-xs"></i>
-                        </button>
+                        </button> -->
+
+            <div class="flex-1 max-w-xl relative">
+                <input type="text" id="searchInput" placeholder="搜尋影片..." class="w-2/3 bg-cyber-dark border border-cyber-cyan/30 rounded-lg px-2 py-1 text-sm text-white focus:outline-none focus:border-cyber-cyan">
+                <button id="searchBtn" class="absolute right-0.5 top-0.5 bg-cyber-cyan text-black px-2 py-1 rounded-lg font-bold text-sm">搜尋</button>
+            </div>
+
+
                     </div>
                 </div>
 
@@ -176,7 +183,8 @@
             </div>
 
             <div class="border-t border-cyber-border/20 bg-cyber-dark/60 backdrop-blur-md">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-4">
+                <!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-4"> -->
+                <div class="mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-4">
                     
                     <!-- Source Selector (s parameter) -->
                     <div class="flex items-center gap-2">
@@ -187,10 +195,11 @@
                             <option value="rycj">如意資源 (rycj)</option>
                             <option value="dytt">電影天堂 (dytt)</option>
                             <option value="ffzy">非凡資源 (ffzy)</option>
+                            <option value="zyku">高清資源 (ffzy)</option>
                             <option value="hn">紅牛資源 (hn)</option>
                             <option value="sd">閃電資源 (sd)</option>
-                            <option value="bf">暴風資源 (bf)</option>
-                            <option value="lz">量子資源 (lz)</option>
+                            <!-- <option value="bf">暴風資源 (bf)</option>
+                            <option value="lz">量子資源 (lz)</option> -->
                         </select>
                     </div>
 
@@ -202,7 +211,8 @@
             </div>
         </header>
 
-        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+        <!-- <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6"> -->
+        <main class="flex-1 w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
 
             <!-- Data HUD Header Status -->
             <div class="cyber-glass rounded-xl p-4 flex flex-wrap items-center justify-between gap-4 border border-cyber-border/30 hud-corner">
@@ -229,7 +239,7 @@
                 </div>
             </div>
 
-            <div id="videoContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
+            <div id="videoContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-10 gap-4 sm:gap-6">
                 <!-- Video Cards Rendered Here -->
             </div>
 
@@ -260,7 +270,7 @@
         </main>
 
         <div id="playerModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-            <div class="cyber-glass w-full max-w-5xl rounded-2xl border border-cyber-cyan/40 overflow-hidden shadow-2xl relative my-auto hud-corner">
+            <div class="cyber-glass w-full max-w-7xl rounded-2xl border border-cyber-cyan/40 overflow-hidden shadow-2xl relative my-auto hud-corner">
                 
                 <!-- Modal Top Header Bar -->
                 <div class="px-6 py-4 bg-cyber-dark/90 border-b border-cyber-border/40 flex items-center justify-between">
@@ -340,7 +350,7 @@
                     <span>CYBER STREAM ENGINE // ENCRYPTED ACCESS</span>
                     <button id="copyUrlBtn" class="px-3 py-1 rounded bg-cyber-cyan/10 border border-cyber-cyan/40 hover:bg-cyber-cyan hover:text-black text-cyber-cyan transition-all flex items-center gap-1">
                         <i class="fa-solid fa-copy"></i>
-                        <span>複製當前數據連結</span>
+                        <span>複製當前串流連結</span>
                     </button>
                 </div>
             </div>
@@ -355,7 +365,7 @@
 
         <footer class="border-t border-cyber-border/30 bg-cyber-dark/80 py-6 mt-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 font-tech space-y-2">
-                <p class="tracking-wider">CYBER-VOD KNOWLEDGE & DATA ENGINE // PROPOSED DESIGN BY 程式大師</p>
+                <p class="tracking-wider">CYBER-VOD KNOWLEDGE & DATA ENGINE // PROPOSED DESIGN BY AI 程式大師</p>
                 <p class="text-[11px] text-slate-600">本系統採用跨域代理轉發機制，僅供影片資訊介面呈現與技術優化展示</p>
             </div>
         </footer>
@@ -373,6 +383,8 @@
         };
 		let openccS2T = null;
 		let openccT2S = null;
+        var currentStreamUrl = '';
+        var videoCards = [];
 		
         function escapeHtml(str) {
             if (str === null || str === undefined) return '';
@@ -499,6 +511,37 @@
                     { id: '27', name: '歐美動漫' }
                 ]
             },
+            'zyku': {
+                name: '高清資源 (zyku)',
+                url: 'https://api.1080zyku.com/inc/apijson.php',
+                categories: [
+                    { id: '', name: '全部資源' },
+                    { id: '1', name: '電影' },
+                    { id: '2', name: '連續劇' },
+                    { id: '3', name: '綜藝' },
+                    { id: '4', name: '動漫' },
+                    { id: '6', name: '動作片' },
+                    { id: '7', name: '喜劇片' },
+                    { id: '8', name: '愛情片' },
+                    { id: '9', name: '科幻片' },
+                    { id: '10', name: '恐怖片' },
+                    { id: '11', name: '劇情片' },
+                    { id: '12', name: '戰爭片' },
+                    { id: '13', name: '國產劇' },
+                    { id: '14', name: '香港劇' },
+                    { id: '15', name: '韓國劇' },
+                    { id: '16', name: '歐美劇' },
+                    { id: '17', name: '台灣劇' },
+                    { id: '18', name: '日本劇' },
+                    { id: '19', name: '海外劇' },
+                    { id: '20', name: '紀錄片' },
+                    { id: '22', name: '懸疑片' },
+                    { id: '23', name: '犯罪片' },
+                    { id: '25', name: '國產動漫' },
+                    { id: '26', name: '日韓動漫' },
+                    { id: '27', name: '歐美動漫' }
+                ]
+            },            
             'hn': {
                 name: '紅牛資源 (hn)',
                 url: 'https://www.hongniuzy2.com/api.php/provide/vod/',
@@ -644,7 +687,7 @@
                     const catId = e.currentTarget.getAttribute('data-id');
                     state.type = catId;
                     state.page = 1;
-                    state.search = '';
+                    state.search = null;
                     document.getElementById('searchInput').value = '';
                     updateUrlParams();
                     renderCategories();
@@ -658,6 +701,8 @@
             showLoading(true);
             const container = document.getElementById('videoContainer');
             container.innerHTML = '';
+
+            // console.log('state (fetchVodData) = ',state);
 
             // Construct Target URL based on active source configuration
             const sourceConfig = API_SOURCES[state.source] || API_SOURCES['rycj'];
@@ -709,17 +754,21 @@
             let rawData = null;
             let successProxy = 'DIRECT';
 
-            for (let i = 0; i < proxyStrategies.length; i++) {
-                try {
-                    rawData = await proxyStrategies[i]();
-                    if (rawData && (rawData.list || Array.isArray(rawData))) {
-                        successProxy = i === 0 ? 'DIRECT' : (i === 1 ? 'CORSPROXY.IO' : 'ALLORIGINS');
-                        break;
-                    }
-                } catch (err) {
-                    console.warn(`Proxy strategy ${i+1} failed:`, err.message);
-                }
-            }
+            // for (let i = 0; i < proxyStrategies.length; i++) {
+            //     try {
+            //         rawData = await proxyStrategies[i]();
+            //         if (rawData && (rawData.list || Array.isArray(rawData))) {
+            //             successProxy = i === 0 ? 'DIRECT' : (i === 1 ? 'CORSPROXY.IO' : 'ALLORIGINS');
+            //             break;
+            //         }
+            //     } catch (err) {
+            //         console.warn(`Proxy strategy ${i+1} failed:`, err.message);
+            //     }
+            // }
+
+            rawData = await proxyStrategies[1]();
+            successProxy = 'CORSPROXY.IO';
+
 
             // Dynamically integrate categories if returned by API (`class` or `type` field)
             if (rawData && (rawData.class || rawData.type) && Array.isArray(rawData.class || rawData.type)) {
@@ -751,9 +800,17 @@
             showLoading(false);
 
             if (rawData && rawData.list && rawData.list.length > 0) {
-                state.currentRawData = rawData.list;
-                renderVideoGrid(rawData.list);
-                renderPagination(rawData.page || state.page, rawData.pagecount || 10);
+                
+				if (state.search == null || state.search == ''){
+                    state.currentRawData = rawData.list;
+                    renderVideoGrid(rawData.list);
+                    renderPagination(rawData.page || state.page, rawData.pagecount || 10);
+                } else {
+                    // rawData.list.forEach(item =>
+                    //     videoCards.push(item)
+                    // );
+                    state.currentRawData.push(...rawData.list); 
+                }
                 document.getElementById('totalCountNum').innerText = rawData.total || rawData.list.length;
                 document.getElementById('emptyState').classList.add('hidden');
                 document.getElementById('emptyState').classList.remove('flex');
@@ -763,27 +820,31 @@
                 document.getElementById('totalCountNum').innerText = '0';
             }
 
-			return rawData.list;
+
+			return
 			
         }
 
         function renderVideoGrid(list) {
-			<!-- console.log(list); -->
+            console.log('state (renderVideoGrid) = ',state,list);
             const container = document.getElementById('videoContainer');
             container.innerHTML = list.map(item => {
                 const vodId = String(item.vod_id || '');
-                const vodName = item.vod_name || '未命名影片';
+                const vodName = openccS2T(item.vod_name) || '未命名影片';
                 const posterUrl = item.vod_pic && item.vod_pic.startsWith('http') 
                     ? item.vod_pic 
                     : `https://placehold.co/300x420/0a0f1d/00f3ff?text=${encodeURIComponent(vodName)}`;
 				
-				var remarks = item.vod_remarks || 'HD中字';
-				if (state.search !== ''){
+				var remarks = openccS2T(item.vod_remarks) || 'HD中字';
+				if (state.search == null || state.search == ''){
 					remarks = state.source;
 				}
-                const typeName = item.type_name || '熱門影視';
-                const vodActor = item.vod_actor || '未知主演';
+                const typeName = openccS2T(item.type_name) || '熱門影視';
+                const vodActor = openccS2T(item.vod_actor) || '未知主演';
                 const pubDate = item.vod_pubdate || item.vod_year || '2026';
+
+                console.log(vodId,vodName,state.source);
+
 
                 return `
                     <div data-vod-id="${escapeHtml(vodId)}" class="video-card group relative bg-cyber-dark/70 rounded-xl overflow-hidden border border-cyber-border/40 hover:border-cyber-cyan transition-all duration-300 hover:shadow-neon-cyan flex flex-col cursor-pointer">
@@ -834,14 +895,14 @@
             const item = state.currentRawData.find(i => String(i.vod_id) === String(vodId));
             if (!item) return;
 
-            document.getElementById('modalTitle').innerText = item.vod_name || '未命名影片';
-            document.getElementById('modalSubTitle').innerText = item.vod_name || '未命名影片';
-            document.getElementById('modalRemarks').innerText = `更新: ${item.vod_remarks || '高清全集'}`;
-            document.getElementById('modalArea').innerText = `地區: ${item.vod_area || '未知'}`;
+            document.getElementById('modalTitle').innerText = openccS2T(item.vod_name) || '未命名影片';
+            document.getElementById('modalSubTitle').innerText = openccS2T(item.vod_name) || '未命名影片';
+            document.getElementById('modalRemarks').innerText = `更新: ${openccS2T(item.vod_remarks) || '高清全集'}`;
+            document.getElementById('modalArea').innerText = `地區: ${openccS2T(item.vod_area) || '未知'}`;
             document.getElementById('modalYear').innerText = `年份: ${item.vod_year || '2026'}`;
-            document.getElementById('modalTypeBadge').innerText = `類別: ${item.type_name || '綜合'}`;
+            document.getElementById('modalTypeBadge').innerText = `類別: ${openccS2T(item.type_name) || '綜合'}`;
             document.getElementById('modalUpdatedTime').innerText = `更新時間: ${item.vod_time || '最新'}`;
-            document.getElementById('modalDes').innerText = item.vod_blurb || item.vod_content || '暫無詳細內容介紹...';
+            document.getElementById('modalDes').innerText = openccS2T(item.vod_blurb) || openccS2T(item.vod_content) || '暫無詳細內容介紹...';
             
             const posterUrl = item.vod_pic && item.vod_pic.startsWith('http') ? item.vod_pic : `https://placehold.co/300x420/0a0f1d/00f3ff?text=${encodeURIComponent(item.vod_name || 'VOD')}`;
             document.getElementById('modalPoster').src = posterUrl;
@@ -863,7 +924,7 @@
                 epContainer.innerHTML = '<span class="text-slate-500 text-xs col-span-full">暫無播放源</span>';
                 return;
             }
-			console.log(playUrlStr);
+			// console.log(playUrlStr);
             // Standard MacCMS format: Ep01$https://...m3u8#Ep02$https://...m3u8
             let episodes = [];
 			if (playUrlStr.includes('$$$')) {
@@ -911,6 +972,8 @@
                 showToast('該播放連結為示範測試位或非標準 m3u8', 'warning');
                 return;
             }
+
+            currentStreamUrl = url;
 
             if (typeof Hls !== 'undefined' && Hls.isSupported() && url.includes('m3u8')) {
                 if (state.hlsPlayer) {
@@ -1046,6 +1109,10 @@
                 if (!exists) {
                     state.type = '';
                 }
+
+                state.search = null;
+                document.getElementById('searchInput').value = '';
+
                 renderCategories();
                 updateHUDLabels();
                 updateUrlParams();
@@ -1075,7 +1142,8 @@
                 try {
                     const dummy = document.createElement('input');
                     document.body.appendChild(dummy);
-                    dummy.value = window.location.href;
+                    // dummy.value = window.location.href;
+                    dummy.value = currentStreamUrl;
                     dummy.select();
                     document.execCommand('copy');
                     document.body.removeChild(dummy);
@@ -1090,23 +1158,31 @@
             const query = document.getElementById('searchInput').value.trim();
             state.search = openccT2S(query);
             state.page = 1;
-			document.getElementById('searchInput').value = state.search
+			document.getElementById('searchInput').value = state.search;
 			
 			const originalSource = state.source;
-			const originalsourceSelect = document.getElementById('sourceSelect');
+			const originalsourceSelect = document.getElementById('sourceSelect').value;
 			
-			var videoCards = [];
-			['rycj','dytt','ffzy'].forEach(item => {
+            state.currentRawData = [];
+
+			['rycj','dytt','ffzy','zyku','hn'].forEach(item => {
 				state.source = item;
-				<!-- updateUrlParams(); -->
-				console.log(fetchVodData());
-				videoCards.append(fetchVodData());
+    			document.getElementById('sourceSelect').value = item;
+				updateUrlParams();
+				fetchVodData();
 			});
-			console.log(videoCards);
-			renderVideoGrid(videoCards);
-			
-			state.source = originalSource;
+
+            // console.log('state (executeSearch) = ',state);
+
+		
+			// state.search = null;
+            state.source = originalSource;
 			document.getElementById('sourceSelect').value = originalsourceSelect;
+            updateUrlParams();
+
+            renderVideoGrid(state.currentRawData);
+
+
         }
 
         function updateUrlParams() {
@@ -1216,7 +1292,10 @@
                 bindEvents();
                 renderCategories();
                 updateHUDLabels();
-                fetchVodData();
+
+				if (state.search == null || state.search == ''){                
+                    fetchVodData();
+                }
             } catch (err) {
                 console.error("Init Error:", err);
                 fetchVodData();
