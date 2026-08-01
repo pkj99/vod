@@ -202,7 +202,7 @@
                 </div>
             </div>
 
-            <div id="videoContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 sm:gap-6">
+            <div id="videoContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 gap-4 sm:gap-6">
                 <!-- Video Cards Rendered Here -->
             </div>
 
@@ -371,7 +371,7 @@
 
         function getCurrentCategories() {
             const src = API_SOURCES[state.source] || API_SOURCES['rycj'];
-            return src ? (src.categories.filter(item => Number(item.id) > 5) || []) : [];
+            return src ? (src.categories.filter(item => Number(item.id) > 5 || item.id == '' ) || []) : [];
         }
 
         function parseResponseJson(text) {
@@ -474,7 +474,13 @@
                     { id: '16', name: '歐美劇' },
                     { id: '17', name: '台灣劇' },
                     { id: '18', name: '日本劇' },
-                    { id: '20', name: '紀錄片' }
+                    { id: '19', name: '海外劇' },
+                    { id: '20', name: '紀錄片' },
+                    { id: '22', name: '懸疑片' },
+                    { id: '23', name: '犯罪片' },
+                    { id: '25', name: '國產動漫' },
+                    { id: '26', name: '日韓動漫' },
+                    { id: '27', name: '歐美動漫' }
                 ]
             },
             'zyku': {
@@ -490,7 +496,22 @@
                     { id: '7', name: '喜劇片' },
                     { id: '8', name: '愛情片' },
                     { id: '9', name: '科幻片' },
-                    { id: '10', name: '恐怖片' }
+                    { id: '10', name: '恐怖片' },
+                    { id: '11', name: '劇情片' },
+                    { id: '12', name: '戰爭片' },
+                    { id: '13', name: '國產劇' },
+                    { id: '14', name: '香港劇' },
+                    { id: '15', name: '韓國劇' },
+                    { id: '16', name: '歐美劇' },
+                    { id: '17', name: '台灣劇' },
+                    { id: '18', name: '日本劇' },
+                    { id: '19', name: '海外劇' },
+                    { id: '20', name: '紀錄片' },
+                    { id: '22', name: '懸疑片' },
+                    { id: '23', name: '犯罪片' },
+                    { id: '25', name: '國產動漫' },
+                    { id: '26', name: '日韓動漫' },
+                    { id: '27', name: '歐美動漫' }
                 ]
             },            
             'hn': {
@@ -502,8 +523,21 @@
                     { id: '2', name: '連續劇' },
                     { id: '3', name: '綜藝' },
                     { id: '4', name: '動漫' },
-                    { id: '6', name: '動作片' },
-                    { id: '7', name: '喜劇片' }
+                    { id: '5', name: '動作片' },
+                    { id: '6', name: '喜劇片' },
+                    { id: '7', name: '愛情片' },
+                    { id: '8', name: '科幻片' },
+                    { id: '9', name: '恐怖片' },
+                    { id: '10', name: '劇情片' },
+                    { id: '11', name: '戰爭片' },
+                    { id: '12', name: '國產劇' },
+                    { id: '13', name: '港澳劇' },
+                    { id: '14', name: '日劇' },
+                    { id: '15', name: '歐美劇' },
+                    { id: '16', name: '台灣劇' },
+                    { id: '17', name: '泰劇' },
+                    { id: '18', name: '韓劇' },
+                    { id: '19', name: '紀錄片' }
                 ]
             },
             'sd': {
@@ -513,8 +547,23 @@
                     { id: '', name: '全部資源' },
                     { id: '1', name: '電影' },
                     { id: '2', name: '連續劇' },
+                    { id: '3', name: '綜藝' },
+                    { id: '4', name: '動漫' },
                     { id: '6', name: '動作片' },
-                    { id: '7', name: '喜劇片' }
+                    { id: '7', name: '喜劇片' },
+                    { id: '8', name: '愛情片' },
+                    { id: '9', name: '科幻片' },
+                    { id: '10', name: '恐怖片' },
+                    { id: '11', name: '劇情片' },
+                    { id: '12', name: '戰爭片' },
+                    { id: '13', name: '國產劇' },
+                    { id: '14', name: '歐美劇' },
+                    { id: '15', name: '韓劇' },
+                    { id: '16', name: '日劇' },
+                    { id: '17', name: '港劇' },
+                    { id: '18', name: '台劇' },
+                    { id: '19', name: '泰劇' },
+                    { id: '20', name: '紀錄片' }
                 ]
             }
         };
@@ -1105,6 +1154,7 @@
                 }
 
                 state.search = '';
+                state.type = '';
                 document.getElementById('searchInput').value = '';
 
                 renderCategories();
