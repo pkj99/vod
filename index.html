@@ -419,11 +419,11 @@
                     { id: '10', name: '恐怖片' },
                     { id: '11', name: '劇情片' },
                     { id: '12', name: '戰爭片' },
+                    { id: '20', name: '紀錄片' },
                     { id: '13', name: '陸劇' },
                     { id: '14', name: '港劇' },
                     { id: '15', name: '韓劇' },
                     { id: '16', name: '美劇' },
-                    { id: '20', name: '紀錄片' },
                     { id: '21', name: '台劇' },
                     { id: '22', name: '日劇' },
                     { id: '25', name: '大陸綜藝' },
@@ -446,11 +446,11 @@
                     { id: '10', name: '恐怖片' },
                     { id: '11', name: '劇情片' },
                     { id: '12', name: '戰爭片' },
+                    { id: '20', name: '紀錄片' },
                     { id: '13', name: '陸劇' },
                     { id: '14', name: '港劇' },
                     { id: '15', name: '韓劇' },
                     { id: '16', name: '美劇' },
-                    { id: '20', name: '紀錄片' },
                     { id: '21', name: '台劇' },
                     { id: '22', name: '日劇' },
                     { id: '25', name: '大陸綜藝' },
@@ -473,6 +473,7 @@
                     { id: '10', name: '恐怖片' },
                     { id: '11', name: '劇情片' },
                     { id: '12', name: '戰爭片' },
+                    { id: '20', name: '紀錄片' },
                     { id: '13', name: '陸劇' },
                     { id: '14', name: '港劇' },
                     { id: '15', name: '韓劇' },
@@ -481,7 +482,6 @@
                     { id: '22', name: '日劇' },
                     { id: '23', name: '海外劇' },
                     { id: '24', name: '泰劇' },
-                    { id: '20', name: '紀錄片' },
                     { id: '25', name: '大陸綜藝' },
                     { id: '26', name: '港台綜藝' },
                 ]
@@ -502,19 +502,20 @@
                     { id: '9', name: '恐怖片' },
                     { id: '10', name: '劇情片' },
                     { id: '11', name: '戰爭片' },
+                    { id: '20', name: '紀錄片' },
                     { id: '12', name: '陸劇' },
                     { id: '13', name: '台劇' },
                     { id: '14', name: '韓劇' },
                     { id: '15', name: '美劇' },
                     { id: '16', name: '港劇' },
                     { id: '17', name: '日劇' },
-                    { id: '19', name: '福利' },
-                    { id: '20', name: '紀錄片' },
+                    { id: '62', name: '大陸綜藝' },
+                    { id: '63', name: '港台綜藝' },
                     { id: '66', name: '國產動漫' },
                     { id: '67', name: '日韓動漫' },
                     { id: '68', name: '歐美動漫' },
-                    { id: '62', name: '大陸綜藝' },
-                    { id: '63', name: '港台綜藝' },
+                    { id: '69', name: '港台動漫' },
+                    { id: '70', name: '海外動漫' },
                 ]
             },            
             'hn': {
@@ -599,7 +600,8 @@
 
             container.innerHTML = categories.map(cat => {
                 const isActive = String(state.type) === String(cat.id) && !state.search;
-                const labelText = cat.id ? `${escapeHtml(cat.name)} (${escapeHtml(String(cat.id))})` : escapeHtml(cat.name);
+                // const labelText = cat.id ? `${escapeHtml(cat.name)} (${escapeHtml(String(cat.id))})` : escapeHtml(cat.name);
+                const labelText = cat.id ? `${escapeHtml(cat.name)}` : escapeHtml(cat.name);
                 return `
                     <button data-id="${escapeHtml(String(cat.id))}" class="cat-btn px-3 py-1.5 rounded-full transition-all whitespace-nowrap border ${
                         isActive 
